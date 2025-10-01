@@ -1,0 +1,44 @@
+
+==============================
+ DIAGRAMA ENTIDAD-RELACIÓN
+==============================
+
+ESQUEMA: productos
+-------------------
+[Marcas] (id, nombre_marca)
+    |
+    |---< [Tenis] (id, nombre_tenis, marca, tipo, talla, color, descripcion, precio)
+    |
+    |---< [Playeras] (id, nombre_playera, marca, talla, color, material, genero, descripcion, precio)
+
+[Gorras] (id, nombre_gorra, talla, color, descripcion, precio)
+
+
+ESQUEMA: stock
+-------------------
+[Inventario] (id_inventario, tipo_producto, id_producto, cantidad, fecha_registro, ultima_actualizacion)
+    ^
+    |---< [Tenis]
+    |---< [Playeras]
+    |---< [Gorras]
+
+
+ESQUEMA: ventas
+-------------------
+[Usuarios] (id, nombre, email, telefono, direccion, fecha_registro)
+    |
+    |---< [Pedidos] (id, id_usuario, fecha_pedido, estado, total)
+             |
+             |---< [DetallePedido] (id, id_pedido, tipo_producto, id_producto, cantidad, precio_unitario, subtotal)
+             |
+             |--- [Pagos] (id, id_pedido, monto, metodo_pago, fecha_pago)
+             |
+             |--- [Entregas] (id, id_pedido, direccion_entrega, fecha_entrega, estado)
+
+==============================
+ Relaciones principales:
+ - Una marca puede tener muchos tenis o playeras.
+ - Cada producto puede estar en inventario.
+ - Un usuario puede hacer muchos pedidos.
+ - Cada pedido tiene detalles, pagos y una entrega.
+==============================
