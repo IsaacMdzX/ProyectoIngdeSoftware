@@ -1,0 +1,1 @@
+En esta carpeta se adjuntara la estructura de la base de datos asi como el archivo de respaldo de la base de datos para que el Back-end pueda trabajar con ella

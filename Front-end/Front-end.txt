@@ -1,0 +1,1 @@
+En esta carpeta se integrara el archivo figma de la interfaz que se usara para la pagina,las imagenes de cada pantalla y posteriormente se publicara el codigo html que usara el back-end
