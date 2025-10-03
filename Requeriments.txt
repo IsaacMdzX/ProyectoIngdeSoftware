@@ -1,0 +1,10 @@
+Framework principal
+Flask==2.3.3
+
+#Base de datos PostgreSQL
+psycopg2-binary==2.9.7
+
+Formularios y seguridad
+Werkzeug==2.3.7
+Jinja2==3.1.2
+
