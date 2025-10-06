@@ -1,0 +1,2 @@
+INTERACTIVIDAD del frontend
+Validaciones, peticiones AJAX, animaciones
