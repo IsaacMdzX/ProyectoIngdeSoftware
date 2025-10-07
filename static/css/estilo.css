@@ -195,13 +195,13 @@ h1 {
     transition: all 0.2s ease;
 }
 .filtro-contenido input[type="checkbox"]:checked {
-    background-color: #087efc;  /* COLOR DEL RECUADRO */
-    border-color: #087efc;      /* COLOR DEL BORDE */
+    background-color: #087efc; 
+    border-color: #087efc; 
 }
 .filtro-contenido input[type="checkbox"]:checked::before {
     content: "✓";
     position: absolute;
-    color: white;               /* COLOR DE LA PALOMITA */
+    color: white;    
     font-size: 12px;
     font-weight: bold;
     top: 50%;
@@ -267,8 +267,6 @@ h1 {
 .area-productos {
   flex-grow: 1;
 }
-
-/* Opciones de Clasificación (Chips de Gorras, Tenis, etc.) */
 .opciones-clasificacion {
   display: flex;
   gap: 10px;
@@ -293,7 +291,7 @@ h1 {
   border-color: #333;
 }
 
-/* Opciones de Ordenar (Botones arriba) */
+/* Opciones de Ordenar*/
 .opciones-ordenar {
   display: flex;
   gap: 10px;
@@ -336,7 +334,7 @@ h1 {
 }
 .producto-imagen {
   height: 180px;
-  background-color: #e0e0e0; /* Fondo gris claro */
+  background-color: #e0e0e0; /* Fondo color gris claro */
   margin-bottom: 10px;
   border-radius: 3px;
   display: flex;
@@ -355,7 +353,7 @@ h1 {
 .producto-precio {
   font-size: 1.2em;
   font-weight: bold;
-  color: #FC4B08; /* Color de acento */
+  color: #FC4B08;
 }
 
 /* ============= PAGINACIÓN ================ */
@@ -381,39 +379,39 @@ h1 {
   background-color: #333;
   color: white;
   border-color: #333;
-  pointer-events: none; /* Deshabilita el clic en la página actual */
+  pointer-events: none; 
 }
 
 /* ============= MEDIA ================ */
 @media (max-width: 768px) {
   header {
     flex-direction: column;
-    align-items: center; /* Centra todo el contenido del header */
+    align-items: center; 
   }
   .header-derecha {
-    align-items: center; /* Centra el buscador y los iconos */
+    align-items: center;
     width: 100%;
   }
   .buscador {
-    justify-content: center; /* Centra el buscador también */
+    justify-content: center;
     width: 100%;
   }
   .buscador input[type="search"] {
     width: 80%; /* Aumenta la proporción en móviles */
   }
   .productos-cuadricula {
-    grid-template-columns: repeat(1, 1fr); /* Una columna en móviles */
+    grid-template-columns: repeat(1, 1fr); /* Una columna para móviles */
   }
 }
 @media (max-width: 1024px) {
   .productos-cuadricula {
-    grid-template-columns: repeat(2, 1fr); /* Dos columnas en tabletas */
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas para tabletas */
   }
 }
 
 @media (min-width: 1025px) {
   .productos-cuadricula {
-    grid-template-columns: repeat(3, 1fr); /* Tres columnas en escritorios */
+    grid-template-columns: repeat(3, 1fr); /* Tres columnas para escritorios */
   }
 }
 @media (max-width: 768px) {
@@ -421,7 +419,7 @@ h1 {
     align-items: center;
   }
   .menu-links {
-    position: static; /* ya no flotan debajo, se apilan normalmente */
+    position: static; /
     justify-content: center;
   }
 }
