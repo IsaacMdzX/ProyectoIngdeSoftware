@@ -1,0 +1,427 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  background-color: #f5f5f5;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+/* ======== ENCABEZADO ======== */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 10px 30px;
+  background: linear-gradient(to right, #00BBFF 0%, #7E8383 50%, #FC4B08 100%);
+  min-height: 80px;
+  position: relative;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.logo-img {
+  height: 50px;
+  max-width: 100%;
+}
+.header-derecha {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  position: relative;
+}
+
+/* BUSCADOR */
+.buscador {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  position: relative;
+}
+.buscador input[type="search"] {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  width: 25vw; /* Ajuste porcentual para responsividad */
+  min-width: 250px;
+  max-width: 350px;
+  transition: width 0.3s ease; /* Transición suave */
+}
+.buscador input[type="search"]:focus {
+  outline: none;
+  border: 2px solid white;
+  width: 28vw; /* Ajuste porcentual para responsividad */
+  max-width: 400px;
+}
+
+/* ICONOS DE NAVEGACIÓN */
+.menu-links {
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  top: 100%; /* Los coloca justo debajo del buscador */
+  right: 0;  /* Alinea el carrito con el final del buscador */
+  margin-top: 5px;
+}
+.icono-nav {
+  width: 22px;
+  height: 22px;
+  transition: transform 0.2s ease;
+}
+.icono-nav:hover {
+  transform: scale(1.1);
+}
+
+/* ============= ESTRUCTURA MAIN =========== */
+main {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+h1 {
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+.contenido-principal {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap; /* Permite que los elementos bajen en pantallas pequeñas */
+}
+
+/* =========== PANEL DE FILTROS ============ */
+.panel-filtros {
+  flex: 0 0 250px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+.filtro-grupo {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+.filtro-grupo:last-child {
+  border-bottom: none;
+}
+.filtro-grupo.desplegable:last-child {
+    border-bottom: none;
+}/* A CHECAR */
+.filtro-grupo label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* =========== FILTROS DESPLEGABLES=========== */
+.filtro-grupo.desplegable {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    position: relative;
+}
+
+/* Oculta el checkbox pero mantiene la funcionalidad */
+.filtro-checkbox {
+    display: none;
+}
+.filtro-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s;
+    margin: 0;
+}
+
+.filtro-header:hover {
+    background-color: #f9f9f9;
+    margin: 0 -15px;
+    padding: 15px;
+}
+
+.filtro-header span:first-child {
+    font-weight: 600;
+    font-size: 1em;
+    color: #333;
+}
+
+.flecha {
+    font-size: 0.8em;
+    color: #666;
+    transition: transform 0.3s ease;
+}
+
+.filtro-contenido {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding-left: 0;
+}
+
+/* Cuando el checkbox está checked (filtro abierto) */
+.filtro-checkbox:checked ~ .filtro-contenido {
+    max-height: 500px;
+    padding: 15px 0;
+    border-top: 1px solid #f0f0f0;
+}
+
+.filtro-checkbox:checked ~ .filtro-header .flecha {
+    transform: rotate(180deg);
+}
+
+/* Estilos para los elementos dentro del contenido desplegable */
+
+.filtro-contenido input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+    position: relative;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    border: 2px solid #666;
+    border-radius: 3px;
+    background-color: white;
+    transition: all 0.2s ease;
+}
+.filtro-contenido input[type="checkbox"]:checked {
+    background-color: #087efc;  /* COLOR DEL RECUADRO */
+    border-color: #087efc;      /* COLOR DEL BORDE */
+}
+.filtro-contenido input[type="checkbox"]:checked::before {
+    content: "✓";
+    position: absolute;
+    color: white;               /* COLOR DE LA PALOMITA */
+    font-size: 12px;
+    font-weight: bold;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+/* Rango de precio dentro del desplegable */
+.filtro-contenido .rango-precio-valor {
+    float: none;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+    color: #666;
+}
+.filtro-contenido .slider {
+    margin-top: 5px;
+}
+/* Efecto visual cuando el filtro está abierto */
+.filtro-checkbox:checked ~ .filtro-header {
+    background-color: #f5f5f5;
+    margin: 0 -15px;
+    padding: 15px;
+}
+/* Chips de palabras clave */
+.chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 5px;
+}
+.chip {
+    background-color: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+}
+.cerrar-chip {
+    margin-left: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Rangos de precio */
+.rango-precio-valor {
+    float: right;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+.slider {
+    width: 100%;
+    margin-top: 5px;
+}
+
+/* Estilo para los checkboxes */
+.filtro-grupo > div {
+  font-size: 0.95em;
+  margin-bottom: 5px;
+}
+
+/* =========== ÁREA DE PRODUCTOS =========== */
+.area-productos {
+  flex-grow: 1;
+}
+
+/* Opciones de Clasificación (Chips de Gorras, Tenis, etc.) */
+.opciones-clasificacion {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.chip-categoria {
+  border: 1px solid #ccc;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9em;
+  background-color: #fff;
+  transition: all 0.2s;
+}
+.chip-categoria:hover {
+  border-color: #FC4B08;
+  color: #FC4B08;
+}
+.chip-categoria.activo {
+  background-color: #333;
+  color: white;
+  border-color: #333;
+}
+
+/* Opciones de Ordenar (Botones arriba) */
+.opciones-ordenar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.boton-ordenar {
+  padding: 8px 15px;
+  border: 1px solid #ccc;
+  background-color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: all 0.2s;
+}
+.boton-ordenar:hover {
+  border-color: #FC4B08;
+  color: #FC4B08;
+}
+.boton-ordenar.activo {
+  background-color: #333;
+  color: white;
+  border-color: #333;
+}
+
+/* Cuadrícula y Tarjetas */
+.productos-cuadricula {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+.producto-tarjeta {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08);
+}
+.producto-imagen {
+  height: 180px;
+  background-color: #e0e0e0; /* Fondo gris claro */
+  margin-bottom: 10px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 1.5em;
+  border: 1px dashed #ccc;
+}
+.producto-nombre {
+  font-size: 1em;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #333;
+}
+.producto-precio {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #FC4B08; /* Color de acento */
+}
+
+/* ============= PAGINACIÓN ================ */
+.paginacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 40px;
+}
+.paginacion a, .paginacion span {
+  text-decoration: none;
+  color: #333;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: all 0.2s;
+}
+.paginacion a:hover {
+  background-color: #eee;
+}
+.paginacion a.pagina-actual {
+  background-color: #333;
+  color: white;
+  border-color: #333;
+  pointer-events: none; /* Deshabilita el clic en la página actual */
+}
+
+/* ============= MEDIA ================ */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: center; /* Centra todo el contenido del header */
+  }
+  .header-derecha {
+    align-items: center; /* Centra el buscador y los iconos */
+    width: 100%;
+  }
+  .buscador {
+    justify-content: center; /* Centra el buscador también */
+    width: 100%;
+  }
+  .buscador input[type="search"] {
+    width: 80%; /* Aumenta la proporción en móviles */
+  }
+  .productos-cuadricula {
+    grid-template-columns: repeat(1, 1fr); /* Una columna en móviles */
+  }
+}
+@media (max-width: 1024px) {
+  .productos-cuadricula {
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas en tabletas */
+  }
+}
+
+@media (min-width: 1025px) {
+  .productos-cuadricula {
+    grid-template-columns: repeat(3, 1fr); /* Tres columnas en escritorios */
+  }
+}
+@media (max-width: 768px) {
+  .header-derecha {
+    align-items: center;
+  }
+  .menu-links {
+    position: static; /* ya no flotan debajo, se apilan normalmente */
+    justify-content: center;
+  }
+}
