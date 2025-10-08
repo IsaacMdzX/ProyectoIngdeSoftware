@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, abort
-from models.models import Post  # O el modelo que uses
+from models.models import Post  
 
-# Crear Blueprint principal
+
 main_bp = Blueprint('main', __name__)
 
 @main_bp.route("/")
@@ -18,9 +18,6 @@ def show_post(slug):
 
 @main_bp.route('/clientes')
 def clientes():
-    # Tu código de clientes aquí
+    
     return render_template('clientes.html')
 
-# RUTAS y PÁGINAS del sistema
-# Ej: /, /clientes, /agregar_cliente
-# Renderiza templates y maneja formularios

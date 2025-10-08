@@ -1,0 +1,6 @@
+# Archivo .gitignore
+.env
+
+env/
+
+__pycache__/    
