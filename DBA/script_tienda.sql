@@ -17,6 +17,23 @@ Create table stock.inventario (Id_inventario serial Primary key, Tipo_producto v
 
 Create table usuarios.cliente(Id_cliente serial primary key, Nombre_cliente varchar(100) not null, Email varchar(150) unique not null, telefono varchar (20), Direccion text, Fecha_registro timestamp default now(), Constraint chk_email_valido check(email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'));
 
+ALTER TABLE usuarios.cliente
+DROP COLUMN Direccion;
+
+ALTER TABLE usuarios.cliente
+ADD COLUMN Contrasena VARCHAR(255) NOT NULL;
+
+CREATE TABLE usuarios.admin (
+    Id_admin SERIAL PRIMARY KEY,
+    Nombre_admin VARCHAR(100) NOT NULL,
+    Correo VARCHAR(150) UNIQUE NOT NULL,
+    Telefono VARCHAR (20) NOT NULL,
+    Contrasena VARCHAR(255) NOT NULL,
+    Constraint chk_email_valido check(email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$')
+
+);
+
+
 CREATE TABLE ventas.transferencias (
   Id_transf SERIAL PRIMARY KEY,
   Id_cliente INT NOT NULL,
@@ -29,7 +46,7 @@ CREATE TABLE ventas.transferencias (
   Fecha DATE DEFAULT CURRENT_DATE,
   Monto DECIMAL(10,2) NOT NULL CHECK (Monto >= 0),
   CONSTRAINT FK_cliente_transferencia FOREIGN KEY (Id_cliente)
-      REFERENCES usuarios.cliente(Id_cliente)
+   REFERENCES usuarios.cliente(Id_cliente)
 );
 
 
