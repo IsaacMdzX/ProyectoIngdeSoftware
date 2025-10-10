@@ -12,19 +12,17 @@ def login():
         return render_template('login.html')
     
     if request.method == 'POST':
-        nombre = request.form.get('nombre')
         email = request.form.get('correo')
-        telefono = request.form.get('telefono')
+        contrasena = request.form.get('contrasena')
 
 
         print("Datos recibidos desde el formulario")
-        print(f"Nombre: {nombre}")
         print(f"Correo: {email}")
-        print(f"Teléfono: {telefono}")
+        print(f"contrasena: {contrasena}")
 
 
         
-        if not nombre or not email or not telefono:
+        if not email or not contrasena:
             flash('Faltan campos requeridos.', 'danger')
             return redirect(url_for('auth.login'))
 
