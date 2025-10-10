@@ -17,12 +17,7 @@
 
     <main class="login-page">
         <div class="contenedor-formulario">
-            <form action="{{ url_for('auth.login') }}" method="POST">
-                
-                <div class="grupo-input">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" id="nombre" name="nombre" required>
-                </div>
+            <form action="procesar_login.php" method="POST">
 
                 <div class="grupo-input">
                     <label for="correo">Correo</label>
@@ -30,18 +25,14 @@
                 </div>
 
                 <div class="grupo-input">
-                    <label for="telefono">Teléfono</label>
-                    <input type="tel" id="telefono" name="telefono" required>
-                </div>
+                    <label for="contraseña">Contraseña</label>
+                    <input type="password" id="contraseña" name="contraseña" required>
+                </div>            
 
                 <button type="submit" class="boton-principal">
                     Iniciar sesión
                 </button>
-
-                <a href="#" class="enlace-secundario">
-                    Crear cuenta nueva
-                </a>
-
+                <a href="Crear_cuenta.html" class="enlace-secundario">Crear cuenta nueva</a>         
             </form>
         </div>
     </main>
