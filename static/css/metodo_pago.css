@@ -1,0 +1,265 @@
+:root {
+    --bg-gray: #e0e0e0;
+    --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --dark-button: #333333;
+    --text-dark: #333333;
+    --text-light-gray: #777777;
+}
+
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-gray);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Asegura que la interfaz ocupe al menos toda la altura de la vista */
+}
+
+.main-container {
+    width: 100%;
+    max-width: 1000px; /* Ancho máximo para el contenido */
+    background-color: var(--bg-gray);
+    position: relative;
+    padding-bottom: 80px; /* Espacio para el botón de pagar */
+}
+
+/* Encabezado */
+.header {
+    background: linear-gradient(to right, #1f6479, #ff5733); /* Gradiente de color similar */
+    height: 150px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 50px;
+    justify-content: flex-start;
+}
+
+.logo-container {
+    background-color: linear-gradient(to right, #007bff, #ff4500);
+    border-radius: 0%;
+    padding: 10px;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: -40px; /* Posiciona el logo para que sobresalga */
+    left: 15%;
+    transform: translateX(-85%);
+}
+
+.logo {
+    height: 50px;
+  max-width: 100%;
+}
+
+/* Contenedor de las tarjetas */
+.card-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 30px;
+    padding: 0 20px;
+    margin-top: 20px;
+}
+
+/* Estilo de la tarjeta individual */
+.product-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: var(--card-shadow);
+    width: 30%;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+}
+
+.card-content {
+    flex-grow: 1;
+    width: 100%;
+}
+
+.product-card h3 {
+    color: var(--text-dark);
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--text-dark);
+    margin: 10px 0 20px 0;
+}
+
+.per-mo {
+    font-size: 1rem;
+    font-weight: normal;
+    color: var(--text-light-gray);
+    vertical-align: top;
+    margin-left: 5px;
+}
+
+.product-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.product-card ul li {
+    color: var(--text-light-gray);
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.feature-icon {
+    color: var(--text-dark);
+    margin-right: 10px;
+    font-size: 0.7rem;
+    vertical-align: middle;
+}
+
+/* Botones de selección de tarjeta */
+.select-button {
+    background-color: var(--dark-button);
+    color: white;
+    border: none;
+    padding: 10px 40px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 15px;
+    width: 80%;
+    transition: background-color 0.3s;
+}
+
+.select-button:hover {
+    background-color: #555555;
+}
+
+/* Modal de pago flotante */
+.payment-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    text-align: center;
+    width: 400px; /* Ajusta el ancho */
+    z-index: 10;
+    /* Para simular la superposición en el centro de la interfaz */
+    /* Debería estar oculto con 'display: none;' y mostrarse con JavaScript */
+}
+
+.payment-modal p {
+    margin: 5px 0;
+    color: var(--text-dark);
+}
+
+.payment-modal p:first-child {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.total-amount {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 30px !important;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+
+.modal-button {
+    padding: 8px 25px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    color: var(--text-dark);
+}
+
+.next-btn {
+    background-color: var(--dark-button);
+    color: white;
+    border: none;
+}
+
+/* Botón principal de Pagar */
+.pay-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--dark-button);
+    color: white;
+    border: none;
+    padding: 15px 50px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background-color 0.3s;
+    z-index: 5;
+}
+
+.pay-button:hover {
+    background-color: #555555;
+}
+
+/* Flecha de retorno */
+.back-arrow {
+    position: absolute;
+    bottom: 35px;
+    left: 20px;
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    cursor: pointer;
+    z-index: 5;
+}
+
+/* Media Queries para hacerlo responsive en pantallas más pequeñas */
+@media (max-width: 768px) {
+    .card-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .product-card {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+
+    .payment-modal {
+        width: 80%;
+        padding: 20px;
+    }
+
+    .pay-button {
+        bottom: 10px;
+        right: 10px;
+    }
+
+    .back-arrow {
+        bottom: 25px;
+        left: 10px;
+    }
+}

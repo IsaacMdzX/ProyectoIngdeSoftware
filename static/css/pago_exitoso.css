@@ -1,0 +1,191 @@
+:root {
+    --bg-gray: #e0e0e0;
+    --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --dark-button: #333333;
+    --text-dark: #333333;
+    --text-light-gray: #777777;
+    --header-height: 150px;
+}
+
+/* Base y Reset */
+* { box-sizing: border-box; }
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-gray);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+.main-container {
+    width: 100%;
+    max-width: 1200px;
+    background-color: var(--bg-gray);
+    position: relative;
+    padding-bottom: 80px;
+    min-height: 100vh;
+}
+
+/* Encabezado */
+.header {
+    background: linear-gradient(to right, #1f6479, #ff5733);
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 50px;
+    justify-content: flex-start;
+}
+.logo { height: 80px; }
+
+/* Contenedor de las tarjetas */
+.card-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 0 20px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+/* Tarjeta Individual */
+.product-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: var(--card-shadow);
+    width: 30%; 
+    min-width: 250px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.product-card h3 { font-size: 1.5rem; margin-bottom: 5px; color: var(--text-dark); }
+.price { font-size: 3rem; font-weight: bold; color: var(--text-dark); margin: 0 0 10px 0; display: inline-block;}
+.per-mo { font-size: 1rem; font-weight: normal; color: var(--text-light-gray); vertical-align: top; margin-left: 5px; }
+.product-card ul { list-style: none; padding: 0; margin: 20px 0; text-align: left; width: 100%; }
+.product-card ul li { color: var(--text-dark); font-size: 0.9rem; margin-bottom: 5px; margin-left: 10%; }
+.feature-icon { color: var(--text-light-gray); margin-right: 5px; font-size: 0.7rem; vertical-align: middle; }
+.select-button { 
+    background-color: var(--dark-button); 
+    color: white; 
+    border: none; 
+    padding: 10px 40px; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    font-size: 1rem; 
+    margin-top: 15px; 
+    width: 80%;
+}
+
+
+/* MODAL DE PAGO EXITOSO */
+.success-modal {
+    /* Posicionamiento: crucial para centrar y superponer */
+    position: fixed; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centra el elemento */
+    
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    padding: 25px 30px;
+    width: 450px; /* Ancho ajustado */
+    z-index: 20; 
+    
+    /* Configuración para el desplazamiento si es necesario */
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-weight: bold;
+}
+
+.success-modal label {
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    margin-bottom: 5px;
+    font-weight: bold;
+    display: block; /* Asegura que la etiqueta tome su propia línea */
+}
+
+.success-modal input[type="text"],
+.success-modal textarea {
+    padding: 10px 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    width: 100%; /* Ocupa todo el ancho disponible */
+}
+
+.success-modal textarea {
+    resize: none; /* Evita que el usuario cambie el tamaño libremente */
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end; /* Alinea el botón Finalizar a la derecha */
+    margin-top: 20px;
+}
+
+.finalize-button {
+    background-color: var(--dark-button);
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+/* Botón de Pagar y Flecha de Retorno (Posicionamiento en la esquina) */
+.pay-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--dark-button);
+    color: white;
+    border: none;
+    padding: 15px 50px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    z-index: 5;
+}
+
+.back-arrow {
+    position: absolute;
+    bottom: 35px;
+    left: 20px;
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    cursor: pointer;
+    z-index: 5;
+}
+
+/* Media Queries para Responsividad */
+@media (max-width: 850px) {
+    .card-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .product-card {
+        width: 80%;
+    }
+    .success-modal {
+        width: 90%; 
+    }
+}

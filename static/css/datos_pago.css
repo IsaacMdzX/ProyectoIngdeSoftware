@@ -1,0 +1,213 @@
+:root {
+    --bg-gray: #c9d8e7; /* Fondo azulado/gris claro */
+    --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --dark-button: #333333;
+    --text-dark: #333333;
+    --text-light-gray: #777777;
+    --header-height: 150px;
+}
+
+/* Aplicar box-sizing globalmente */
+* {
+    box-sizing: border-box;
+}
+
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-gray); /* Aplicar el fondo azulado/gris */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.main-container {
+    width: 100%;
+    max-width: 1200px;
+    background-color: var(--bg-gray);
+    position: relative;
+    padding-bottom: 80px;
+    min-height: 100vh;
+}
+
+/* Encabezado */
+.header {
+    background: linear-gradient(to right, #1f6479, #ff5733);
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 50px;
+    justify-content: flex-start;
+}
+
+.logo {
+    height: 80px;
+}
+
+/* Contenedor de las tarjetas */
+.card-container {
+    display: flex;
+    justify-content: space-around; /* Usamos space-around para simular el espacio de la tarjeta central oculta */
+    gap: 30px;
+    padding: 0 20px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+/* Estilo de la tarjeta individual */
+.product-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: var(--card-shadow);
+    width: 30%; /* Le damos un 30% para que quepan 3 */
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+    /* Opacidad reducida para las tarjetas detrás del modal (efecto "desactivado") */
+    opacity: 0.7; 
+}
+
+/* ... (Estilos de contenido y botones de tarjeta, etc., iguales a la versión anterior) ... */
+.card-content { flex-grow: 1; width: 100%; }
+.product-card h3 { color: var(--text-dark); font-size: 1.5rem; margin-bottom: 10px; }
+.price { font-size: 3rem; font-weight: bold; color: var(--text-dark); margin: 10px 0 20px 0; }
+.per-mo { font-size: 1rem; font-weight: normal; color: var(--text-light-gray); vertical-align: top; margin-left: 5px; }
+.product-card ul { list-style: none; padding: 0; margin: 20px 0; text-align: left; }
+.product-card ul li { color: var(--text-light-gray); font-size: 1rem; margin-bottom: 10px; }
+.feature-icon { color: var(--text-dark); margin-right: 10px; font-size: 0.7rem; vertical-align: middle; }
+.select-button { background-color: var(--dark-button); color: white; border: none; padding: 10px 40px; border-radius: 4px; cursor: pointer; font-size: 1rem; margin-top: 15px; width: 80%; transition: background-color 0.3s; }
+
+/* Modal de Transferencia */
+.transfer-modal {
+    /* Posicionamiento crucial para centrar y superponer */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centra el elemento respecto a sí mismo */
+    
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    padding: 25px 30px;
+    width: 450px;
+    z-index: 20;
+
+    /* AÑADIDOS CRUCIALES PARA EVITAR QUE SE SALGA DE LA PANTALLA: */
+    max-height: 90vh; /* Máximo 90% de la altura de la ventana (viewport height) */
+    overflow-y: auto; /* Permite desplazamiento vertical si el contenido es más alto que max-height */
+}
+.back-arrow {
+    /* Posicionamiento: absoluto respecto a .main-container */
+    position: absolute; 
+    bottom: 35px; /* Distancia desde la parte inferior */
+    left: 20px;  /* Distancia desde la izquierda */
+    
+    font-size: 1.5rem;
+    color: var(--text-dark); /* Color oscuro, puedes usar #333333 */
+    cursor: pointer;
+    z-index: 5; /* Asegura que esté por encima de otros elementos */
+}
+
+.modal-header {
+    /* Mantiene el encabezado fijo en la parte superior del modal si hay scroll */
+    position: sticky; 
+    top: -25px; /* Ajuste para que quede justo al inicio del padding del modal */
+    background-color: white;
+    z-index: 25;
+    padding-top: 25px; /* Compensar el ajuste superior */
+    padding-bottom: 20px; /* Espacio debajo del encabezado */
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* margin-bottom: 20px; <--- Esta línea ya no es necesaria por el padding-bottom */
+}
+
+.close-icon {
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--text-dark);
+}
+
+.transfer-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.transfer-form label {
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.transfer-form input {
+    padding: 10px 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.realizar-pago-btn {
+    background-color: var(--dark-button);
+    color: white;
+    border: none;
+    padding: 12px 0;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    margin-top: 15px;
+    transition: background-color 0.3s;
+}
+
+/* Botón principal de Pagar y Flecha de Retorno (iguales) */
+.pay-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--dark-button);
+    color: white;
+    border: none;
+    padding: 15px 50px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background-color 0.3s;
+    z-index: 5;
+}
+
+.back-arrow {
+    position: absolute;
+    bottom: 35px;
+    left: 20px;
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    cursor: pointer;
+    z-index: 5;
+}
+
+/* Media Queries para un buen diseño responsivo */
+@media (max-width: 850px) {
+    .card-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .product-card {
+        width: 80%;
+    }
+
+    .transfer-modal {
+        width: 90%; 
+        padding: 15px 20px;
+    }
+}
