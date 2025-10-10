@@ -44,7 +44,4 @@ class Cliente:
         conn.close()
         return True
     
-    #Cada clase = Una tabla de la base de datos
-    #Cada método = Una operación (crear, leer, actualizar, eliminar)
-    #Usar @staticmethod para no necesitar crear objetos
-    #Siempre cerrar conexión a la base de datos
+    

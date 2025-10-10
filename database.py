@@ -1,10 +1,13 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt 
 
 db = SQLAlchemy()
+bcrypt = Bcrypt() 
 
 def setup_database(app):
-    """Inicializa el objeto db con la aplicación Flask."""
+    """Inicializa la base de datos y Bcrypt con la aplicación Flask."""
     db.init_app(app)
+    bcrypt.init_app(app) 
 
 
 class Marca(db.Model):
@@ -14,7 +17,6 @@ class Marca(db.Model):
     id_marca = db.Column(db.Integer, primary_key=True)
     nombre_marca = db.Column(db.String(100), unique=True, nullable=False)
     
-    # Relationships
     tenis = db.relationship('Tenis', backref='marca_info', lazy=True)
     playeras = db.relationship('Playera', backref='marca_info', lazy=True)
     
@@ -26,7 +28,7 @@ class Tenis(db.Model):
     __tablename__ = 'tenis'
     __table_args__ = {'schema': 'productos'}
     
-    id_tenis = db.Column(db.Integer, primary_key=True)
+    id_teni = db.Column('id_teni', db.Integer, primary_key=True) 
     nombre_tenis = db.Column(db.String(100), nullable=False)
     marca = db.Column(db.Integer, db.ForeignKey('productos.marcas.id_marca'), nullable=False)
     tipo = db.Column(db.Integer, nullable=False)
@@ -72,6 +74,7 @@ class Gorra(db.Model):
         return f'<Gorra {self.nombre_gorra}>'
 
 
+
 class Inventario(db.Model):
     __tablename__ = 'inventario'
     __table_args__ = {'schema': 'stock'}
@@ -95,15 +98,29 @@ class Cliente(db.Model):
     nombre_cliente = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(150), unique=True, nullable=False)
     telefono = db.Column(db.String(20))
-    direccion = db.Column(db.Text)
     fecha_registro = db.Column(db.DateTime, default=db.func.now())
+    contrasena = db.Column('contrasena', db.String(255), nullable=False)
     
-    # Relationships
     pedidos = db.relationship('Pedido', backref='cliente_info', lazy=True)
     transferencias = db.relationship('Transferencia', backref='cliente_info', lazy=True)
     
     def __repr__(self):
         return f'<Cliente {self.nombre_cliente} - {self.email}>'
+
+
+class Admin(db.Model):
+    __tablename__ = 'admin'
+    __table_args__ = {'schema': 'usuarios'}
+    
+    id_admin = db.Column(db.Integer, primary_key=True)
+    nombre_admin = db.Column(db.String(100), nullable=False)
+    correo = db.Column(db.String(150), unique=True, nullable=False)
+    telefono = db.Column(db.String(20), nullable=False)
+    contrasena = db.Column(db.String(255), nullable=False)
+    
+    def __repr__(self):
+        return f'<Admin {self.nombre_admin}>'
+
 
 
 class Transferencia(db.Model):
@@ -135,7 +152,6 @@ class Pedido(db.Model):
     estado = db.Column(db.String(20), nullable=False)
     total = db.Column(db.Numeric(10, 2), default=0, nullable=False)
     
-    # Relationships
     detalles = db.relationship('DetallePedido', backref='pedido', lazy=True, cascade='all, delete-orphan')
     entregas = db.relationship('Entrega', backref='pedido', lazy=True, cascade='all, delete-orphan')
     

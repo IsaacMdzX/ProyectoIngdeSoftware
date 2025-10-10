@@ -21,7 +21,8 @@ ALTER TABLE usuarios.cliente
 DROP COLUMN Direccion;
 
 ALTER TABLE usuarios.cliente
-ADD COLUMN Contrasena VARCHAR(255) NOT NULL;
+ADD COLUMN Contrasena VARCHAR(255) NOT NULL DEFAULT 'TEMPORAL123';
+
 
 CREATE TABLE usuarios.admin (
     Id_admin SERIAL PRIMARY KEY,
@@ -29,8 +30,7 @@ CREATE TABLE usuarios.admin (
     Correo VARCHAR(150) UNIQUE NOT NULL,
     Telefono VARCHAR (20) NOT NULL,
     Contrasena VARCHAR(255) NOT NULL,
-    Constraint chk_email_valido check(email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$')
-
+    Constraint chk_email_valido CHECK(Correo ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$')
 );
 
 
