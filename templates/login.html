@@ -17,7 +17,7 @@
 
     <main class="login-page">
         <div class="contenedor-formulario">
-            <form action="procesar_login.php" method="POST">
+            <form action="{{ url_for('auth.login') }}" method="POST">
                 
                 <div class="grupo-input">
                     <label for="nombre">Nombre</label>
