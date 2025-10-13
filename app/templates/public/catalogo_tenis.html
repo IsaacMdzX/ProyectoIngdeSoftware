@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head> 
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tr.sneakers</title>
+  <link rel="icon" href="../../static/images/Shoe_Logo.jpg">
+  <link rel="stylesheet" href="../../static/css/estilo.css">
+</head>
+<body>
+    <header>
+    <a class="logo">
+      <img src="../../static/images/trsneakers_logo.png" alt="logocompañia" class="logo-img">
+    </a>
+
+    <div class="header-derecha">
+      <form class="buscador" action="resultados.html" method="get">
+        <input type="search" name="q" placeholder="Buscar...">
+      </form>
+
+      <nav class="menu-links">
+        <a href="Login.html" class="inicio" title="Iniciar Sesión">
+    <img src="../static/images/inicio_sesion.png" alt="Iniciar Sesión" class="icono-nav">
+        </a>
+        <a href="#" class="carrito" title="carrito">
+          <img src="../static/images/carrito_de_compras.png" alt="Login" class="icono-nav">
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <h1>Filtrar y ordenar</h1>
+    
+    <div class="contenido-principal">
+<aside class="panel-filtros">
+    
+    <div class="filtro-grupo">
+        <label>Palabras clave</label>
+        <div class="chips-container">
+            <span class="chip">Deportivo <span class="cerrar-chip">x</span></span>
+            <span class="chip">Pirmo <span class="cerrar-chip">x</span></span>
+            <span class="chip">23.0 <span class="cerrar-chip">x</span></span>
+        </div>
+    </div>
+        
+    <div class="filtro-grupo desplegable">
+        <input type="checkbox" id="filtro-color" class="filtro-checkbox">
+        <label for="filtro-color" class="filtro-header">
+            <span>Color</span>
+            <span class="flecha">▼</span>
+        </label>
+        <div class="filtro-contenido">
+            <div><input type="checkbox" checked> Verde militar.</div>
+            <div><input type="checkbox" checked> Gris</div>
+            <div><input type="checkbox"> Blanco</div>
+        </div>
+    </div>
+        
+    <div class="filtro-grupo desplegable">
+        <input type="checkbox" id="filtro-marca" class="filtro-checkbox">
+        <label for="filtro-marca" class="filtro-header">
+            <span>Marca</span>
+            <span class="flecha">▼</span>
+        </label>
+        <div class="filtro-contenido">
+            <div><input type="checkbox" checked> Pirma</div>
+            <div><input type="checkbox"> Nike</div>
+            <div><input type="checkbox" checked> Charlie</div>
+        </div>
+    </div>
+        
+    <div class="filtro-grupo desplegable">
+        <input type="checkbox" id="filtro-precio" class="filtro-checkbox">
+        <label for="filtro-precio" class="filtro-header">
+            <span>Precio</span>
+            <span class="flecha">▼</span>
+        </label>
+        <div class="filtro-contenido">
+            <div class="rango-precio-valor">$0-$100</div>
+            <input type="range" min="0" max="100" value="30" class="slider"> 
+        </div>
+    </div>
+</aside>
+      
+      <section class="area-productos">
+        <div class="opciones-clasificacion">
+         <a href="Catalogo_Tenis.html" class="chip-categoria activo">Tenis</a>
+         <a href="Catalogo_Playeras.html" class="chip-categoria">Playeras</a>
+         <a href="Catalogo_Gorras.html" class="chip-categoria">Gorras</a>         
+        </div>
+        
+        <div class="opciones-ordenar">
+          <button class="boton-ordenar activo">Productos</button>
+          <button class="boton-ordenar">Precio ascendente</button>
+          <button class="boton-ordenar">Precio descendiente</button>
+          <button class="boton-ordenar">Favoritos</button>
+        </div>
+        
+        <div class="productos-cuadricula">
+          <div class="producto-tarjeta">
+            <div class="producto-imagen"></div>
+            <div class="producto-info">
+              <p class="producto-nombre">Texto</p>
+              <p class="producto-precio">$0</p>
+            </div>
+          </div>
+          <div class="producto-tarjeta">...</div>
+          <div class="producto-tarjeta">...</div>
+          <div class="producto-tarjeta">...</div>
+          <div class="producto-tarjeta">...</div>
+          <div class="producto-tarjeta">...</div>
+        </div>
+        
+        <div class="paginacion">
+          <a href="#">← Anterior</a>
+          <a href="#" class="pagina-actual">1</a>
+          <a href="#">2</a>
+          <a href="#">3</a>
+          <span>...</span>
+          <a href="#">67</a>
+          <a href="#">68</a>
+          <a href="#">Siguiente →</a>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
