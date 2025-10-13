@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head> 
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tr.sneakers</title>
+  <link rel="icon" href="../../static/images/Shoe Logo.jpg">
+ <link rel="stylesheet" href="../../static/css/estilo_login.css">
+</head>
+<body class="login">
+    <header class="header-login">
+        <a class="logo" href="index.html">
+            <img src="../../static/images/trsneakers logo.png" alt="logocompañia" class="logo-img">
+        </a>
+    </header>
+
+    <main class="login-page">
+        <div class="contenedor-formulario">
+            <form action="procesar_login.php" method="POST">
+
+                <div class="grupo-input">
+                    <label for="correo">Correo</label>
+                    <input type="email" id="correo" name="correo"  required>
+                </div>
+
+                <div class="grupo-input">
+                    <label for="contraseña">Contraseña</label>
+                    <input type="password" id="contraseña" name="contraseña" required>
+                </div>            
+
+                <button type="submit" class="boton-principal">
+                    Iniciar sesión
+                </button>
+                <a href="Crear_cuenta.html" class="enlace-secundario">Crear cuenta nueva</a>         
+            </form>
+        </div>
+    </main>
+</body>
+</html>

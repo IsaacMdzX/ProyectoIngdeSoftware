@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tr.sneakers</title>
+  <link rel="icon" href="../static/images/Shoe Logo.jpg">
+  <link rel="stylesheet" href="../static/css/datos_pago.css">
+</head>
+<body>
+
+    <div class="main-container">
+
+        <header class="header">
+            <img src="../static/images/trsneakers logo.png" alt="Logo TK Sneakers" class="logo">
+        </header>
+
+        <div class="card-container">
+            <div class="product-card">
+                <div class="card-content">
+                    <h3>Título</h3>
+                    <p class="price">$0<span class="per-mo">/mo</span></p>
+                    <ul>
+                        <li><i class="fas fa-dot-circle feature-icon"></i> Talla</li>
+                        <li><i class="fas fa-dot-circle feature-icon"></i> Marca</li>
+                    </ul>
+                </div>
+                <button class="select-button">Button</button>
+            </div>
+
+            <div class="product-card">
+                <div class="card-content">
+                    <h3>Título</h3>
+                    <p class="price">$0<span class="per-mo">/mo</span></p>
+                    <ul>
+                        <li><i class="fas fa-dot-circle feature-icon"></i> Talla</li>
+                        <li><i class="fas fa-dot-circle feature-icon"></i> Marca</li>
+                    </ul>
+                </div>
+                <button class="select-button">Button</button>
+            </div>
+        </div>
+
+        <div class="back-arrow">
+            <i class="fas fa-arrow-left"></i>
+        </div>
+        
+        <button class="pay-button">Pagar</button>
+
+        <div class="transfer-modal">
+            <div class="modal-header">
+                <h2>Datos de Transferencia</h2>
+                <i class="fas fa-times close-icon"></i>
+            </div>
+            <form class="transfer-form">
+                <label for="origen">Origen</label>
+                <input type="text" id="origen" placeholder="">
+                
+                <label for="destino">Destino</label>
+                <input type="text" id="destino" placeholder="">
+                
+                <label for="comision">Comisión</label>
+                <input type="text" id="comision" placeholder="">
+                
+                <label for="concepto">Concepto</label>
+                <input type="text" id="concepto" placeholder="">
+                
+                <label for="referencia">Referencia</label>
+                <input type="text" id="referencia" placeholder="">
+                
+                <label for="operacion">Tipo de Operación</label>
+                <input type="text" id="operacion" placeholder="">
+                
+                <label for="folio">Folio</label>
+                <input type="text" id="folio" placeholder="">
+                
+                <label for="fecha">Fecha</label>
+                <input type="text" id="fecha" placeholder="DD/MM/AAAA">
+                
+                <button type="submit" class="realizar-pago-btn"><a href="pago_exitoso.html" class="pay-button-style">Realizar pago</a></button>
+            </form>
+        </div>
+
+    </div>
+
+</body>
+</html>
