@@ -5,89 +5,78 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tr.sneakers</title>
-  <link rel="icon" href="../static/images/Shoe Logo.jpg">
-  <link rel="stylesheet" href="../static/css/inventario_admin.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="icon" href="../../static/images/Shoe Logo.jpg">
+  <link rel="stylesheet" href="../../static/css/inventario_tenis.css">
 </head>
 <body>
-    
-    <div class="header">
-        <div class="nav-links home-icon-container">
-            <a href="#" class="nav-icon"><i class="fas fa-home"></i></a>
-        </div>
-        <div class="logo-container">
-            <img src="../static/images/trsneakers logo.png" alt="Logo" class="logo">
-        </div>
-        <div class="nav-links user-icon-container">
-            <a href="#" class="nav-icon user-icon"><i class="fas fa-user"></i></a>
-        </div>
-    </div>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="../../static/images/trsneakers logo.png" alt="Tr.sneakers Logo" class="logo-img">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>                
+                <li class="active"><a href="#">Inventario</a></li>                
+                <li><a href="#">Usuarios</a></li>
+                <li><a href="#">Configuración</a></li>
+                <li><a href="#">Cerrar Sesión</a></li>
+            </ul>
+        </aside>
 
-    <div class="main-content-wrapper">
-        <div class="inventory-container">
-            <h1 class="page-title">Inventario</h1>
-
-            <div class="controls-bar">
-                <div class="filters">
-                    <button class="filter-btn"><a href="Inventario_gorras.html" class="pay-button-style">Gorras</a></button>
-                    <button class="filter-btn"><a href="Inventario_tenis.html" class="pay-button-style">Tenis</a></button>
-                    <button class="filter-btn active">Playeras<i class="fas fa-check"></i></button>
-                </div>
-                
-                <div class="search-and-add">
-                    <div class="search-box">
-                        <input type="text" placeholder="Buscar">
-                        <i class="fas fa-search search-icon"></i>
-                    </div>
-                    <button class="add-button"><i class="fas fa-plus"></i></button>
+        <main class="main-content">
+            <div class="header">
+                <h1>INVENTARIO</h1>
+                <div class="user-info">
+                    <span>Administrador</span>
                 </div>
             </div>
 
-            <div class="product-list">
-                <div class="product-item">
-                    <div class="product-image-placeholder">
-                        <i class="fas fa-image"></i>
-                    </div>
-                    <div class="product-details">
-                        <h3 class="product-name">Producto</h3>
-                        <p class="product-description">Detalles</p>
-                        <button class="update-button">Actualizar</button>
-                    </div>
-                    <div class="product-actions">
-                        <i class="fas fa-trash-alt delete-icon"></i>
-                    </div>
-                </div>
+            <section class="seccion_inventario">
+                <h2>Inventario</h2>
                 
-                <div class="product-item">
-                    <div class="product-image-placeholder">
-                        <i class="fas fa-image"></i>
-                    </div>
-                    <div class="product-details">
-                        <h3 class="product-name">Producto</h3>
-                        <p class="product-description">Detalles</p>
-                        <button class="update-button">Actualizar</button>
-                    </div>
-                    <div class="product-actions">
-                        <i class="fas fa-trash-alt delete-icon"></i>
-                    </div>
+                <div class="categorias">
+                    <a href="Inventario_tenis.html" class="categoria-btn">Tenis</a>
+                    <a href="Inventario_playeras.html" class="categoria-btn active">Playeras</a>
+                    <a href="Inventario_gorras.html" class="categoria-btn">Gorras</a>
                 </div>
 
-                <div class="product-item">
-                    <div class="product-image-placeholder">
-                        <i class="fas fa-image"></i>
+                <div class="divisor"></div>
+
+                <div class="producto-tarjeta">
+                    <div class="encabezado-p">
+                        <h3 class="pnombre-producti">Producto</h3>
                     </div>
-                    <div class="product-details">
-                        <h3 class="product-name">Producto</h3>
-                        <p class="product-description">Detalles</p>
-                        <button class="update-button">Actualizar</button>
-                    </div>
-                    <div class="product-actions">
-                        <i class="fas fa-trash-alt delete-icon"></i>
-                    </div>
+                    <p class="producto-detalles">Detalles principales.</p>
+                    <button class="actualizar-btn">Actualizar</button>
                 </div>
-            </div>
-        </div>
+
+                <div class="producto-tarjeta">
+                    <div class="encabezado-p">
+                        <h3 class="pnombre-producti">Producto</h3>
+                    </div>
+                    <p class="producto-detalles">Detalles principales.</p>
+                    <button class="actualizar-btn">Actualizar</button>
+                </div>
+
+                <div class="producto-tarjeta">
+                    <div class="encabezado-p">
+                        <h3 class="pnombre-producti">Producto</h3>
+                    </div>
+                    <p class="producto-detalles">Detalles principales.</p>
+                    <button class="actualizar-btn">Actualizar</button>
+                </div>
+
+                <div class="paginacion">
+                    <button class="pagina-btn">‹</button>
+                    <button class="pagina-btn active">1</button>
+                    <button class="pagina-btn">2</button>
+                    <button class="pagina-btn">3</button>
+                    <span class="puntos">...</span>
+                    <button class="pagina-btn">10</button>
+                    <button class="pagina-btn">›</button>
+                    <button class="pagina-btn siguiente-btn">Siguiente ></button>
+                </div>                
+            </section>
+        </main>
     </div>
-
 </body>
-</html>
