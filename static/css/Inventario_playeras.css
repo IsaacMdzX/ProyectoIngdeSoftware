@@ -1,257 +1,291 @@
-/* Estilos Generales y Layout */
-body {
+* {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #555; /* Fondo gris oscuro que rodea el área blanca */
-    min-height: 100vh;
-    display: flex;
-}
-
-.app-container {
-    display: flex;
-    width: 100%;
-}
-
-/* ------------------------------------- */
-/* 1. MENÚ LATERAL IZQUIERDO (SIDEBAR) */
-/* ------------------------------------- */
-.sidebar {
-    width: 60px; /* Ancho fijo y estrecho */
-    background-color: #333; /* Fondo oscuro */
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 20px;
-    position: relative;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.frame-label {
-    font-size: 0.7em;
-    margin-bottom: 20px;
-    color: #ccc;
-    text-orientation: mixed;
-    writing-mode: vertical-lr; /* Orientación del texto como en el ejemplo */
-    transform: rotate(180deg);
-}
-
-.sidebar .nav-icon {
-    color: #bbb;
-    text-decoration: none;
-    font-size: 1.2em;
-    padding: 10px;
-}
-
-.sidebar .nav-icon.active {
-    background-color: #007bff; /* Color azul para el ícono activo */
-    border-radius: 5px;
-    color: white;
-}
-
-
-/* ------------------------------------- */
-/* 2. ÁREA PRINCIPAL DE CONTENIDO */
-/* ------------------------------------- */
-.content-area {
-    flex-grow: 1;
-    background-color: #ccc; /* Fondo gris intermedio de la sección visible */
     padding: 0;
-    display: flex;
-    flex-direction: column;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* A. Encabezado Superior */
-.header {
-    width: 100%;
-    height: 120px;
-    background: linear-gradient(to right, #007bff, #ff4500); /* Degradado azul a naranja */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+body {
+    background-color: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
 }
 
-.logo-container {
-    background-color: linear-gradient(to right, #007bff, #ff4500);
-    border-radius: 0%;
-    padding: 10px;
-    width: 150px;
-    height: 150px;
+.container {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    bottom: -40px; /* Posiciona el logo para que sobresalga */
-    left: 15%;
-    transform: translateX(-85%);
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background: #217390; 
+    color: white;
+    padding: 20px 0;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.2);
 }
 
 .logo {
-    height: 50px;
-  max-width: 100%;
+    padding: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    margin-bottom: 20px;
+    text-align: center;
 }
 
-.user-icon-container {
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
+.logo-img {
+    max-width: 180px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
 }
 
-.user-icon {
-    color: #ff4500; /* Color naranja para el ícono de usuario */
-    font-size: 1.8em;
+.nav-links {
+    list-style: none;
+}
+
+.nav-links li {
+    padding: 15px 20px;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.nav-links li:hover {
+    background-color: rgba(255,255,255,0.1);
+    border-left: 4px solid #ff8000;
+    padding-left: 16px;
+}
+
+.nav-links li.active {
+    background-color: rgba(255,255,255,0.15);
+    border-left: 4px solid #ff8000;
+    padding-left: 16px;
+}
+
+.nav-links a {
+    color: white;
     text-decoration: none;
+    display: block;
+    font-weight: 500;
+    font-size: 15px;
 }
 
-/* B. Contenedor del Inventario (área blanca) */
-.inventory-container {
-    background-color: white;
-    max-width: 90%;
-    width: 90%;
-    margin: 60px auto 30px auto; /* Margen superior para el logo */
+.main-content {
+    flex: 1;
     padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    flex-grow: 1; /* Para que ocupe el espacio vertical restante */
 }
 
-.page-title {
-    font-size: 1.8em;
-    font-weight: bold;
-    margin-bottom: 25px;
-    color: #333;
-}
-
-/* ------------------------------------- */
-/* CONTROLES (FILTROS Y BÚSQUEDA) - REUTILIZADOS */
-/* ------------------------------------- */
-.controls-bar {
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e1e4e8;
 }
 
-.filters {
-    display: flex;
-    gap: 10px;
+.header h1 {
+    color: #2c3e50;
+    font-size: 1.8rem;
+    font-weight: 600;
 }
 
-.filter-btn {
-    padding: 8px 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px; /* Bordes más rectangulares que el admin anterior */
-    background-color: white;
-    cursor: pointer;
-    font-size: 0.9em;
-}
-
-.filter-btn.active {
-    background-color: #333;
-    color: white;
-    border-color: #333;
-}
-
-/* Búsqueda y Añadir */
-.search-and-add {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-}
-
-.search-box {
+.user-info {
     display: flex;
     align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 5px 10px;
-    width: 250px;
+    font-weight: 600;
+    color: #217390;
 }
 
-.search-box input {
-    border: none;
-    outline: none;
-    flex-grow: 1;
-    padding: 5px;
+.seccion_inventario h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    font-weight: 600;
 }
-
-.search-icon {
-    color: #666;
-    margin-left: 10px;
-}
-
-.add-button {
+.categoria-btn {
+    padding: 10px 20px;
     background-color: white;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     border-radius: 5px;
-    width: 40px;
-    height: 40px;
-    font-size: 1.2em;
     cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    font-size: 14px;
+    text-decoration: none;
     color: #333;
+    display: inline-block;
+    text-align: center;
+}
+.categoria-btn:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-2px);
+    color: #333;
+    text-decoration: none;
+}
+.categoria-btn.active {
+    background: #217390;
+    color: white;
+    border-color: transparent;
+    text-decoration: none;
+}
+.divisor {
+    height: 1px;
+    background: #e1e4e8;
+    margin: 20px 0;
+    opacity: 0.6;
 }
 
-/* ------------------------------------- */
-/* LISTA DE PRODUCTOS - REUTILIZADOS */
-/* ------------------------------------- */
-.product-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.product-item {
-    display: flex;
-    align-items: center;
-    border: 1px solid #eee;
-    padding: 15px;
+.producto-tarjeta {
+    background-color: white;
     border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+    border-left: 4px solid transparent;
 }
 
-.product-image-placeholder {
-    width: 80px;
-    height: 80px;
-    background-color: #eee;
+.producto-tarjeta:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    border-left: 4px solid #217390;
+}
+
+.encabezado-p {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.nombre-producto {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.producto-detalles {
+    color: #7f8c8d;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.actualizar-btn {
+    background: #217390;
+    color: white;
+    border: none;
+    padding: 10px 20px;
     border-radius: 5px;
-    margin-right: 20px;
-    /* Simula la imagen con un fondo gris, como en tu captura */
-}
-
-.product-details {
-    flex-grow: 1;
-}
-
-.product-name {
-    margin: 0;
-    font-size: 1.2em;
-    font-weight: bold;
-}
-
-.product-description {
-    margin: 5px 0 10px 0;
-    font-size: 0.9em;
-    color: #666;
-}
-
-.update-button {
-    padding: 5px 12px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: white;
     cursor: pointer;
-    font-size: 0.8em;
+    font-weight: 500;
+    transition: all 0.3s ease;
 }
 
-.product-actions {
-    margin-left: auto;
+.actualizar-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(33, 115, 144, 0.3);
+    background: #1f99c6;
 }
 
-.delete-icon {
-    color: #888;
-    font-size: 1.2em;
+.paginacion {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    margin-top: 30px;
+    padding: 20px 0;
+}
+
+.pagina-info {
+    font-size: 14px;
+    color: #7f8c8d;
+    margin-right: 15px;
+}
+
+.pagina-btn {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 4px;
     cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.pagina-btn:hover {
+    background: #f5f5f5;
+    border-color: #217390;
+}
+
+.pagina-btn.active {
+    background: #217390;
+    color: white;
+    border-color: #217390;
+}
+
+.puntos {
+    padding: 8px 5px;
+    color: #7f8c8d;
+}
+
+.siguiente-btn {
+    background: #217390;
+    color: white;
+    border-color: #217390;
+    padding: 8px 15px;
+}
+
+.siguiente-btn:hover {
+    background: #1f99c6;
+    border-color: #1f99c6;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        height: auto;
+    }
+    
+    .categorias {
+        justify-content: center;
+    }
+    
+    .header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .nav-links li {
+        flex: 1;
+        min-width: 120px;
+        text-align: center;
+        border-bottom: none;
+        border-right: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .nav-links li:last-child {
+        border-right: none;
+    }
+    
+    .paginacion {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .pagina-info {
+        margin-right: 0;
+        margin-bottom: 10px;
+        width: 100%;
+        text-align: center;
+    }
 }
