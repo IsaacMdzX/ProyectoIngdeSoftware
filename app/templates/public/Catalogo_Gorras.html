@@ -15,16 +15,16 @@
     </a>
 
     <div class="header-derecha">
-      <form class="buscador" action="resultados.html" method="get">
+  <form class="buscador" action="{{ url_for('main.resultados') }}" method="get">
         <input type="search" name="q" placeholder="Buscar...">
       </form>
 
       <nav class="menu-links">
-        <a href="Login.html" class="inicio" title="Iniciar Sesión">
-    <img src="../static/images/inicio_sesion.png" alt="Iniciar Sesión" class="icono-nav">
+        <a href="{{ url_for('auth.login') }}" class="inicio" title="Iniciar Sesión">
+    <img src="{{ url_for('static', filename='images/inicio_sesion.png') }}" alt="Iniciar Sesión" class="icono-nav">
         </a>
-        <a href="#" class="carrito" title="carrito">
-          <img src="../static/images/carrito_de_compras.png" alt="Login" class="icono-nav">
+        <a href="{{ url_for('main.carrito') }}" class="carrito" title="carrito">
+          <img src="{{ url_for('static', filename='images/carrito_de_compras.png') }}" alt="Login" class="icono-nav">
         </a>
       </nav>
     </div>
@@ -85,11 +85,11 @@
 </aside>
       
       <section class="area-productos">
-        <div class="opciones-clasificacion">
-         <a href="Catalogo_Tenis.html" class="chip-categoria">Tenis</a>
-         <a href="Catalogo_Playeras.html" class="chip-categoria">Playeras</a>
-         <a href="Catalogo_Gorras.html" class="chip-categoria activo">Gorras</a>         
-        </div>
+  <div class="opciones-clasificacion">
+   <a href="{{ url_for('main.tenis') }}" class="chip-categoria">Tenis</a>
+   <a href="{{ url_for('main.playeras') }}" class="chip-categoria">Playeras</a>
+   <a href="{{ url_for('main.gorras') }}" class="chip-categoria activo">Gorras</a>         
+  </div>
         
         <div class="opciones-ordenar">
           <button class="boton-ordenar activo">Productos</button>

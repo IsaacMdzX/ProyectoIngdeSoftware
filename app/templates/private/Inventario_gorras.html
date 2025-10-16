@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tr.sneakersv1</title>
   <link rel="icon" href="../static/images/Shoe Logo.jpg">
-  <link rel="stylesheet" href="../static/css/inventario_gorras.css">
+  <link rel="stylesheet" href="../static/css/Inventario_gorras.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -31,11 +31,12 @@
                 <div class="filters">
                     <button class="filter-btn active">Gorras<i class="fas fa-check"></i></button>
                     <button class="filter-btn">
-                        <a href="Inventario_tenis.html" class="pay-button-style">Tenis</a>
+                        <a href="{{ url_for('admin.admin_dashboard') }}"> Tenis</a>
                     </button>
                     <button class="filter-btn">
-                        <a href="Inventario_playeras.html" class="pay-button-style">Playeras</a>
+                        <a href="{{ url_for('admin.gestion_playeras') }}"> Playeras</a>
                     </button>
+                    
                 </div>
                 
                 <div class="search-and-add">

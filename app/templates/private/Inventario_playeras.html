@@ -29,9 +29,13 @@
 
             <div class="controls-bar">
                 <div class="filters">
-                    <button class="filter-btn"><a href="Inventario_gorras.html" class="pay-button-style">Gorras</a></button>
-                    <button class="filter-btn"><a href="Inventario_tenis.html" class="pay-button-style">Tenis</a></button>
+                    <button class="filter-btn"><a href="{{ url_for('admin.gestion_gorras') }}"> Gorras</a></button>
+                    <button class="filter-btn"><a href="{{ url_for('admin.admin_dashboard') }}"> Tenis</a></button>
                     <button class="filter-btn active">Playeras<i class="fas fa-check"></i></button>
+                    <button><a href="{{ url_for('main.tenis') }}" style="background: #2f528b; color: white; padding: 5px 10px; border-radius: 4px; margin-left: 10px;">
+         Ver Tienda
+    </a></button>
+                     <button><a href="{{ url_for('admin.admin_logout') }}"> Cerrar Sesión</a></button>
                 </div>
                 
                 <div class="search-and-add">

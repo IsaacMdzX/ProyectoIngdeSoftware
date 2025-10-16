@@ -29,15 +29,19 @@
 
             <div class="controls-bar">
                 <div class="filters">
-                    <button class="filter-btn"><a href="Inventario_gorras.html" class="pay-button-style">Gorras</a></button>
+                    <button class="filter-btn"><a href="{{ url_for('admin.gestion_gorras') }}">Gorras</a></a></button>
                     <button class="filter-btn active">Tenis <i class="fas fa-check"></i> 
                     </button>
-                    <button class="filter-btn"><a href="Inventario_playeras.html" class="pay-button-style">Playeras</a></button>
+                    <button class="filter-btn"><a href="{{ url_for('admin.gestion_playeras') }}">Playeras</a></a></button>
+                    <button><a href="{{ url_for('main.tenis') }}" style="background: #2f528b; color: white; padding: 5px 10px; border-radius: 4px; margin-left: 10px;">
+        Ver Tienda
+    </a></button>
+                    <button><a href="{{ url_for('admin.admin_logout') }}">Cerrar Sesión</a></button>
                 </div>
                 
                 <div class="search-and-add">
                     <div class="search-box">
-                        <input type="text" placeholder="Buscar">
+                        <input type="text" placeholder="Buscar">s
                         <i class="fas fa-search search-icon"></i>
                     </div>
                     <button class="add-button"><i class="fas fa-plus"></i></button>

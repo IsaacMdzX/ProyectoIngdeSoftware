@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Tienda Sneakers</title>
+    <!-- Vincular el archivo CSS separado -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_login.css') }}">
+</head>
+<body class="login admin-login">
+    <header class="header-login">
+        <a class="logo" href="{{ url_for('admin.admin_login') }}">
+            🛠 ADMIN PANEL - TIENDA SNEAKERS
+        </a>
+    </header>
+    
+    <main class="login-page">
+        <div class="contenedor-formulario">
+            <!-- Advertencia de acceso restringido -->
+            <div class="admin-warning">
+                ⚠️ ACCESO RESTRINGIDO - Solo personal autorizado
+            </div>
+            
+            <!-- Mensajes flash -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, msg in messages %}
+                            <div class="flash {{ category }}">{{ msg }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <!-- Formulario de login admin -->
+            <form action="{{ url_for('admin.admin_login_post') }}" method="POST">
+                <div class="group-input">
+                    <label for="username">Usuario Admin</label>
+                    <input type="text" id="username" name="username" required 
+                           placeholder="Ingresa tu usuario de administrador"/>
+                </div>
+                
+                <div class="group-input">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" required 
+                           placeholder="Ingresa tu contraseña"/>
+                </div>
+                
+                <button type="submit" class="boton-principal">
+                    🔐 Acceder al Panel Admin
+                </button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
