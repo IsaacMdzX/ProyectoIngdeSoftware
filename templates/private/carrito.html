@@ -5,14 +5,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tr.sneakers</title>
-  <link rel="icon" href="../static/images/Shoe Logo.jpg">
-  <link rel="stylesheet" href="../static/css/estilo_carrito.css">
+  <link rel="icon" href="../../static/images/Shoe Logo.jpg">
+  <link rel="stylesheet" href="../../static/css/estilo_carrito.css"> 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="header">
         <div class="logo-container">
-            <img src="../static/images/trsneakers logo.png" alt="Logo de Zapatilla" class="logo">
+            <img src="../../static/images/trsneakers logo.png" alt="Logo de Zapatilla" class="logo">
         </div>
     </div>
 
@@ -48,15 +48,48 @@
                 <button class="card-button">Button</button>
             </div>
         </div>
-
-        <div class="bottom-actions">
-            <button class="pay-button"><a href="metodo_pago.html" class="pay-button">Pagar</a></button>
-        </div>
+        <button id="openModal" class="pay-button">Pagar</button>
+        <script src="../../static/js/modal_pago.js"></script>
     </div>
-
     <div class="footer-navigation">
         <a href="#" class="back-button"><i class="fas fa-arrow-left"></i></a>
     </div>
+<!-- Modal de Pago -->
+
+<div id="modalPago" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Datos de Transferencia</h2>
+
+    <form id="formPago">
+      <label>Origen</label>
+      <input type="text" placeholder="Cuenta origen" required>
+
+      <label>Destino</label>
+      <input type="text" placeholder="Cuenta destino" required>
+
+      <label>Comisión</label>
+      <input type="number" placeholder="$" required>
+
+      <label>Concepto</label>
+      <input type="text" placeholder="Motivo del pago">
+
+      <label>Referencia</label>
+      <input type="text" placeholder="Referencia o folio">
+
+      <label>Tipo de Operación</label>
+      <input type="text" placeholder="Transferencia / Depósito">
+
+      <label>Folio</label>
+      <input type="text" placeholder="Número de folio">
+
+      <label>Fecha</label>
+      <input type="date" required>
+
+      <button type="submit" class="submit-button">Realizar pago</button>
+    </form>
+  </div>
+</div>
 
 </body>
 </html>
