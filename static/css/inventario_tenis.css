@@ -4,18 +4,15 @@
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
 body {
     background-color: #f5f7fa;
     color: #333;
     line-height: 1.6;
 }
-
 .container {
     display: flex;
     min-height: 100vh;
 }
-
 .sidebar {
     width: 250px;
     background: #217390; 
@@ -23,43 +20,36 @@ body {
     padding: 20px 0;
     box-shadow: 2px 0 10px rgba(0,0,0,0.2);
 }
-
 .logo {
     padding: 20px;
     border-bottom: 1px solid rgba(255,255,255,0.3);
     margin-bottom: 20px;
     text-align: center;
 }
-
 .logo-img {
     max-width: 180px;
     height: auto;
     display: block;
     margin: 0 auto;
 }
-
 .nav-links {
     list-style: none;
 }
-
 .nav-links li {
     padding: 15px 20px;
     transition: all 0.3s ease;
     border-bottom: 1px solid rgba(255,255,255,0.1);
 }
-
 .nav-links li:hover {
     background-color: rgba(255,255,255,0.1);
     border-left: 4px solid #ff8000;
     padding-left: 16px;
 }
-
 .nav-links li.active {
     background-color: rgba(255,255,255,0.15);
     border-left: 4px solid #ff8000;
     padding-left: 16px;
 }
-
 .nav-links a {
     color: white;
     text-decoration: none;
@@ -67,12 +57,11 @@ body {
     font-weight: 500;
     font-size: 15px;
 }
-
 .main-content {
     flex: 1;
     padding: 30px;
+    margin-left: 30px;
 }
-
 .header {
     display: flex;
     justify-content: space-between;
@@ -81,47 +70,74 @@ body {
     padding-bottom: 15px;
     border-bottom: 1px solid #e1e4e8;
 }
-
 .header h1 {
     color: #2c3e50;
     font-size: 1.8rem;
     font-weight: 600;
 }
-
 .user-info {
     display: flex;
     align-items: center;
     font-weight: 600;
     color: #217390;
 }
-
 .seccion_inventario h2 {
     color: #2c3e50;
     margin-bottom: 20px;
     font-size: 1.5rem;
     font-weight: 600;
 }
-
+.fila-categorias-agregar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 20px;
+}
 .categorias {
     display: flex;
     gap: 15px;
-    margin-bottom: 30px;
     flex-wrap: wrap;
 }
-
+.contenedor-boton-agregar {
+    display: flex;
+    align-items: center;
+}
+.boton-agregar {
+    background: #27ae60;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+.boton-agregar:hover {
+    background: #219653;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+    text-decoration: none;
+    color: white;
+}
 .categoria-btn {
-    padding: 10px 20px;
+    padding: 12px 20px;
     background-color: white;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 14px;
     text-decoration: none;
     color: #333;
     display: inline-block;
     text-align: center;
+    white-space: nowrap;
 }
 .categoria-btn:hover {
     background-color: #f0f0f0;
@@ -133,7 +149,7 @@ body {
     background: #217390;
     color: white;
     border-color: transparent;
-    text-decoration: none; /* Sin subrayado cuando está activo */
+    text-decoration: none;
 }
 .divisor {
     height: 1px;
@@ -141,7 +157,6 @@ body {
     margin: 20px 0;
     opacity: 0.6;
 }
-
 .producto-tarjeta {
     background-color: white;
     border-radius: 8px;
@@ -151,32 +166,27 @@ body {
     transition: transform 0.3s ease;
     border-left: 4px solid transparent;
 }
-
 .producto-tarjeta:hover {
     transform: translateY(-5px);
     box-shadow: 0 5px 20px rgba(0,0,0,0.1);
     border-left: 4px solid #217390;
 }
-
 .encabezado-p {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
 }
-
 .nombre-producto {
     font-size: 1.3rem;
     font-weight: 600;
     color: #2c3e50;
 }
-
 .producto-detalles {
     color: #7f8c8d;
     margin-bottom: 15px;
     line-height: 1.5;
 }
-
 .actualizar-btn {
     background: #217390;
     color: white;
@@ -187,13 +197,11 @@ body {
     font-weight: 500;
     transition: all 0.3s ease;
 }
-
 .actualizar-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(33, 115, 144, 0.3);
     background: #1f99c6;
 }
-
 .paginacion {
     display: flex;
     justify-content: flex-end;
@@ -202,13 +210,6 @@ body {
     margin-top: 30px;
     padding: 20px 0;
 }
-
-.pagina-info {
-    font-size: 14px;
-    color: #7f8c8d;
-    margin-right: 15px;
-}
-
 .pagina-btn {
     padding: 8px 12px;
     border: 1px solid #ddd;
@@ -218,30 +219,25 @@ body {
     transition: all 0.3s ease;
     font-size: 14px;
 }
-
 .pagina-btn:hover {
     background: #f5f5f5;
     border-color: #217390;
 }
-
 .pagina-btn.active {
     background: #217390;
     color: white;
     border-color: #217390;
 }
-
 .puntos {
     padding: 8px 5px;
     color: #7f8c8d;
 }
-
 .siguiente-btn {
     background: #217390;
     color: white;
     border-color: #217390;
     padding: 8px 15px;
 }
-
 .siguiente-btn:hover {
     background: #1f99c6;
     border-color: #1f99c6;
@@ -251,28 +247,39 @@ body {
     .container {
         flex-direction: column;
     }
-    
     .sidebar {
         width: 100%;
         height: auto;
     }
-    
+    .main-content {
+        margin-left: 0;
+        padding: 20px;
+    }
+    .fila-categorias-agregar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
     .categorias {
         justify-content: center;
     }
-    
+    .contenedor-boton-agregar {
+        justify-content: center;
+    }
+    .boton-agregar {
+        width: 100%;
+        max-width: 300px;
+    }
     .header {
         flex-direction: column;
         gap: 15px;
         text-align: center;
     }
-    
     .nav-links {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
     }
-    
     .nav-links li {
         flex: 1;
         min-width: 120px;
@@ -280,20 +287,11 @@ body {
         border-bottom: none;
         border-right: 1px solid rgba(255,255,255,0.1);
     }
-    
     .nav-links li:last-child {
         border-right: none;
     }
-    
     .paginacion {
         justify-content: center;
         flex-wrap: wrap;
-    }
-    
-    .pagina-info {
-        margin-right: 0;
-        margin-bottom: 10px;
-        width: 100%;
-        text-align: center;
     }
 }
