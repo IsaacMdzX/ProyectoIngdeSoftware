@@ -4,11 +4,6 @@ body {
   background-color: #f5f5f5;
 }
 
-a {
-  text-decoration: none;
-  color: black;
-}
-
 /* ======== ENCABEZADO ======== */
 header {
   display: flex;
@@ -20,15 +15,30 @@ header {
   min-height: 80px;
   position: relative;
 }
+/* Contenedor del logo */
+.logo-container {
+   background:  rgba(255, 255, 255, 0.7);  /* Fondo blanco para el borde */
+   border-radius: 50%; /* Lo hace circular */
+   padding: 8px;
+   width: 120px;
+   height: 120px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   position: absolute;
+   top: 50%;
+   transform: translateY(1%); /* Lo baja para que salga un poco del header */
+   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+/* Imagen del logo */
 .logo {
-  display: flex;
-  align-items: center;
-  margin-bottom: 4px;
+   width: 100px;
+   height: 100px;
+   object-fit: contain;
+   border-radius: 50%;
 }
-.logo-img {
-  height: 50px;
-  max-width: 100%;
-}
+
+
 .header-derecha {
   display: flex;
   flex-direction: column;
@@ -392,6 +402,15 @@ h1 {
     align-items: center;
     width: 100%;
   }
+  .logo-container {
+    width: 80px;
+    height: 80px;
+    bottom: -40px;
+}
+.logo {
+    max-width: 60px;
+    max-height: 60px;
+}
   .buscador {
     justify-content: center;
     width: 100%;
@@ -419,7 +438,7 @@ h1 {
     align-items: center;
   }
   .menu-links {
-    position: static; /
-    justify-content: center;
+    position: static; 
+    justify-content:center; 
   }
 }
