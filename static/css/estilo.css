@@ -3,8 +3,6 @@ body {
   margin: 0;
   background-color: #f5f5f5;
 }
-
-/* ======== ENCABEZADO ======== */
 header {
   display: flex;
   align-items: center;
@@ -17,27 +15,23 @@ header {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
-/* Contenedor del logo */
 .logo-container {
-   background:  rgba(255, 255, 255, 0.7);  /* Fondo blanco para el borde */
-   border-radius: 40%; /* Lo hace circular */
-   padding: 8px;
-   width: 100px;
-   height: 100px;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 40%;
+  padding: 8px;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
-/* Imagen del logo */
 .logo {
-   width: 109px;
-   height: 109px;
-   object-fit: contain;
-   border-radius: 50%;
+  width: 109px;
+  height: 109px;
+  object-fit: contain;
+  border-radius: 50%;
 }
-
-
 .header-derecha {
   display: flex;
   flex-direction: column;
@@ -45,8 +39,6 @@ header {
   gap: 10px;
   position: relative;
 }
-
-/* BUSCADOR */
 .buscador {
   display: flex;
   justify-content: flex-end;
@@ -58,27 +50,25 @@ header {
   border: none;
   border-radius: 6px;
   font-size: 16px;
-  width: 25vw; /* Ajuste porcentual para responsividad */
+  width: 25vw;
   min-width: 250px;
   max-width: 350px;
-  transition: width 0.3s ease; /* Transición suave */
+  transition: width 0.3s ease;
   right: 0;
 }
 .buscador input[type="search"]:focus {
   outline: none;
   border: 2px solid white;
-  width: 28vw; /* Ajuste porcentual para responsividad */
+  width: 28vw;
   max-width: 400px;
   right: 0;
 }
-
-/* ICONOS DE NAVEGACIÓN */
 .menu-links {
   display: flex;
   gap: 10px;
   position: absolute;
-  top: 100%; /* Los coloca justo debajo del buscador */
-  right: 0;  /* Alinea el carrito con el final del buscador */
+  top: 100%;
+  right: 0;
   margin-top: 5px;
 }
 .icono-nav {
@@ -89,8 +79,6 @@ header {
 .icono-nav:hover {
   transform: scale(1.1);
 }
-
-/* ============= ESTRUCTURA MAIN =========== */
 main {
   padding: 20px;
   max-width: 1200px;
@@ -104,10 +92,8 @@ h1 {
 .contenido-principal {
   display: flex;
   gap: 30px;
-  flex-wrap: wrap; /* Permite que los elementos bajen en pantallas pequeñas */
+  flex-wrap: wrap;
 }
-
-/* =========== PANEL DE FILTROS ============ */
 .panel-filtros {
   flex: 0 0 250px;
   background-color: #ffffff;
@@ -124,118 +110,101 @@ h1 {
   border-bottom: none;
 }
 .filtro-grupo.desplegable:last-child {
-    border-bottom: none;
-}/* A CHECAR */
+  border-bottom: none;
+}
 .filtro-grupo label {
   font-weight: bold;
   display: block;
   margin-bottom: 10px;
 }
-
-/* =========== FILTROS DESPLEGABLES=========== */
 .filtro-grupo.desplegable {
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #eee;
-    position: relative;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  position: relative;
 }
-
-/* Oculta el checkbox pero mantiene la funcionalidad */
 .filtro-checkbox {
-    display: none;
+  display: none;
 }
 .filtro-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 0;
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.2s;
-    margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s;
+  margin: 0;
 }
-
 .filtro-header:hover {
-    background-color: #f9f9f9;
-    margin: 0 -15px;
-    padding: 15px;
+  background-color: #f9f9f9;
+  margin: 0 -15px;
+  padding: 15px;
 }
-
 .filtro-header span:first-child {
-    font-weight: 600;
-    font-size: 1em;
-    color: #333;
+  font-weight: 600;
+  font-size: 1em;
+  color: #333;
 }
-
 .flecha {
-    font-size: 0.8em;
-    color: #666;
-    transition: transform 0.3s ease;
+  font-size: 0.8em;
+  color: #666;
+  transition: transform 0.3s ease;
 }
-
 .filtro-contenido {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    padding-left: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding-left: 0;
 }
-
-/* Cuando el checkbox está checked (filtro abierto) */
 .filtro-checkbox:checked ~ .filtro-contenido {
-    max-height: 500px;
-    padding: 15px 0;
-    border-top: 1px solid #f0f0f0;
+  max-height: 500px;
+  padding: 15px 0;
+  border-top: 1px solid #f0f0f0;
 }
-
 .filtro-checkbox:checked ~ .filtro-header .flecha {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
-
-/* Estilos para los elementos dentro del contenido desplegable */
-
 .filtro-contenido input[type="checkbox"] {
-    width: 14px;
-    height: 14px;
-    position: relative;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    border: 2px solid #666;
-    border-radius: 3px;
-    background-color: white;
-    transition: all 0.2s ease;
+  width: 14px;
+  height: 14px;
+  position: relative;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 2px solid #666;
+  border-radius: 3px;
+  background-color: white;
+  transition: all 0.2s ease;
 }
 .filtro-contenido input[type="checkbox"]:checked {
-    background-color: #087efc; 
-    border-color: #087efc; 
+  background-color: #087efc;
+  border-color: #087efc;
 }
 .filtro-contenido input[type="checkbox"]:checked::before {
-    content: "✓";
-    position: absolute;
-    color: white;    
-    font-size: 12px;
-    font-weight: bold;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  content: "✓";
+  position: absolute;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
-/* Rango de precio dentro del desplegable */
 .filtro-contenido .rango-precio-valor {
-    float: none;
-    font-size: 0.9em;
-    margin-bottom: 10px;
-    color: #666;
+  float: none;
+  font-size: 0.9em;
+  margin-bottom: 10px;
+  color: #666;
 }
 .filtro-contenido .slider {
-    margin-top: 5px;
+  margin-top: 5px;
 }
-/* Efecto visual cuando el filtro está abierto */
 .filtro-checkbox:checked ~ .filtro-header {
-    background-color: #f5f5f5;
-    margin: 0 -15px;
-    padding: 15px;
+  background-color: #f5f5f5;
+  margin: 0 -15px;
+  padding: 15px;
 }
-/* Chips de palabras clave */
 .chips-container {
   display: flex;
   flex-wrap: wrap;
@@ -243,38 +212,32 @@ h1 {
   margin-top: 5px;
 }
 .chip {
-    background-color: #333;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 15px;
-    font-size: 0.9em;
-    display: flex;
-    align-items: center;
+  background-color: #333;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.9em;
+  display: flex;
+  align-items: center;
 }
 .cerrar-chip {
-    margin-left: 5px;
-    cursor: pointer;
-    font-weight: bold;
+  margin-left: 5px;
+  cursor: pointer;
+  font-weight: bold;
 }
-
-/* Rangos de precio */
 .rango-precio-valor {
-    float: right;
-    font-size: 0.9em;
-    margin-bottom: 5px;
+  float: right;
+  font-size: 0.9em;
+  margin-bottom: 5px;
 }
 .slider {
-    width: 100%;
-    margin-top: 5px;
+  width: 100%;
+  margin-top: 5px;
 }
-
-/* Estilo para los checkboxes */
 .filtro-grupo > div {
   font-size: 0.95em;
   margin-bottom: 5px;
 }
-
-/* =========== ÁREA DE PRODUCTOS =========== */
 .area-productos {
   flex-grow: 1;
 }
@@ -301,8 +264,6 @@ h1 {
   color: white;
   border-color: #333;
 }
-
-/* Opciones de Ordenar*/
 .opciones-ordenar {
   display: flex;
   gap: 10px;
@@ -326,8 +287,6 @@ h1 {
   color: white;
   border-color: #333;
 }
-
-/* Cuadrícula y Tarjetas */
 .productos-cuadricula {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -345,7 +304,7 @@ h1 {
 }
 .producto-imagen {
   height: 180px;
-  background-color: #e0e0e0; /* Fondo color gris claro */
+  background-color: #e0e0e0;
   margin-bottom: 10px;
   border-radius: 3px;
   display: flex;
@@ -366,8 +325,6 @@ h1 {
   font-weight: bold;
   color: #FC4B08;
 }
-
-/* ============= PAGINACIÓN ================ */
 .paginacion {
   display: flex;
   justify-content: center;
@@ -390,14 +347,12 @@ h1 {
   background-color: #333;
   color: white;
   border-color: #333;
-  pointer-events: none; 
+  pointer-events: none;
 }
-
-/* ============= MEDIA ================ */
 @media (max-width: 768px) {
   header {
     flex-direction: column;
-    align-items: center; 
+    align-items: center;
   }
   .header-derecha {
     align-items: center;
@@ -407,31 +362,30 @@ h1 {
     width: 80px;
     height: 80px;
     bottom: -40px;
-}
-.logo {
+  }
+  .logo {
     max-width: 60px;
     max-height: 60px;
-}
+  }
   .buscador {
     justify-content: center;
     width: 100%;
   }
   .buscador input[type="search"] {
-    width: 80%; /* Aumenta la proporción en móviles */
+    width: 80%;
   }
   .productos-cuadricula {
-    grid-template-columns: repeat(1, 1fr); /* Una columna para móviles */
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 @media (max-width: 1024px) {
   .productos-cuadricula {
-    grid-template-columns: repeat(2, 1fr); /* Dos columnas para tabletas */
+    grid-template-columns: repeat(2, 1fr);
   }
 }
-
 @media (min-width: 1025px) {
   .productos-cuadricula {
-    grid-template-columns: repeat(3, 1fr); /* Tres columnas para escritorios */
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 @media (max-width: 768px) {
@@ -439,7 +393,7 @@ h1 {
     align-items: center;
   }
   .menu-links {
-    position: static; 
-    justify-content:center; 
+    position: static;
+    justify-content:center;
   }
 }
