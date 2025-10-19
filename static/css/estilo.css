@@ -12,28 +12,27 @@ header {
   flex-wrap: wrap;
   padding: 10px 30px;
   background: linear-gradient(to right, #00BBFF 0%, #7E8383 50%, #FC4B08 100%);
-  min-height: 80px;
+  min-height: 100px;
   position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 /* Contenedor del logo */
 .logo-container {
    background:  rgba(255, 255, 255, 0.7);  /* Fondo blanco para el borde */
-   border-radius: 50%; /* Lo hace circular */
+   border-radius: 40%; /* Lo hace circular */
    padding: 8px;
-   width: 120px;
-   height: 120px;
+   width: 100px;
+   height: 100px;
    display: flex;
    align-items: center;
    justify-content: center;
-   position: absolute;
-   top: 50%;
-   transform: translateY(1%); /* Lo baja para que salga un poco del header */
    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 /* Imagen del logo */
 .logo {
-   width: 100px;
-   height: 100px;
+   width: 109px;
+   height: 109px;
    object-fit: contain;
    border-radius: 50%;
 }
@@ -63,12 +62,14 @@ header {
   min-width: 250px;
   max-width: 350px;
   transition: width 0.3s ease; /* Transición suave */
+  right: 0;
 }
 .buscador input[type="search"]:focus {
   outline: none;
   border: 2px solid white;
   width: 28vw; /* Ajuste porcentual para responsividad */
   max-width: 400px;
+  right: 0;
 }
 
 /* ICONOS DE NAVEGACIÓN */
