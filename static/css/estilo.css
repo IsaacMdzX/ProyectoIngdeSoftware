@@ -254,6 +254,8 @@ h1 {
   font-size: 0.9em;
   background-color: #fff;
   transition: all 0.2s;
+  color: #333;
+  text-decoration: none;
 }
 .chip-categoria:hover {
   border-color: #FC4B08;
