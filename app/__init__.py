@@ -3,6 +3,7 @@ from config import Config
 from database import setup_database 
 from .auth import auth_bp
 from .main import main_bp
+from .private import private_bp
 from flask import Flask, redirect, url_for
 import os
 
@@ -20,7 +21,8 @@ def create_app(config_class=Config):
     
     
     app.register_blueprint(auth_bp)
-    app.register_blueprint(main_bp) 
+    app.register_blueprint(main_bp)
+    app.register_blueprint(private_bp) 
     
     @app.route('/')
     def index():
