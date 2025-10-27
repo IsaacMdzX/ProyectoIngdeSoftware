@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tr.sneakers</title>
+    <link rel="icon" href="../../static/images/Shoe Logo.jpg">
+    <link rel="stylesheet" href="../../static/css/estilo_gestionclien.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar"> 
+            <div class="logo">
+                <img src="../../static/images/trsneakers logo.png" alt="Tr.sneakers Logo" class="logo-img">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>                
+                <li><a href="Inventario_tenis.html" class="categoria-btn">Inventario</a></li>               
+                <li class="active"><a href="gestion_clientes.html">Usuarios</a></li>
+                <li><a href="#">Configuración</a></li>
+                <li><a href="#">Cerrar Sesión</a></li>
+            </ul>
+        </aside>
+
+        <main class="contenido-principal-completo">
+            <div class="header">
+            <div class="header"></div>                
+                <h1>USUARIOS</h1>
+                <div class="info-usuario">
+                    <span>Administrador</span>
+                </div>
+            </div>
+
+            <div class="contenedor-tabla-usuarios">
+                <div class="barra-herramientas">
+                    <div class="busqueda">
+                        <input type="text" class="campo-busqueda" placeholder="Buscar usuario...">
+                        <button class="boton-buscar">Buscar</button>
+                    </div>
+                    <button class="boton-agregar">+ Agregar Usuario</button>
+                </div>
+
+                <div class="tabla-contenedor">
+                    <table class="tabla-usuarios">
+                        <thead>
+                            <tr>
+                                <th class="columna-checkbox">
+                                    <input type="checkbox" class="checkbox-todos">
+                                </th>
+                                <th class="columna-id">ID</th>
+                                <th class="columna-nombre">NOMBRE COMPLETO</th>
+                                <th class="columna-usuario">USUARIO</th>
+                                <th class="columna-email">EMAIL</th>
+                                <th class="columna-contraseña">CONTRASEÑA</th>
+                                <th class="columna-rol">ROL</th>
+                                <th class="columna-acciones"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="fila-usuario">
+    <td class="columna-checkbox">
+        <input type="checkbox" class="checkbox-usuario">
+    </td>
+    <td class="columna-id">001</td>
+    <td class="columna-nombre">
+        <input type="text" class="campo-editable" placeholder="Nombre completo" value="">
+    </td>
+    <td class="columna-usuario">
+        <input type="text" class="campo-editable" placeholder="Usuario" value="">
+    </td>
+    <td class="columna-email">
+        <input type="email" class="campo-editable" placeholder="Email" value="">
+    </td>
+    <td class="columna-contraseña">
+        <input type="password" class="campo-editable" placeholder="Contraseña" value="">
+    </td>
+    <td class="columna-rol">
+        <select class="selector-rol">
+            <option value="admin">Administrador</option>
+            <option value="vendedor">Vendedor</option>
+            <option value="cliente">Cliente</option>
+        </select>
+    </td>
+    <td class="columna-acciones">
+        <button class="boton-editar">Editar</button>
+        <button class="boton-eliminar">Eliminar</button>
+        <button class="boton-guardar">Guardar</button>
+    </td>
+</tr>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="paginacion">
+                    <button class="boton-pagina anterior">← Anterior</button>
+                    <button class="boton-pagina activo">1</button>
+                    <button class="boton-pagina">2</button>
+                    <button class="boton-pagina">3</button>
+                    <span class="puntos-paginacion">...</span>
+                    <button class="boton-pagina">8</button>
+                    <button class="boton-pagina">9</button>                   
+                    <button class="boton-pagina">10</button>
+                    <button class="boton-pagina siguiente">Siguiente →</button>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tr.sneakers</title>
+  <link rel="icon" href="../../static/images/Shoe Logo.jpg">
+  <link rel="stylesheet" href="../../static/css/inventario_tenis.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="../../static/images/trsneakers logo.png" alt="Tr.sneakers Logo" class="logo-img">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>                
+                <li class="active"><a href="#">Inventario</a></li>                
+                <li><a href="gestion_clientes.html">Usuarios</a></li>
+                <li><a href="#">Configuración</a></li>
+                <li><a href="#">Cerrar Sesión</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="header">
+                <h1>INVENTARIO</h1>
+                <div class="user-info">
+                    <span>Administrador</span>
+                </div>
+            </div>
+
+            <section class="seccion_inventario">
+                <h2>Inventario</h2>
+
+                <div class="fila-categorias-agregar">
+                    <div class="categorias">
+                        <a href="Inventario_tenis.html" class="categoria-btn">Tenis</a>
+                        <a href="Inventario_playeras.html" class="categoria-btn active">Playeras</a>
+                        <a href="Inventario_gorras.html" class="categoria-btn">Gorras</a>
+                    </div>
+                    
+                    <div class="contenedor-boton-agregar">
+                        <a href="nuevo_producto.html" class="boton-agregar">Agregar Producto</a>
+                    </div>
+                </div>
+
+                <div class="contenedor-tabla-usuarios">
+
+                    <div class="divisor"></div>
+
+                    <div class="producto-tarjeta">
+                        <div class="encabezado-p">
+                            <h3 class="nombre-producto">Producto</h3>
+                        </div>
+                        <p class="producto-detalles">Detalles principales.</p>
+                        <button class="actualizar-btn">Actualizar</button>
+                    </div>
+
+                    <div class="producto-tarjeta">
+                        <div class="encabezado-p">
+                            <h3 class="nombre-producto">Producto</h3>
+                        </div>
+                        <p class="producto-detalles">Detalles principales.</p>
+                        <button class="actualizar-btn">Actualizar</button>
+                    </div>
+
+                    <div class="producto-tarjeta">
+                        <div class="encabezado-p">
+                            <h3 class="nombre-producto">Producto</h3>
+                        </div>
+                        <p class="producto-detalles">Detalles principales.</p>
+                        <button class="actualizar-btn">Actualizar</button>
+                    </div>
+
+                    <div class="paginacion">
+                        <button class="pagina-btn">‹</button>
+                        <button class="pagina-btn active">1</button>
+                        <button class="pagina-btn">2</button>
+                        <button class="pagina-btn">3</button>
+                        <span class="puntos">...</span>
+                        <button class="pagina-btn">10</button>
+                        <button class="pagina-btn">›</button>
+                        <button class="pagina-btn siguiente-btn">Siguiente ></button>
+                    </div>                
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
