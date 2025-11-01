@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head> 
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tr.sneakers - Gorras</title>
+  
+  <link rel="icon" href="{{ url_for('static', filename='images/Shoe_Logo.jpg') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body>
+    <header>
+   <div class="header">
+       <div class="logo-container">
+           <img src="{{ url_for('static', filename='images/trsneakers_logo.png') }}" alt="Logo de Zapatilla" class="logo">
+       </div>
+   </div>
+    <div class="header-derecha">
+      <form class="buscador" action="#" method="get">
+        <input type="search" name="q" placeholder="Buscar...">
+      </form>
+
+      <nav class="menu-links">
+        <a href="{{ url_for('auth.login') }}" class="inicio" title="Iniciar Sesión">
+            <img src="{{ url_for('static', filename='images/inicio_sesion.png') }}" alt="Iniciar Sesión" class="icono-nav">
+        </a>
+        <a href="#" class="carrito" title="carrito">
+          <img src="{{ url_for('static', filename='images/carrito_de_compras.png') }}" alt="Carrito" class="icono-nav">
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <h1>Filtrar y ordenar</h1>
+    
+    <div class="contenido-principal">
+<aside class="panel-filtros">
+    
+    </aside>
+      
+      <section class="area-productos">
+        <div class="opciones-clasificacion">
+         <a href="{{ url_for('public.index') }}" class="chip-categoria">Tenis</a>
+         <a href="{{ url_for('public.catalogo_playeras') }}" class="chip-categoria">Playeras</a>
+         <a href="{{ url_for('public.catalogo_gorras') }}" class="chip-categoria activo">Gorras</a>         
+        </div>
+        
+        <div class="opciones-ordenar">
+          </div>
+        
+        <div class="productos-cuadricula">
+          
+          {% for gorra in gorras %}
+          <div class="producto-tarjeta">
+            <div class="producto-imagen">
+                </div>
+            <div class="producto-info">
+              <p class="producto-nombre">{{ gorra.nombre_gorra }}</p>
+              <p class="producto-precio">${{ gorra.precio }}</p>
+            </div>
+          </div>
+          {% else %}
+          <p>No hay gorras disponibles en este momento.</p>
+          {% endfor %}
+          </div>
+        
+        <div class="paginacion">
+          </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

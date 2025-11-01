@@ -9,37 +9,41 @@ body {
     overflow-x: hidden; /* Evita scroll horizontal */
 }
 
-
 /* Header */
 .header {
     width: 100%;
-    height: 120px; /* Altura del header */
-    background: linear-gradient(to right, #007bff, #ff4500); /* Degradado azul a naranja */
+    height: 140px;
+     background: linear-gradient(to right, #00BBFF 0%, #7E8383 50%, #FC4B08 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1; /* Para que el logo quede encima de todo */
+    z-index: 1;
 }
 
+/* Contenedor del logo */
 .logo-container {
-    background-color: linear-gradient(to right, #007bff, #ff4500);
-    border-radius: 0%;
-    padding: 10px;
-    width: 150px;
-    height: 150px;
+    background:  rgba(255, 255, 255, 0.7);  /* Fondo blanco para el borde */
+    border-radius: 50%; /* Lo hace circular */
+    padding: 8px;
+    width: 120px;
+    height: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: absolute;
-    left: 20%;
-    transform: translateX(-80%);
+    top: 50%;
+    transform: translateY(1%); /* Lo baja para que salga un poco del header */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* Imagen del logo */
 .logo {
-    height: 50px;
-  max-width: 100%;
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    border-radius: 50%;
 }
 
 
@@ -177,6 +181,84 @@ body {
 .back-button:hover {
     background-color: #555;
 }
+
+/* ===== Modal de Pago ===== */
+.modal {
+  display: none; /* Oculto por defecto */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Fondo oscuro semitransparente */
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(3px);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: auto;
+  padding: 30px;
+  border-radius: 12px;
+  width: 400px;
+  max-width: 70%;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.modal-content h2 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.modal-content label {
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.submit-button {
+  width: 100%;
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #555;
+}
+
+/* Botón para cerrar */
+.close {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  font-size: 24px;
+  color: #555;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.close:hover {
+  color: red;
+}
+
 
 /* Media Queries para Responsividad */
 @media (max-width: 768px) {

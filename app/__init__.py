@@ -1,36 +1,22 @@
 from flask import Flask
-from config import Config                 
-from database import setup_database 
-from .auth import auth_bp
-from .main import main_bp
-from .private import private_bp
-from flask import Flask, redirect, url_for
-import os
+from config.config import Config
+from .extensions import db, bcrypt
 
 def create_app(config_class=Config):
-
-    app = Flask(__name__, 
-                template_folder=os.path.join(os.path.dirname(__file__), 'templates'),
-                static_folder=os.path.join(os.path.dirname(__file__), 'static'))
-    
+    app = Flask(__name__)
     
     app.config.from_object(config_class)
 
-    
-    setup_database(app) 
-    
-    
+    db.init_app(app)
+    bcrypt.init_app(app)
+
+    from .auth.routes import auth_bp
     app.register_blueprint(auth_bp)
-    app.register_blueprint(main_bp)
-    app.register_blueprint(private_bp) 
+
+    from .admin.routes import admin_bp
+    app.register_blueprint(admin_bp)
+
+    from .public.routes import public_bp
+    app.register_blueprint(public_bp)
     
-    @app.route('/')
-    def index():
-        return redirect('/auth/login')
-
-    return app 
-
-
-
-    
-   
+    return app

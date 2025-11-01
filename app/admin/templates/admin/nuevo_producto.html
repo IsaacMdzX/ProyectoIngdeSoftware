@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tr.sneakers</title>
+  <link rel="icon" href="../../static/images/Shoe Logo.jpg">
+  <link rel="stylesheet" href="../../static/css/inventario_tenis.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="../../static/images/trsneakers logo.png" alt="Tr.sneakers Logo" class="logo-img">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>                
+                <li class="active"><a href="#">Inventario</a></li>                
+                <li><a href="#">Usuarios</a></li>
+                <li><a href="#">Configuración</a></li>
+                <li><a href="#">Cerrar Sesión</a></li>
+            </ul>
+        </aside>
+        
+          <main class="main-content">
+            <div class="header">              
+                <h1>Agregar Producto</h1>
+                <div class="info-usuario">
+                    <span>Administrador</span>
+                </div>
+            </div>
+
+                <div class="formulario-producto-des">
+                    <form action="#" method="POST">
+                        <section class="seccion-formulario-expandida">
+                            <h2 class="titulo-seccion">Información Básica</h2>
+                            
+                            <div class="fila-completa">
+                                <div class="grupo-formulario-grande">
+                                    <label class="etiqueta-grupo-grande">Categoría</label>
+                                    <select class="campo-grande" name="categoria" required>
+                                        <option value="">Seleccionar categoría</option>
+                                        <option value="tenis">Tenis</option>
+                                        <option value="gorras">Gorras</option>
+                                        <option value="playeras">Playeras</option>
+                                    </select>
+                                </div>
+
+                                <div class="grupo-formulario-grande">
+                                    <label class="etiqueta-grupo-grande">Nombre del Producto</label>
+                                    <input type="text" class="campo-grande" name="nombre" placeholder="Nombre del producto" required>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="seccion-formulario-expandida">
+                            <h2 class="titulo-seccion">Especificaciones</h2>
+                            
+                            <div class="fila-completa">
+                                <div class="grupo-formulario-grande">
+                                    <label class="etiqueta-grupo-grande">Marca</label>
+                                    <input type="text" class="campo-grande" name="marca" placeholder="Marca del producto">
+                                </div>
+                                
+                                <div class="grupo-formulario-grande">
+                                    <label class="etiqueta-grupo-grande">Tipo</label>
+                                    <input type="text" class="campo-grande" name="tipo" placeholder="Tipo de producto">
+                                </div>
+                                
+                                <div class="grupo-formulario-grande">
+                                    <label class="etiqueta-grupo-grande">Talla</label>
+                                    <input type="text" class="campo-grande" name="talla" placeholder="Talla" required>
+                                </div>
+                            </div>
+
+                            <div class="fila-completa">
+                                <div class="grupo-formulario-grande">
+                                    <label class="etiqueta-grupo-grande">Color</label>
+                                    <input type="text" class="campo-grande" name="color" placeholder="Color" required>
+                                </div>
+                                
+                                <div class="grupo-formulario-grande">
+                                    <label class="etiqueta-grupo-grande">Material</label>
+                                    <input type="text" class="campo-grande" name="material" placeholder="Material del producto">
+                                </div>
+                                
+                                <div class="grupo-formulario-grande">
+                                    <label class="etiqueta-grupo-grande">Género</label>
+                                    <select class="campo-grande" name="genero">
+                                        <option value="">Seleccionar género</option>
+                                        <option value="Hombre">Hombre</option>
+                                        <option value="Mujer">Mujer</option>
+                                        <option value="Unisex">Unisex</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="seccion-formulario-expandida">
+                            <h2 class="titulo-seccion">Precio y Descripción</h2>
+                            
+                            <div class="fila-completa">
+                                <div class="grupo-formulario-grande">
+                                    <label class="etiqueta-grupo-grande">Precio</label>
+                                    <input type="number" class="campo-grande" name="precio" placeholder="Precio" step="0.01" required>
+                                </div>
+                            </div>
+
+                            <div class="grupo-formulario-completo">
+                                <label class="etiqueta-grupo-grande">Descripción del producto</label>
+                                <textarea class="campo-textarea-grande" name="description" placeholder="Descripción del producto" rows="8"></textarea>
+                            </div>
+                        </section>
+
+                        <button type="submit" class="boton-guardar">Guardar</button>
+                    </form>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

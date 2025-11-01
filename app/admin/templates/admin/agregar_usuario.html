@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Usuario - Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo_login.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/Shoe_Logo.jpg') }}">
+</head>
+<body class="login">
+    <main class="login-page">
+        <div class="contenedor-formulario">
+            <h2>Agregar Nuevo Usuario</h2>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}">
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+
+            <form action="{{ url_for('admin.agregar_usuario') }}" method="POST">
+                
+                <div class="grupo-input">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+                <div class="grupo-input">
+                    <label for="correo">Correo</label>
+                    <input type="email" id="correo" name="correo" required>
+                </div>
+                <div class="grupo-input">
+                    <label for="telefono">Teléfono</label>
+                    <input type="tel" id="telefono" name="telefono" required>
+                </div>
+                <div class="grupo-input">
+                    <label for="contrasena">Contraseña</label>
+                    <input type="password" id="contrasena" name="contrasena" required>
+                </div>
+                <div class="grupo-input">
+                    <label for="rol">Rol</label>
+                    <select id="rol" name="rol" required>
+                        <option value="">Selecciona un rol...</option>
+                        <option value="cliente">Cliente</option>
+                        <option value="admin">Administrador</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="boton-principal">
+                    Guardar Usuario
+                </button>
+                <a href="{{ url_for('admin.gestion_usuarios') }}" class="enlace-secundario">Cancelar</a>         
+            </form>
+        </div>
+    </main>
+</body>
+</html>

@@ -3,30 +3,55 @@
     padding: 0;
     box-sizing: border-box;
 }
-
-html, body {
+ body {
     width: 100%;
     height: 100%;
 }
-
 body.login {
+    margin: 0;
+    padding: 0;
     font-family: sans-serif;
     background-color: #f5f5f5;
     min-height: 100vh;
+    overflow-x: center;
+    flex-direction: column;
+    display: flex;
+    box-sizing: border-box;
 }
 
-header {
+.header {
+    width: 100%;
+    height: 140px;
+     background: linear-gradient(to right, #00BBFF 0%, #7E8383 50%, #FC4B08 100%);
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 25px 30px;
-    background: linear-gradient(to right, #00BBFF 0%, #7E8383 50%, #FC4B08 100%);
-    min-height: 80px;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
 }
 
-.header-login .logo-img {
-    height: 50px;
-    max-width: 100%;
+.logo-container {
+    background:  rgba(255, 255, 255, 0.7);  
+    border-radius: 50%; /* Lo hace circular */
+    padding: 8px;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(1%); /* Lo baja para que salga un poco del header */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Imagen del logo */
+.logo {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    border-radius: 100%;
 }
 
 .login-page {
@@ -39,10 +64,12 @@ header {
 }
 
 .contenedor-formulario {
-    width: 100%;
-    max-width: 500px;
-    background-color: transparent;
-    padding: 40px;
+  width: 100%;
+  max-width: 480px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  padding: 40px 35px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .grupo-input {
@@ -50,19 +77,21 @@ header {
 }
 
 .grupo-input label {
-    display: block;
-    font-weight: 500;
-    margin-bottom: 5px;
-    font-size: 1.1em;
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  font-size: 1em;
+  color: #333;
 }
 
 .grupo-input input {
-    width: 100%;
-    padding: 10px 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1em;
-    background-color: white;
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1em;
+  background-color: #fff;
+  transition: border-color 0.2s ease;
 }
 
 .boton-principal {
@@ -79,8 +108,37 @@ header {
     cursor: pointer;
 }
 
+.grupo-input input:focus {
+  border-color: #00BBFF;
+  outline: none;
+}
+
 .boton-principal:hover {
     background-color: #999999;
 }
 
-/* ELIMINADO: .enlace-secundario (no se usa) */
+@media (max-width: 480px) {
+  .header {
+    height: 100px;
+  }
+
+  .logo-container {
+    width: 100px;
+    height: 100px;
+    transform: translateY(30%);
+  }
+
+  .logo {
+    width: 90px;
+    height: 90px;
+  }
+
+  .contenedor-formulario {
+    padding: 25px 20px;
+  }
+
+  .boton-principal {
+    font-size: 1em;
+    padding: 12px;
+  }
+}
