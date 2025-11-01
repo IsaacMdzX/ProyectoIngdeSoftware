@@ -1,27 +1,136 @@
-create schema stock;
 create schema productos;
+create schema stock;
 create schema usuarios;
 create schema ventas;
 
-CREATE TABLE productos.marcas (id_marca SERIAL PRIMARY KEY, nombre_marca VARCHAR(100) UNIQUE NOT NULL);
+CREATE TABLE productos.marcas (
+    id_marca SERIAL PRIMARY KEY,
+    nombre_marca VARCHAR(100) UNIQUE NOT NULL
+);
 
-create table productos.tenis (Id_teni serial primary key, Nombre_tenis varchar(100) not null, Marca int not null,Tipo int not null, Talla numeric(4,1) not null,Color varchar(50),Descripcion text,Precio decimal(10,2) not null,CONSTRAINT fk_marca_tenis FOREIGN KEY (Marca) REFERENCES productos.marcas(id_marca));  
+CREATE TABLE productos.tipos_producto (
+    id_tipo_producto SERIAL PRIMARY KEY,
+    nombre_tipo VARCHAR(50) UNIQUE NOT NULL CHECK (nombre_tipo IN ('Playera','Tenis','Gorra'))
+);
 
-create table productos.Gorras (Id_gorra serial primary key, Nombre_gorra varchar(100) unique not null, Talla varchar (10) not null, Color varchar (50) not null,Descripcion text, Precio decimal(10,2) not null);
+CREATE TABLE productos.generos (
+    id_genero SERIAL PRIMARY KEY,
+    nombre_genero VARCHAR(20) UNIQUE NOT NULL CHECK (nombre_genero IN ('Hombre','Mujer','Unisex'))
+);
 
-create table productos.playeras (Id_playera serial primary key, Nombre_playera varchar(100) not null,Marca int not null, Talla varchar(10) not null, Color varchar(50) not null, Material varchar (50), Genero VARCHAR(20) CHECK (genero IN ('Hombre','Mujer','Unisex')), Descripcion text, Precio decimal (10,2) not null, CONSTRAINT fk_marca_tenis FOREIGN KEY (Marca) REFERENCES productos.marcas(id_marca));
+CREATE TABLE productos.tallas_ropa (
+    id_talla_ropa SERIAL PRIMARY KEY,
+    nombre_talla VARCHAR(10) UNIQUE NOT NULL CHECK (nombre_talla IN ('XS','S','M','L','XL','XXL','Única'))
+);
 
-Create table stock.inventario (Id_inventario serial Primary key, Tipo_producto varchar(20) not null check(tipo_producto in ('Playera','Tenis','Gorra')),id_producto int not null, Cantidad int not null default 0, Fecha_registro timestamp default now(), Ultima_actualizacion timestamp default now(), CONSTRAINT fk_playera FOREIGN KEY (id_producto) REFERENCES productos.playeras(id_playera) DEFERRABLE INITIALLY DEFERRED,
-    CONSTRAINT fk_tenis FOREIGN KEY (id_producto) REFERENCES productos.tenis(id_teni) DEFERRABLE INITIALLY DEFERRED,
-    CONSTRAINT fk_gorra FOREIGN KEY (id_producto) REFERENCES productos.gorras(id_gorra) DEFERRABLE INITIALLY DEFERRED);
+CREATE TABLE productos.tallas_calzado (
+    id_talla_calzado SERIAL PRIMARY KEY,
+    numero_talla NUMERIC(4,1) UNIQUE NOT NULL CHECK (numero_talla > 0)
+);
 
-Create table usuarios.cliente(Id_cliente serial primary key, Nombre_cliente varchar(100) not null, Email varchar(150) unique not null, telefono varchar (20), Direccion text, Fecha_registro timestamp default now(), Constraint chk_email_valido check(email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'));
+CREATE TABLE productos.colores (
+    id_color SERIAL PRIMARY KEY,
+    nombre_color VARCHAR(50) UNIQUE NOT NULL
+);
 
-ALTER TABLE usuarios.cliente
-DROP COLUMN Direccion;
+CREATE TABLE productos.playeras (
+    Id_playera SERIAL PRIMARY KEY, 
+    Nombre_playera VARCHAR(100) NOT NULL,
+    Marca INT NOT NULL, 
+    Tipo INT NOT NULL, 
+    Talla_ropa INT NOT NULL, 
+    Material VARCHAR (50), 
+    Genero INT, 
+    Descripcion TEXT, 
+    Precio DECIMAL (10,2) NOT NULL, 
+    CONSTRAINT fk_marca_playera FOREIGN KEY (Marca) REFERENCES productos.marcas(id_marca),
+    CONSTRAINT fk_tipo_playera FOREIGN KEY (Tipo) REFERENCES productos.tipos_producto(id_tipo_producto),
+    CONSTRAINT fk_talla_playera FOREIGN KEY (Talla_ropa) REFERENCES productos.tallas_ropa(id_talla_ropa),
+    CONSTRAINT fk_genero_playera FOREIGN KEY (Genero) REFERENCES productos.generos(id_genero)
+);
 
-ALTER TABLE usuarios.cliente
-ADD COLUMN Contrasena VARCHAR(255) NOT NULL;
+CREATE TABLE productos.playeras_colores (
+    id_pc SERIAL PRIMARY KEY,
+    id_playera INT NOT NULL,
+    id_color INT NOT NULL,
+    UNIQUE (id_playera, id_color), 
+    CONSTRAINT fk_pc_playera FOREIGN KEY (id_playera) 
+        REFERENCES productos.playeras(id_playera) ON DELETE CASCADE,
+    CONSTRAINT fk_pc_color FOREIGN KEY (id_color) 
+        REFERENCES productos.colores(id_color) ON DELETE RESTRICT
+);
+
+CREATE TABLE productos.tenis (
+    Id_teni SERIAL PRIMARY KEY, 
+    Nombre_tenis VARCHAR(100) NOT NULL, 
+    Marca INT NOT NULL,
+    Tipo INT NOT NULL, 
+    Talla_calzado INT NOT NULL, 
+    Descripcion TEXT,
+    Precio DECIMAL(10,2) NOT NULL,
+    CONSTRAINT fk_marca_tenis FOREIGN KEY (Marca) REFERENCES productos.marcas(id_marca),
+    CONSTRAINT fk_tipo_tenis FOREIGN KEY (Tipo) REFERENCES productos.tipos_producto(id_tipo_producto),
+    CONSTRAINT fk_talla_tenis FOREIGN KEY (Talla_calzado) REFERENCES productos.tallas_calzado(id_talla_calzado)
+);  
+
+CREATE TABLE productos.tenis_colores (
+    id_tc SERIAL PRIMARY KEY,
+    id_teni INT NOT NULL,
+    id_color INT NOT NULL,
+    UNIQUE (id_teni, id_color), 
+    CONSTRAINT fk_tc_teni FOREIGN KEY (id_teni) 
+        REFERENCES productos.tenis(id_teni) ON DELETE CASCADE,
+    CONSTRAINT fk_tc_color FOREIGN KEY (id_color) 
+        REFERENCES productos.colores(id_color) ON DELETE RESTRICT
+);
+
+CREATE TABLE productos.gorras (
+    Id_gorra SERIAL PRIMARY KEY, 
+    Nombre_gorra VARCHAR(100) UNIQUE NOT NULL, 
+    Talla_ropa INT NOT NULL, 
+    Descripcion TEXT, 
+    Precio DECIMAL(10,2) NOT NULL,
+    CONSTRAINT fk_talla_gorra FOREIGN KEY (Talla_ropa) REFERENCES productos.tallas_ropa(id_talla_ropa)
+);
+
+CREATE TABLE productos.gorras_colores (
+    id_gc SERIAL PRIMARY KEY,
+    id_gorra INT NOT NULL,
+    id_color INT NOT NULL,
+    UNIQUE (id_gorra, id_color), 
+    CONSTRAINT fk_gc_gorra FOREIGN KEY (id_gorra) 
+        REFERENCES productos.gorras(id_gorra) ON DELETE CASCADE,
+    CONSTRAINT fk_gc_color FOREIGN KEY (id_color) 
+        REFERENCES productos.colores(id_color) ON DELETE RESTRICT
+);
+
+CREATE TABLE stock.inventario (
+    Id_inventario SERIAL PRIMARY KEY, 
+    Tipo_producto VARCHAR(20) NOT NULL CHECK(tipo_producto IN ('Playera','Tenis','Gorra')),
+    id_producto INT NOT NULL, 
+    Cantidad INT NOT NULL DEFAULT 0, 
+    Fecha_registro TIMESTAMP DEFAULT NOW(), 
+    Ultima_actualizacion TIMESTAMP DEFAULT NOW(), 
+    CONSTRAINT fk_inventario_playera FOREIGN KEY (id_producto) 
+        REFERENCES productos.playeras(id_playera) DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT fk_inventario_tenis FOREIGN KEY (id_producto) 
+        REFERENCES productos.tenis(id_teni) DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT fk_inventario_gorra FOREIGN KEY (id_producto) 
+        REFERENCES productos.gorras(id_gorra) DEFERRABLE INITIALLY DEFERRED
+);
+
+CREATE TABLE usuarios.cliente(
+    Id_cliente SERIAL PRIMARY KEY, 
+    Nombre_cliente VARCHAR(100) NOT NULL, 
+    Email VARCHAR(150) UNIQUE NOT NULL, 
+    telefono VARCHAR (20), 
+    Fecha_registro TIMESTAMP DEFAULT NOW(), 
+    Contrasena VARCHAR(255) NOT NULL, 
+    CONSTRAINT chk_email_valido_cliente 
+        CHECK(Email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'),
+    CONSTRAINT chk_contrasena_compleja_cliente
+        CHECK (Contrasena ~ '^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')
+);
 
 CREATE TABLE usuarios.admin (
     Id_admin SERIAL PRIMARY KEY,
@@ -29,10 +138,46 @@ CREATE TABLE usuarios.admin (
     Correo VARCHAR(150) UNIQUE NOT NULL,
     Telefono VARCHAR (20) NOT NULL,
     Contrasena VARCHAR(255) NOT NULL,
-    Constraint chk_email_valido check(email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$')
-
+    CONSTRAINT chk_email_valido_admin 
+        CHECK(Correo ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'),
+    CONSTRAINT chk_contrasena_compleja_admin
+        CHECK (Contrasena ~ '^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')
 );
 
+CREATE TABLE ventas.pedidos (
+    Id_pedidos SERIAL PRIMARY KEY,
+    Id_cliente INT NOT NULL,
+    Fecha_pedido TIMESTAMP DEFAULT NOW(),
+    Estado VARCHAR(20) NOT NULL CHECK (Estado IN ('Pendiente','Pagado','Enviado','Entregado','Cancelado')),
+    Total DECIMAL (10,2) NOT NULL DEFAULT 0, 
+    CONSTRAINT fk_pedido_cliente FOREIGN KEY (Id_cliente) REFERENCES usuarios.cliente(Id_cliente)
+);
+
+CREATE TABLE ventas.detalle_pedido (
+    Id_dep SERIAL PRIMARY KEY,
+    Id_pedido INT NOT NULL,
+    Tipo_producto VARCHAR(20) NOT NULL CHECK (Tipo_producto IN ('Playera', 'Tenis', 'Gorra')),
+    Id_producto INT NOT NULL,
+    Cantidad INT NOT NULL CHECK (Cantidad > 0),
+    Precio_unitario DECIMAL(10,2) NOT NULL CHECK (Precio_unitario >= 0),
+    Subtotal DECIMAL(10,2) GENERATED ALWAYS AS (Cantidad * Precio_unitario) STORED,
+    CONSTRAINT fk_detalle_pedido FOREIGN KEY (Id_pedido) REFERENCES ventas.pedidos(Id_pedidos) ON DELETE CASCADE,
+    CONSTRAINT fk_detalle_playera FOREIGN KEY (Id_producto)
+        REFERENCES productos.playeras(Id_playera) DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT fk_detalle_tenis FOREIGN KEY (Id_producto)
+        REFERENCES productos.tenis(Id_teni) DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT fk_detalle_gorra FOREIGN KEY (Id_producto)
+        REFERENCES productos.gorras(Id_gorra) DEFERRABLE INITIALLY DEFERRED
+);
+
+CREATE TABLE ventas.entregas (
+    id_entrega SERIAL PRIMARY KEY,
+    id_pedido INT NOT NULL,
+    direccion_entrega TEXT NOT NULL,
+    fecha_entrega TIMESTAMP,
+    estado VARCHAR(20) NOT NULL CHECK (estado IN ('Pendiente','En camino','Entregado')),
+    CONSTRAINT fk_entrega_pedido FOREIGN KEY (id_pedido) REFERENCES ventas.pedidos(id_pedidos) ON DELETE CASCADE
+);
 
 CREATE TABLE ventas.transferencias (
   Id_transf SERIAL PRIMARY KEY,
@@ -47,44 +192,4 @@ CREATE TABLE ventas.transferencias (
   Monto DECIMAL(10,2) NOT NULL CHECK (Monto >= 0),
   CONSTRAINT FK_cliente_transferencia FOREIGN KEY (Id_cliente)
    REFERENCES usuarios.cliente(Id_cliente)
-);
-
-
-CREATE TABLE ventas.pedidos (
-  Id_pedidos SERIAL PRIMARY KEY,
-  Id_cliente INT NOT NULL,
-  Fecha_pedido TIMESTAMP DEFAULT NOW(),
-  Estado VARCHAR(20) NOT NULL CHECK (Estado IN ('Pendiente','Pagado','Enviado','Entregado','Cancelado')),
-  Total DECIMAL (10,2) NOT NULL DEFAULT 0,
-  CONSTRAINT fk_pedido_cliente FOREIGN KEY (Id_cliente)
-      REFERENCES usuarios.cliente(Id_cliente)
-);
-
-CREATE TABLE ventas.detalle_pedido (
-    Id_dep SERIAL PRIMARY KEY,
-    Id_pedido INT NOT NULL,
-    Tipo_producto VARCHAR(20) NOT NULL CHECK (Tipo_producto IN ('Playera', 'Tenis', 'Gorra')),
-    Id_producto INT NOT NULL,
-    Cantidad INT NOT NULL CHECK (Cantidad > 0),
-    Precio_unitario DECIMAL(10,2) NOT NULL CHECK (Precio_unitario >= 0),
-    Subtotal DECIMAL(10,2) GENERATED ALWAYS AS (Cantidad * Precio_unitario) STORED,
-    CONSTRAINT fk_detalle_pedido FOREIGN KEY (Id_pedido)REFERENCES ventas.pedidos(Id_pedidos)ON DELETE CASCADE,CONSTRAINT fk_detalle_playera FOREIGN KEY (Id_producto)
-        REFERENCES productos.playeras(Id_playera)
-        DEFERRABLE INITIALLY DEFERRED,
-    CONSTRAINT fk_detalle_tenis FOREIGN KEY (Id_producto)
-        REFERENCES productos.tenis(Id_teni)
-        DEFERRABLE INITIALLY DEFERRED,
-
-    CONSTRAINT fk_detalle_gorra FOREIGN KEY (Id_producto)
-        REFERENCES productos.gorras(Id_gorra)
-        DEFERRABLE INITIALLY DEFERRED
-);
-
-CREATE TABLE ventas.entregas (
-    id_entrega SERIAL PRIMARY KEY,
-    id_pedido INT NOT NULL,
-    direccion_entrega TEXT NOT NULL,
-    fecha_entrega TIMESTAMP,
-    estado VARCHAR(20) NOT NULL CHECK (estado IN ('Pendiente','En camino','Entregado')),
-    CONSTRAINT fk_entrega_pedido FOREIGN KEY (id_pedido) REFERENCES ventas.pedidos(id_pedidos) ON DELETE CASCADE
 );
