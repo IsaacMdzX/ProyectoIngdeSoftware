@@ -21,13 +21,30 @@
       </form>
 
       <nav class="menu-links">
-        <a href="{{ url_for('auth.login') }}" class="inicio" title="Iniciar Sesión">
-    <img src="{{ url_for('static', filename='images/inicio_sesion.png') }}" alt="Iniciar Sesión" class="icono-nav">
-        </a>
+        
+        {% if session['user_id'] %}
+            
+            {% if session['role'] == 'cliente' %}
+                <span class="saludo-usuario">Hola, {{ session['user_name'] }}</span>
+            
+            {% elif session['role'] == 'admin' %}
+                <a href="{{ url_for('admin.inventario_tenis') }}" class="inicio" title="Panel Admin">Panel Admin</a>
+            {% endif %}
+
+            <a href="{{ url_for('auth.logout') }}" class="inicio" title="Cerrar Sesión">
+                <img src="{{ url_for('static', filename='images/logout_icon.png') }}" alt="Cerrar Sesión" class="icono-nav"> </a>
+
+        {% else %}
+            <a href="{{ url_for('auth.login') }}" class="inicio" title="Iniciar Sesión">
+                <img src="{{ url_for('static', filename='images/inicio_sesion.png') }}" alt="Iniciar Sesión" class="icono-nav">
+            </a>
+        {% endif %}
+
         <a href="#" class="carrito" title="carrito">
-          <img src="{{ url_for('static', filename='images/carrito_de_compras.png') }}" alt="Login" class="icono-nav">
+          <img src="{{ url_for('static', filename='images/carrito_de_compras.png') }}" alt="Carrito" class="icono-nav">
         </a>
       </nav>
+      
     </div>
   </header>
 

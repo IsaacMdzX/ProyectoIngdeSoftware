@@ -26,12 +26,14 @@ def login():
         if admin_existente and bcrypt.check_password_hash(admin_existente.contrasena, contrasena):
             session['user_id'] = admin_existente.id_admin
             session['role'] = 'admin' 
+            session['user_name'] = admin_existente.nombre_admin 
             flash(f'Bienvenido, Administrador {admin_existente.nombre_admin}!', 'success')
             return redirect(url_for('admin.inventario_tenis')) 
 
         elif cliente_existente and bcrypt.check_password_hash(cliente_existente.contrasena, contrasena):
             session['user_id'] = cliente_existente.id_cliente
             session['role'] = 'cliente'
+            session['user_name'] = cliente_existente.nombre_cliente 
             flash(f'¡Bienvenido de vuelta, {cliente_existente.nombre_cliente}!', 'success')
             return redirect(url_for('public.index')) 
         
@@ -55,7 +57,7 @@ def registro():
             return redirect(url_for('auth.registro'))
 
         if contrasena != confirmar_contrasena:
-            flash('Las contrasena no coinciden. Intente de nuevo.', 'danger')
+            flash('Las contraseñas no coinciden. Intente de nuevo.', 'danger')
             return redirect(url_for('auth.registro'))
 
         if db.session.execute(db.select(Cliente).filter_by(email=email)).scalar_one_or_none():
@@ -88,5 +90,6 @@ def registro():
 def logout():
     session.pop('user_id', None)
     session.pop('role', None)
+    session.pop('user_name', None) 
     flash('Has cerrado sesión exitosamente.', 'success')
     return redirect(url_for('auth.login'))
