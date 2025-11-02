@@ -193,3 +193,43 @@ CREATE TABLE ventas.transferencias (
   CONSTRAINT FK_cliente_transferencia FOREIGN KEY (Id_cliente)
    REFERENCES usuarios.cliente(Id_cliente)
 );
+
+--- Ingreso de datos Marcas
+INSERT INTO productos.marcas (nombre_marca) VALUES
+('Nike'),
+('Adidas'),
+('Puma'),
+('Reebok'),
+('Under Armour');
+--- Ingreso de datos Colores
+INSERT INTO productos.colores (nombre_color) VALUES
+('Rojo'),
+('Azul'),
+('Verde'),
+('Negro'),
+('Blanco'),
+('Amarillo'),
+('Gris'),
+('Naranja'),
+('Morado'),
+('Rosa');
+
+-- Ingreso de Tipos de Producto
+INSERT INTO prodcutos.tipos_producto (nombre_tipo) VALUES
+('Playera'),
+('Tenis'),
+('Gorra');
+
+-- Ingreso de Géneros
+INSERT INTO prodcutos.generos (nombre_genero) VALUES
+('Hombre'),
+('Mujer'),
+('Unisex');
+
+-- Ingreso de Tallas de Ropa
+INSERT INTO prodcutos.tallas_ropa (nombre_talla) VALUES
+('XS'), ('S'), ('M'), ('L'), ('XL'), ('XXL'), ('Única');
+
+-- Ingreso de Tallas de Calzado
+INSERT INTO productos.tallas_calzado (numero_talla) VALUES
+(5.0), (6.0), (7.0), (7.5), (8.0), (8.5), (9.0), (9.5), (10.0), (10.5), (11.0);
