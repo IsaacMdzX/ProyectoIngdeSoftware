@@ -176,3 +176,42 @@ def eliminar_usuario(rol, id):
         flash(f'Error al eliminar usuario: {e}', 'danger')
 
     return redirect(url_for('admin.gestion_usuarios'))
+
+@admin_bp.route('/cambiar-contrasena', methods=['GET', 'POST'])
+def cambiar_contrasena():
+    if 'role' not in session or session['role'] != 'admin':
+        return redirect(url_for('auth.login'))
+
+    if request.method == 'POST':
+        contrasena_actual = request.form.get('contrasena_actual')
+        nueva_contrasena = request.form.get('nueva_contrasena')
+        confirmar_contrasena = request.form.get('confirmar_contrasena')
+
+        if not all([contrasena_actual, nueva_contrasena, confirmar_contrasena]):
+            flash('Todos los campos son obligatorios.', 'danger')
+            return redirect(url_for('admin.cambiar_contrasena'))
+        
+        if nueva_contrasena != confirmar_contrasena:
+            flash('Las nuevas contraseñas no coinciden.', 'danger')
+            return redirect(url_for('admin.cambiar_contrasena'))
+
+        admin_id = session.get('user_id')
+        admin = db.session.get(Admin, admin_id)
+
+        if not bcrypt.check_password_hash(admin.contrasena, contrasena_actual):
+            flash('La contraseña actual es incorrecta.', 'danger')
+            return redirect(url_for('admin.cambiar_contrasena'))
+        
+        try:
+            hashed_password = bcrypt.generate_password_hash(nueva_contrasena).decode('utf-8')
+            admin.contrasena = hashed_password
+            db.session.commit()
+            flash('Contraseña actualizada exitosamente.', 'success')
+            return redirect(url_for('admin.inventario_tenis'))
+        
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al actualizar la contraseña: {e}', 'danger')
+            return redirect(url_for('admin.cambiar_contrasena'))
+
+    return render_template('admin/cambiar_contrasena.html')

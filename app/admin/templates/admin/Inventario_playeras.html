@@ -7,7 +7,7 @@
   <title>Tr.sneakers - Inventario Playeras</title>
   
   <link rel="icon" href="{{ url_for('static', filename='images/Shoe_Logo.jpg') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/inventario_playeras.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/inventario_tenis.css') }}">
 </head>
 <body>
     <div class="container">
@@ -16,10 +16,10 @@
                 <img src="{{ url_for('static', filename='images/trsneakers_logo.png') }}" alt="Tr.sneakers Logo" class="logo-img">
             </div>
             <ul class="nav-links">
-                <li><a href="{{ url_for('admin.dashboard') }}">Home</a></li>                
+                <li><a href="{{ url_for('admin.inventario_tenis') }}">Home</a></li>                
                 <li class="active"><a href="{{ url_for('admin.inventario_tenis') }}">Inventario</a></li>                
                 <li><a href="{{ url_for('admin.gestion_usuarios') }}">Usuarios</a></li>
-                <li><a href="#">Configuración</a></li>
+                <li><a href="{{ url_for('admin.cambiar_contrasena') }}">Configuración</a></li>
                 <li><a href="{{ url_for('auth.logout') }}">Cerrar Sesión</a></li>
             </ul>
         </aside>

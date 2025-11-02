@@ -18,7 +18,7 @@
                 <li><a href="{{ url_for('admin.inventario_tenis') }}">Home</a></li>                
                 <li><a href="{{ url_for('admin.inventario_tenis') }}" class="categoria-btn">Inventario</a></li>               
                 <li class="active"><a href="{{ url_for('admin.gestion_usuarios') }}">Usuarios</a></li>
-                <li><a href="#">Configuración</a></li>
+                <li><a href="{{ url_for('admin.cambiar_contrasena') }}">Configuración</a></li>
                 <li><a href="{{ url_for('auth.logout') }}">Cerrar Sesión</a></li>
             </ul>
         </aside>
