@@ -193,15 +193,35 @@ CREATE TABLE ventas.transferencias (
   CONSTRAINT FK_cliente_transferencia FOREIGN KEY (Id_cliente)
    REFERENCES usuarios.cliente(Id_cliente)
 );
+-- 1️ Ingreso de Tipos de Producto
+INSERT INTO productos.tipos_producto (nombre_tipo) VALUES
+('Playera'),
+('Tenis'),
+('Gorra');
 
---- Ingreso de datos Marcas
+--  Ingreso de Géneros
+INSERT INTO productos.generos (nombre_genero) VALUES
+('Hombre'),
+('Mujer'),
+('Unisex');
+
+-- Ingreso de Tallas de Ropa
+INSERT INTO productos.tallas_ropa (nombre_talla) VALUES
+('XS'), ('S'), ('M'), ('L'), ('XL'), ('XXL'), ('Única');
+
+--Ingreso de Tallas de Calzado
+INSERT INTO productos.tallas_calzado (numero_talla) VALUES
+(5.0), (6.0), (7.0), (7.5), (8.0), (8.5), (9.0), (9.5), (10.0), (10.5), (11.0);
+
+-- Ingreso de Marcas
 INSERT INTO productos.marcas (nombre_marca) VALUES
 ('Nike'),
 ('Adidas'),
 ('Puma'),
 ('Reebok'),
 ('Under Armour');
---- Ingreso de datos Colores
+
+--Ingreso de Colores
 INSERT INTO productos.colores (nombre_color) VALUES
 ('Rojo'),
 ('Azul'),
@@ -214,22 +234,67 @@ INSERT INTO productos.colores (nombre_color) VALUES
 ('Morado'),
 ('Rosa');
 
--- Ingreso de Tipos de Producto
-INSERT INTO prodcutos.tipos_producto (nombre_tipo) VALUES
-('Playera'),
-('Tenis'),
-('Gorra');
+--  Ingreso de Tenis
+INSERT INTO productos.tenis (Nombre_tenis, Marca, Tipo, Talla_calzado, Descripcion, Precio) VALUES
+(
+    'Air Max 90',
+    (SELECT id_marca FROM productos.marcas WHERE nombre_marca = 'Nike'),
+    (SELECT id_tipo_producto FROM productos.tipos_producto WHERE nombre_tipo = 'Tenis'),
+    (SELECT id_talla_calzado FROM productos.tallas_calzado WHERE numero_talla = 9.0),
+    'Tenis casual Nike Air Max 90',
+    119.99
+),
+(
+    'Ultraboost',
+    (SELECT id_marca FROM productos.marcas WHERE nombre_marca = 'Adidas'),
+    (SELECT id_tipo_producto FROM productos.tipos_producto WHERE nombre_tipo = 'Tenis'),
+    (SELECT id_talla_calzado FROM productos.tallas_calzado WHERE numero_talla = 9.5),
+    'Tenis running Adidas Ultraboost',
+    149.99
+),
+(
+    'Suede Classic',
+    (SELECT id_marca FROM productos.marcas WHERE nombre_marca = 'Puma'),
+    (SELECT id_tipo_producto FROM productos.tipos_producto WHERE nombre_tipo = 'Tenis'),
+    (SELECT id_talla_calzado FROM productos.tallas_calzado WHERE numero_talla = 9.0),
+    'Tenis estilo urbano Puma Suede',
+    79.50
+);
 
--- Ingreso de Géneros
-INSERT INTO prodcutos.generos (nombre_genero) VALUES
-('Hombre'),
-('Mujer'),
-('Unisex');
+--  Asociar colores a los tenis insertados
+INSERT INTO productos.tenis_colores (id_teni, id_color)
+SELECT t.Id_teni, c.id_color
+FROM productos.tenis t
+JOIN productos.colores c ON c.nombre_color IN ('Negro','Blanco','Azul')
+WHERE t.Nombre_tenis = 'Air Max 90';
 
--- Ingreso de Tallas de Ropa
-INSERT INTO prodcutos.tallas_ropa (nombre_talla) VALUES
-('XS'), ('S'), ('M'), ('L'), ('XL'), ('XXL'), ('Única');
+INSERT INTO productos.tenis_colores (id_teni, id_color)
+SELECT t.Id_teni, c.id_color
+FROM productos.tenis t
+JOIN productos.colores c ON c.nombre_color IN ('Blanco','Negro')
+WHERE t.Nombre_tenis = 'Ultraboost';
 
--- Ingreso de Tallas de Calzado
-INSERT INTO productos.tallas_calzado (numero_talla) VALUES
-(5.0), (6.0), (7.0), (7.5), (8.0), (8.5), (9.0), (9.5), (10.0), (10.5), (11.0);
+INSERT INTO productos.tenis_colores (id_teni, id_color)
+SELECT t.Id_teni, c.id_color
+FROM productos.tenis t
+JOIN productos.colores c ON c.nombre_color IN ('Gris','Negro')
+WHERE t.Nombre_tenis = 'Suede Classic';
+
+---Consultas Ejecutarlas en psql no instalarlo 
+
+SELECT
+    t.id_teni,
+    t.nombre_tenis AS nombre,
+    m.nombre_marca AS marca,
+    tp.nombre_tipo AS tipo,
+    tc.numero_talla AS talla,
+    t.precio,
+    STRING_AGG(c.nombre_color, ', ') AS colores_disponibles
+FROM productos.tenis t
+JOIN productos.marcas m ON t.marca = m.id_marca
+JOIN productos.tipos_producto tp ON t.tipo = tp.id_tipo_producto
+JOIN productos.tallas_calzado tc ON t.talla_calzado = tc.id_talla_calzado
+JOIN productos.tenis_colores tcl ON t.id_teni = tcl.id_teni
+JOIN productos.colores c ON tcl.id_color = c.id_color
+GROUP BY t.id_teni, t.nombre_tenis, m.nombre_marca, tp.nombre_tipo, tc.numero_talla, t.precio
+ORDER BY t.id_teni;
