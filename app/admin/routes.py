@@ -1,10 +1,13 @@
 from flask import Blueprint, render_template, session, redirect, url_for, flash, request
 from ..extensions import db, bcrypt
 from ..auth.models import Cliente, Admin
-from ..public.models import Tenis, Playera, Gorra
-from .models import Inventario
+from ..public.models import Tenis, Playera, Gorra, Marca, TipoProducto, TallaCalzado, TallaRopa, Color, Genero
+from .models import Inventario, Pedido, DetallePedido, Entrega, Transferencia
 
 admin_bp = Blueprint('admin', __name__, template_folder='templates')
+
+def to_none(val):
+    return None if val == '' else val
 
 @admin_bp.route('/inventario-tenis')
 def inventario_tenis():
@@ -13,8 +16,8 @@ def inventario_tenis():
         return redirect(url_for('auth.login'))
     
     stmt = (
-        db.select(Tenis.nombre_tenis, Tenis.precio, Inventario.cantidad, Tenis.id_teni)
-        .join(Inventario, (Tenis.id_teni == Inventario.id_producto))
+        db.select(Tenis, Inventario.cantidad)
+        .join(Inventario, (Tenis.id_teni == Inventario.id_producto), isouter=True)
         .filter(Inventario.tipo_producto == 'Tenis')
     )
     productos_inventario = db.session.execute(stmt).all()
@@ -28,8 +31,8 @@ def inventario_playeras():
         return redirect(url_for('auth.login'))
     
     stmt = (
-        db.select(Playera.nombre_playera, Playera.precio, Inventario.cantidad, Playera.id_playera)
-        .join(Inventario, (Playera.id_playera == Inventario.id_producto))
+        db.select(Playera, Inventario.cantidad)
+        .join(Inventario, (Playera.id_playera == Inventario.id_producto), isouter=True)
         .filter(Inventario.tipo_producto == 'Playera')
     )
     productos_inventario = db.session.execute(stmt).all()
@@ -43,8 +46,8 @@ def inventario_gorras():
         return redirect(url_for('auth.login'))
     
     stmt = (
-        db.select(Gorra.nombre_gorra, Gorra.precio, Inventario.cantidad, Gorra.id_gorra)
-        .join(Inventario, (Gorra.id_gorra == Inventario.id_producto))
+        db.select(Gorra, Inventario.cantidad)
+        .join(Inventario, (Gorra.id_gorra == Inventario.id_producto), isouter=True)
         .filter(Inventario.tipo_producto == 'Gorra')
     )
     productos_inventario = db.session.execute(stmt).all()
@@ -215,3 +218,245 @@ def cambiar_contrasena():
             return redirect(url_for('admin.cambiar_contrasena'))
 
     return render_template('admin/cambiar_contrasena.html')
+
+@admin_bp.route('/agregar-producto', methods=['GET', 'POST'])
+def agregar_producto():
+    if 'role' not in session or session['role'] != 'admin':
+        return redirect(url_for('auth.login'))
+
+    if request.method == 'POST':
+        categoria = request.form.get('categoria')
+        
+        try:
+            if categoria == 'tenis':
+                nombre = request.form.get('nombre')
+                marca = request.form.get('marca')
+                tipo = request.form.get('tipo')
+                precio = request.form.get('precio')
+                
+                if not all([nombre, marca, tipo, precio]):
+                    flash('Error: Nombre, Marca, Tipo y Precio son obligatorios para Tenis.', 'danger')
+                    return redirect(url_for('admin.agregar_producto'))
+
+                nuevo_producto = Tenis(
+                    nombre_tenis=nombre,
+                    marca=marca,
+                    tipo=tipo,
+                    talla_calzado=to_none(request.form.get('talla_calzado')),
+                    precio=precio,
+                    descripcion=to_none(request.form.get('descripcion'))
+                )
+                id_producto_attr = 'id_teni'
+                
+            elif categoria == 'playera':
+                nombre = request.form.get('nombre')
+                marca = request.form.get('marca')
+                precio = request.form.get('precio')
+
+                if not all([nombre, marca, precio]):
+                    flash('Error: Nombre, Marca y Precio son obligatorios para Playeras.', 'danger')
+                    return redirect(url_for('admin.agregar_producto'))
+                
+                nuevo_producto = Playera(
+                    nombre_playera=nombre,
+                    marca=marca,
+                    tipo=to_none(request.form.get('tipo')),
+                    talla_ropa=to_none(request.form.get('talla_ropa')),
+                    genero=to_none(request.form.get('genero')),
+                    material=to_none(request.form.get('material')),
+                    precio=precio,
+                    descripcion=to_none(request.form.get('descripcion'))
+                )
+                id_producto_attr = 'id_playera'
+
+            elif categoria == 'gorra':
+                nombre = request.form.get('nombre')
+                precio = request.form.get('precio')
+
+                if not all([nombre, precio]):
+                    flash('Error: Nombre y Precio son obligatorios para Gorras.', 'danger')
+                    return redirect(url_for('admin.agregar_producto'))
+
+                nuevo_producto = Gorra(
+                    nombre_gorra=nombre,
+                    talla_ropa=to_none(request.form.get('talla_ropa')),
+                    precio=precio,
+                    descripcion=to_none(request.form.get('descripcion'))
+                )
+                id_producto_attr = 'id_gorra'
+            
+            else:
+                flash('Categoría no válida.', 'danger')
+                return redirect(url_for('admin.agregar_producto'))
+
+        except Exception as e:
+            flash(f'Error al preparar el producto: {e}', 'danger')
+            return redirect(url_for('admin.agregar_producto'))
+
+        try:
+            db.session.add(nuevo_producto)
+            db.session.commit()
+            
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al guardar el producto (PASO 2): {e}', 'danger')
+            return redirect(url_for('admin.agregar_producto'))
+
+        try:
+            id_prod_guardado = getattr(nuevo_producto, id_producto_attr)
+            
+            nuevo_inventario = Inventario(
+                tipo_producto=categoria.capitalize(),
+                id_producto=id_prod_guardado,
+                cantidad=request.form.get('cantidad', 0)
+            )
+            db.session.add(nuevo_inventario)
+            db.session.commit()
+            
+            flash(f'Producto ({categoria}) agregado exitosamente.', 'success')
+            return redirect(url_for('admin.inventario_tenis'))
+
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al guardar el inventario (PASO 3): {e}', 'danger')
+            return redirect(url_for('admin.agregar_producto'))
+
+    marcas = db.session.execute(db.select(Marca)).scalars().all()
+    tipos = db.session.execute(db.select(TipoProducto)).scalars().all()
+    tallas_calzado = db.session.execute(db.select(TallaCalzado)).scalars().all()
+    tallas_ropa = db.session.execute(db.select(TallaRopa)).scalars().all()
+    generos = db.session.execute(db.select(Genero)).scalars().all()
+    
+    return render_template('admin/nuevo_producto.html', 
+                           marcas=marcas, 
+                           tipos=tipos, 
+                           tallas_calzado=tallas_calzado,
+                           tallas_ropa=tallas_ropa,
+                           generos=generos)
+
+@admin_bp.route('/editar-producto/<string:tipo>/<int:id>', methods=['GET', 'POST'])
+def editar_producto(tipo, id):
+    if 'role' not in session or session['role'] != 'admin':
+        return redirect(url_for('auth.login'))
+
+    if tipo == 'Tenis':
+        producto = db.session.get(Tenis, id)
+        redirect_url = url_for('admin.inventario_tenis')
+    elif tipo == 'Playera':
+        producto = db.session.get(Playera, id)
+        redirect_url = url_for('admin.inventario_playeras')
+    elif tipo == 'Gorra':
+        producto = db.session.get(Gorra, id)
+        redirect_url = url_for('admin.inventario_gorras')
+    else:
+        flash('Tipo de producto no válido.', 'danger')
+        return redirect(url_for('admin.inventario_tenis'))
+
+    inventario = db.session.execute(
+        db.select(Inventario).filter_by(tipo_producto=tipo, id_producto=id)
+    ).scalar_one_or_none()
+    
+    if not producto:
+        flash('Producto no encontrado.', 'danger')
+        return redirect(url_for('admin.inventario_tenis'))
+
+    if request.method == 'POST':
+        try:
+            if tipo == 'Tenis':
+                producto.nombre_tenis = request.form.get('nombre')
+                producto.marca = request.form.get('marca')
+                producto.tipo = request.form.get('tipo')
+                producto.talla_calzado = to_none(request.form.get('talla_calzado'))
+                producto.precio = request.form.get('precio')
+                producto.descripcion = to_none(request.form.get('descripcion'))
+            elif tipo == 'Playera':
+                producto.nombre_playera = request.form.get('nombre')
+                producto.marca = request.form.get('marca')
+                producto.tipo = to_none(request.form.get('tipo'))
+                producto.talla_ropa = to_none(request.form.get('talla_ropa'))
+                producto.genero = to_none(request.form.get('genero'))
+                producto.material = to_none(request.form.get('material'))
+                producto.precio = request.form.get('precio')
+                producto.descripcion = to_none(request.form.get('descripcion'))
+            elif tipo == 'Gorra':
+                producto.nombre_gorra = request.form.get('nombre')
+                producto.talla_ropa = to_none(request.form.get('talla_ropa'))
+                producto.precio = request.form.get('precio')
+                producto.descripcion = to_none(request.form.get('descripcion'))
+            
+            if inventario:
+                inventario.cantidad = request.form.get('cantidad', 0)
+            else:
+                nuevo_inventario = Inventario(
+                    tipo_producto=tipo,
+                    id_producto=id,
+                    cantidad=request.form.get('cantidad', 0)
+                )
+                db.session.add(nuevo_inventario)
+                
+            db.session.commit()
+            flash('Producto actualizado exitosamente.', 'success')
+            return redirect(redirect_url)
+        
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al actualizar producto: {e}', 'danger')
+            return redirect(url_for('admin.editar_producto', tipo=tipo, id=id))
+
+    marcas = db.session.execute(db.select(Marca)).scalars().all()
+    tipos = db.session.execute(db.select(TipoProducto)).scalars().all()
+    tallas_calzado = db.session.execute(db.select(TallaCalzado)).scalars().all()
+    tallas_ropa = db.session.execute(db.select(TallaRopa)).scalars().all()
+    generos = db.session.execute(db.select(Genero)).scalars().all()
+
+    return render_template('admin/editar_producto.html', 
+                           producto=producto, 
+                           inventario=inventario,
+                           tipo_producto=tipo,
+                           marcas=marcas, 
+                           tipos=tipos, 
+                           tallas_calzado=tallas_calzado,
+                           tallas_ropa=tallas_ropa,
+                           generos=generos)
+
+@admin_bp.route('/eliminar-producto/<string:tipo>/<int:id>', methods=['POST'])
+def eliminar_producto(tipo, id):
+    if 'role' not in session or session['role'] != 'admin':
+        return redirect(url_for('auth.login'))
+    
+    redirect_url = url_for('admin.inventario_tenis')
+    
+    try:
+        inventario_entry = db.session.execute(
+            db.select(Inventario).filter_by(tipo_producto=tipo, id_producto=id)
+        ).scalar_one_or_none()
+        
+        if tipo == 'Tenis':
+            producto_entry = db.session.get(Tenis, id)
+            redirect_url = url_for('admin.inventario_tenis')
+        elif tipo == 'Playera':
+            producto_entry = db.session.get(Playera, id)
+            redirect_url = url_for('admin.inventario_playeras')
+        elif tipo == 'Gorra':
+            producto_entry = db.session.get(Gorra, id)
+            redirect_url = url_for('admin.inventario_gorras')
+        else:
+            flash('Tipo de producto no válido.', 'danger')
+            return redirect(url_for('admin.inventario_tenis'))
+
+        if inventario_entry:
+            db.session.delete(inventario_entry)
+        if producto_entry:
+            db.session.delete(producto_entry)
+        
+        if inventario_entry or producto_entry:
+            db.session.commit()
+            flash(f'{tipo} eliminado exitosamente.', 'success')
+        else:
+            flash('Producto no encontrado.', 'warning')
+            
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Error al eliminar {tipo}: {e}', 'danger')
+
+    return redirect(redirect_url)

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tr.sneakers - Nuevo Producto</title>
+  <title>Tr.sneakers - Editar Producto</title>
   <link rel="icon" href="{{ url_for('static', filename='images/Shoe_Logo.jpg') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/inventario_tenis.css') }}">
 </head>
@@ -25,14 +25,14 @@
         
           <main class="main-content">
             <div class="header">              
-                <h1>Agregar Producto</h1>
+                <h1>Editar Producto ({{ tipo_producto }})</h1>
                 <div class="info-usuario">
                     <span>Administrador</span>
                 </div>
             </div>
 
                 <div class="formulario-producto-des">
-                    <form action="{{ url_for('admin.agregar_producto') }}" method="POST">
+                    <form action="{{ url_for('admin.editar_producto', tipo=tipo_producto, id=(producto.id_teni or producto.id_playera or producto.id_gorra)) }}" method="POST">
                         
                         {% with messages = get_flashed_messages(with_categories=true) %}
                           {% if messages %}
@@ -50,17 +50,12 @@
                             <div class="fila-completa">
                                 <div class="grupo-formulario-grande">
                                     <label class="etiqueta-grupo-grande">Categoría</label>
-                                    <select class="campo-grande" name="categoria" required>
-                                        <option value="">Seleccionar categoría</option>
-                                        <option value="tenis">Tenis</option>
-                                        <option value="playera">Playeras</option>
-                                        <option value="gorra">Gorras</option>
-                                    </select>
+                                    <input type="text" class="campo-grande" name="categoria" value="{{ tipo_producto }}" readonly>
                                 </div>
 
                                 <div class="grupo-formulario-grande">
                                     <label class="etiqueta-grupo-grande">Nombre del Producto</label>
-                                    <input type="text" class="campo-grande" name="nombre" placeholder="Nombre del producto" required>
+                                    <input type="text" class="campo-grande" name="nombre" value="{{ producto.nombre_tenis or producto.nombre_playera or producto.nombre_gorra }}" required>
                                 </div>
                             </div>
                         </section>
@@ -74,46 +69,53 @@
                                     <select class="campo-grande" name="marca">
                                         <option value="">Seleccionar marca</option>
                                         {% for marca in marcas %}
-                                        <option value="{{ marca.id_marca }}">{{ marca.nombre_marca }}</option>
+                                        <option value="{{ marca.id_marca }}" {% if producto.marca == marca.id_marca %}selected{% endif %}>{{ marca.nombre_marca }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
                                 
+                                {% if tipo_producto != 'Gorra' %}
                                 <div class="grupo-formulario-grande">
                                     <label class="etiqueta-grupo-grande">Tipo</label>
                                     <select class="campo-grande" name="tipo">
                                         <option value="">Seleccionar tipo</option>
                                         {% for tipo in tipos %}
-                                        <option value="{{ tipo.id_tipo_producto }}">{{ tipo.nombre_tipo }}</option>
+                                        <option value="{{ tipo.id_tipo_producto }}" {% if producto.tipo == tipo.id_tipo_producto %}selected{% endif %}>{{ tipo.nombre_tipo }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
+                                {% endif %}
                                 
+                                {% if tipo_producto == 'Tenis' %}
                                 <div class="grupo-formulario-grande">
                                     <label class="etiqueta-grupo-grande">Talla (Calzado)</label>
                                     <select class="campo-grande" name="talla_calzado">
-                                        <option value="">Seleccionar talla de calzado</option>
+                                        <option value="">Seleccionar talla</option>
                                         {% for talla in tallas_calzado %}
-                                        <option value="{{ talla.id_talla_calzado }}">{{ talla.numero_talla }}</option>
+                                        <option value="{{ talla.id_talla_calzado }}" {% if producto.talla_calzado == talla.id_talla_calzado %}selected{% endif %}>{{ talla.numero_talla }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
+                                {% endif %}
                             </div>
 
                             <div class="fila-completa">
+                                {% if tipo_producto != 'Tenis' %}
                                 <div class="grupo-formulario-grande">
                                     <label class="etiqueta-grupo-grande">Talla (Ropa)</label>
                                     <select class="campo-grande" name="talla_ropa">
-                                        <option value="">Seleccionar talla de ropa</option>
+                                        <option value="">Seleccionar talla</option>
                                         {% for talla in tallas_ropa %}
-                                        <option value="{{ talla.id_talla_ropa }}">{{ talla.nombre_talla }}</option>
+                                        <option value="{{ talla.id_talla_ropa }}" {% if producto.talla_ropa == talla.id_talla_ropa %}selected{% endif %}>{{ talla.nombre_talla }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
+                                {% endif %}
                                 
+                                {% if tipo_producto == 'Playera' %}
                                 <div class="grupo-formulario-grande">
                                     <label class="etiqueta-grupo-grande">Material</label>
-                                    <input type="text" class="campo-grande" name="material" placeholder="Material del producto">
+                                    <input type="text" class="campo-grande" name="material" value="{{ producto.material or '' }}">
                                 </div>
                                 
                                 <div class="grupo-formulario-grande">
@@ -121,10 +123,11 @@
                                     <select class="campo-grande" name="genero">
                                         <option value="">Seleccionar género</option>
                                         {% for genero in generos %}
-                                        <option value="{{ genero.id_genero }}">{{ genero.nombre_genero }}</option>
+                                        <option value="{{ genero.id_genero }}" {% if producto.genero == genero.id_genero %}selected{% endif %}>{{ genero.nombre_genero }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
+                                {% endif %}
                             </div>
                         </section>
 
@@ -134,21 +137,21 @@
                             <div class="fila-completa">
                                 <div class="grupo-formulario-grande">
                                     <label class="etiqueta-grupo-grande">Precio</label>
-                                    <input type="number" class="campo-grande" name="precio" placeholder="Precio" step="0.01" required>
+                                    <input type="number" class="campo-grande" name="precio" value="{{ producto.precio }}" step="0.01" required>
                                 </div>
                                 <div class="grupo-formulario-grande">
-                                    <label class="etiqueta-grupo-grande">Cantidad Inicial</label>
-                                    <input type="number" class="campo-grande" name="cantidad" value="0" required>
+                                    <label class="etiqueta-grupo-grande">Cantidad</label>
+                                    <input type="number" class="campo-grande" name="cantidad" value="{{ inventario.cantidad or 0 }}" required>
                                 </div>
                             </div>
 
                             <div class="grupo-formulario-completo">
                                 <label class="etiqueta-grupo-grande">Descripción del producto</label>
-                                <textarea class="campo-textarea-grande" name="descripcion" placeholder="Descripción del producto" rows="8"></textarea>
+                                <textarea class="campo-textarea-grande" name="descripcion" rows="8">{{ producto.descripcion or '' }}</textarea>
                             </div>
                         </section>
 
-                        <button type="submit" class="boton-guardar">Guardar Producto</button>
+                        <button type="submit" class="boton-guardar">Actualizar Producto</button>
                     </form>
                 </div>
             </main>

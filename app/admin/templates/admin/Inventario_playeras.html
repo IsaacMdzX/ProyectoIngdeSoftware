@@ -37,33 +37,48 @@
 
                 <div class="fila-categorias-agregar">
                     <div class="categorias">
-                        <a href="{{ url_for('admin.inventario_tenis') }}" class="categoria-btn">Tenis</a>
-                        <a href="{{ url_for('admin.inventario_playeras') }}" class="categoria-btn active">Playeras</a>
-                        <a href="{{ url_for('admin.inventario_gorras') }}" class="categoria-btn">Gorras</a>
-                    </div>
+                       <a href="{{ url_for('admin.inventario_tenis') }}" class="categoria-btn">Tenis</a>
+                       <a href="{{ url_for('admin.inventario_playeras') }}" class="categoria-btn active">Playeras</a>
+                       <a href="{{ url_for('admin.inventario_gorras') }}" class="categoria-btn">Gorras</a>
+                      </div>
                     
                     <div class="contenedor-boton-agregar">
-                        <a href="#" class="boton-agregar">Agregar Producto</a>
+                        <a href="{{ url_for('admin.agregar_producto') }}" class="boton-agregar">Agregar Producto</a>
                     </div>
                 </div>
 
                 <div class="contenedor-tabla-usuarios">
-
                     <div class="divisor"></div>
 
-                    {% for producto in inventario %}
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                      {% if messages %}
+                        {% for category, message in messages %}
+                          <div class="alert alert-{{ category }}">
+                            {{ message }}
+                          </div>
+                        {% endfor %}
+                      {% endif %}
+                    {% endwith %}
+                    
+                    {% for producto, cantidad in inventario %}
                     <div class="producto-tarjeta">
                         <div class="encabezado-p">
-                            <h3 class="nombre-producto">{{ producto[0] }} (ID: {{ producto[3] }})</h3>
+                            <h3 class="nombre-producto">{{ producto.nombre_playera }} (ID: {{ producto.id_playera }})</h3>
                         </div>
-                        <p class="producto-detalles">Precio: ${{ producto[1] }} | Cantidad: {{ producto[2] }}</p>
-                        <button class="actualizar-btn">Actualizar</button>
+                        <p class="producto-detalles">Precio: ${{ producto.precio }} | Cantidad: {{ cantidad or 0 }}</p>
+                        
+                        <a href="{{ url_for('admin.editar_producto', tipo='Playera', id=producto.id_playera) }}" class="actualizar-btn">Editar</a>
+                        
+                        <form action="{{ url_for('admin.eliminar_producto', tipo='Playera', id=producto.id_playera) }}" method="POST" style="display:inline-block; margin-left: 10px;">
+                            <button type="submit" class="actualizar-btn" style="background-color: #e74c3c;" onclick="return confirm('¿Estás seguro de que quieres eliminar este producto?');">Eliminar</button>
+                        </form>
                     </div>
                     {% else %}
                     <p>No hay playeras en el inventario.</p>
                     {% endfor %}
+
                     <div class="paginacion">
-                        </div>                
+                    </div>                
                 </div>
             </section>
         </main>
