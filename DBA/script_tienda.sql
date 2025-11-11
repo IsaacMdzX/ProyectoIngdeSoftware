@@ -42,7 +42,8 @@ CREATE TABLE productos.playeras (
     Material VARCHAR (50), 
     Genero INT, 
     Descripcion TEXT, 
-    Precio DECIMAL (10,2) NOT NULL, 
+    Precio DECIMAL (10,2) NOT NULL,
+    image_filename VARCHAR(255), 
     CONSTRAINT fk_marca_playera FOREIGN KEY (Marca) REFERENCES productos.marcas(id_marca),
     CONSTRAINT fk_tipo_playera FOREIGN KEY (Tipo) REFERENCES productos.tipos_producto(id_tipo_producto),
     CONSTRAINT fk_talla_playera FOREIGN KEY (Talla_ropa) REFERENCES productos.tallas_ropa(id_talla_ropa),
@@ -68,6 +69,7 @@ CREATE TABLE productos.tenis (
     Talla_calzado INT NOT NULL, 
     Descripcion TEXT,
     Precio DECIMAL(10,2) NOT NULL,
+    image_filename VARCHAR(255),
     CONSTRAINT fk_marca_tenis FOREIGN KEY (Marca) REFERENCES productos.marcas(id_marca),
     CONSTRAINT fk_tipo_tenis FOREIGN KEY (Tipo) REFERENCES productos.tipos_producto(id_tipo_producto),
     CONSTRAINT fk_talla_tenis FOREIGN KEY (Talla_calzado) REFERENCES productos.tallas_calzado(id_talla_calzado)
@@ -90,6 +92,7 @@ CREATE TABLE productos.gorras (
     Talla_ropa INT NOT NULL, 
     Descripcion TEXT, 
     Precio DECIMAL(10,2) NOT NULL,
+    image_filename VARCHAR(255),
     CONSTRAINT fk_talla_gorra FOREIGN KEY (Talla_ropa) REFERENCES productos.tallas_ropa(id_talla_ropa)
 );
 
