@@ -1,0 +1,36 @@
+<header>
+  <div class="header">
+    <div class="logo-container">
+      <img src="{{ url_for('static', filename='images/trsneakers_logo.png') }}" alt="Logo de Zapatilla" class="logo">
+    </div>
+  </div>
+  {% if not minimal_header %}
+    <div class="header-derecha">
+      <form class="buscador" action="#" method="get">
+        <input type="search" name="q" placeholder="Buscar...">
+      </form>
+
+      <nav class="menu-links">
+        {% if session.get('user_id') %}
+          {% if session.get('role') in ['cliente','admin'] %}
+            <span class="saludo-usuario">Hola, {{ session.get('user_name') }}</span>
+          {% endif %}
+
+          <a href="{{ url_for('auth.logout') }}" class="inicio" title="Cerrar Sesión">
+            <img src="{{ url_for('static', filename='images/logout_icon.png') }}" alt="Cerrar Sesión" class="icono-nav">
+          </a>
+        {% else %}
+          <a href="{{ url_for('auth.login') }}" class="inicio" title="Iniciar Sesión">
+            <img src="{{ url_for('static', filename='images/inicio_sesion.png') }}" alt="Iniciar Sesión" class="icono-nav">
+          </a>
+        {% endif %}
+
+        <a href="{{ url_for('public.ver_carrito') }}" class="carrito" title="carrito">
+          <img src="{{ url_for('static', filename='images/carrito_de_compras.png') }}" alt="Carrito" class="icono-nav">
+          {% set cant_items = (session.get('carrito') | map(attribute='cantidad') | sum) if session.get('carrito') else 0 %}
+          {% if cant_items > 0 %}<span class="badge-carrito">{{ cant_items }}</span>{% endif %}
+        </a>
+      </nav>
+    </div>
+  {% endif %}
+</header>

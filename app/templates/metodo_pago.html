@@ -4,72 +4,106 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tr.sneakers</title>
-  <link rel="icon" href="../static/images/Shoe Logo.jpg">
- <link rel="stylesheet" href="../static/css/metodo_pago.css">
+        <title>Tr.sneakers</title>
+        <link rel="icon" href="{{ url_for('static', filename='images/Shoe_Logo.jpg') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/metodo_pago.css') }}">
+                <style>
+                    /* Mensajes flash mínimos para esta página */
+                    .flash-container { max-width: 900px; margin: 10px auto 0; padding: 0 16px; }
+                    .flash { border-radius: 6px; padding: 10px 12px; margin: 8px 0; color: #0f172a; font-weight: 500; }
+                    .flash.success { background: #d1fae5; border: 1px solid #10b981; }
+                    .flash.info { background: #e0f2fe; border: 1px solid #3b82f6; }
+                    .flash.warning { background: #fef3c7; border: 1px solid #f59e0b; }
+                    .flash.danger { background: #fee2e2; border: 1px solid #ef4444; }
+                </style>
 </head>
 <body>
-
+    {% set minimal_header = True %}
+    {% include 'shared/_header.html' %}
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                <div class="flash-container">
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
     <div class="main-container">
-
-        <header class="header">
-            <img src="../static/images/trsneakers_logo.png" alt="Logo TK Sneakers" class="logo">
-        </header>
-
-        <div class="card-container">
-            <div class="product-card">
-                <div class="card-content">
-                    <h3>Título</h3>
-                    <p class="price">$0<span class="per-mo">/mo</span></p>
-                    <ul>
-                        <li><i class="fas fa-dot-circle feature-icon"></i> Talla</li>
-                        <li><i class="fas fa-dot-circle feature-icon"></i> Marca</li>
-                    </ul>
-                </div>
-                <button class="select-button">Button</button>
-            </div>
-
-            <div class="product-card">
-                <div class="card-content">
-                    <h3>Título</h3>
-                    <p class="price">$0<span class="per-mo">/mo</span></p>
-                    <ul>
-                        <li><i class="fas fa-dot-circle feature-icon"></i> Talla</li>
-                        <li><i class="fas fa-dot-circle feature-icon"></i> Marca</li>
-                    </ul>
-                </div>
-                <button class="select-button">Button</button>
-            </div>
-
-            <div class="product-card">
-                <div class="card-content">
-                    <h3>Título</h3>
-                    <p class="price">$0<span class="per-mo">/mo</span></p>
-                    <ul>
-                        <li><i class="fas fa-dot-circle feature-icon"></i> Talla</li>
-                        <li><i class="fas fa-dot-circle feature-icon"></i> Marca</li>
-                    </ul>
-                </div>
-                <button class="select-button">Button</button>
-            </div>
-        </div>
-
-        <div class="back-arrow">
-            <i class="fas fa-arrow-left"></i>
-        </div>
         
-        <button class="pay-button">Pagar</button>
-
         <div class="payment-modal">
-            <p>Total a pagar</p>
-            <p class="total-amount">$ 0.00</p>
+            <h2 class="modal-title">Resumen de compra</h2>
+            <div class="items-wrapper">
+                {% if items %}
+                <table class="items-table">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for it in items %}
+                        <tr>
+                            <td class="txt-left">{{ it.nombre }}</td>
+                            <td>x{{ it.cantidad }}</td>
+                            <td>$ {{ '%.2f' % it.precio }}</td>
+                            <td>$ {{ '%.2f' % (it.precio * it.cantidad) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p class="empty">Tu carrito está vacío.</p>
+                {% endif %}
+            </div>
+            <div class="total-row">
+                <span>Total</span>
+                <strong>$ {{ '%.2f' % total if total is defined else '0.00' }}</strong>
+            </div>
+
+            <div class="pay-section">
+                <h3 class="pay-title">Elige tu método de pago</h3>
+                <div class="pay-options">
+                                        <a class="pay-option transfer" href="{{ url_for('public.checkout_datos') }}">
+                                                <div class="icon-wrap" aria-hidden="true">
+                                                    <!-- Ícono banco/transferencia -->
+                                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M12 3L2 9v2h20V9L12 3zm8 12h-2v4h2v-4zm-4 0h-2v4h2v-4zm-4 0h-2v4h2v-4zm-4 0H6v4h2v-4zM4 21h16v-2H4v2z"/>
+                                                    </svg>
+                                                </div>
+                                                <div class="option-texts">
+                                                    <span class="title">Transferencia</span>
+                                                    <span class="subtitle">BBVA • Confirmación manual</span>
+                                                </div>
+                                        </a>
+                                        <a class="pay-option mp" href="{{ url_for('public.checkout_pagar', provider='mercadopago') }}">
+                                                <div class="icon-wrap" aria-hidden="true">
+                                                    <!-- Ícono tarjeta/crédito -->
+                                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V10h16v8zm0-12H4V6h16v2z"/>
+                                                    </svg>
+                                                </div>
+                                                <div class="option-texts">
+                                                    <span class="title">Mercado Pago</span>
+                                                    <span class="subtitle">Tarjeta, débito, efectivo</span>
+                                                </div>
+                                        </a>
+                </div>
+            </div>
+
+
+            <!-- Botón atrás secundario -->
             <div class="modal-actions">
-               <button class="filter-btn"><a href="carrito.html" class="pay-button-style">Atras</a></button>
-                <button class="filter-btn"><a href="Datos_pago.html" class="pay-button-style">Siguiente</a></button>
+                <a class="filter-btn secondary pay-button-style" href="{{ url_for('public.ver_carrito') }}">← Atrás</a>
             </div>
         </div>
 
     </div>
 
+    
 </body>
 </html>

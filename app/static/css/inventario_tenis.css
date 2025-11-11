@@ -42,12 +42,12 @@ body {
 }
 .nav-links li:hover {
     background-color: rgba(255,255,255,0.1);
-    border-left: 4px solid #ff8000;
+    border-left: 4px solid #000000;
     padding-left: 16px;
 }
 .nav-links li.active {
     background-color: rgba(255,255,255,0.15);
-    border-left: 4px solid #ff8000;
+    border-left: 4px solid #0e0e0e;
     padding-left: 16px;
 }
 .nav-links a {

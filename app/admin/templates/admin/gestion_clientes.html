@@ -66,7 +66,7 @@
                                 <td class="columna-rol">Cliente</td>
                                 <td class="columna-acciones">
                                     <a href="{{ url_for('admin.editar_usuario', rol='cliente', id=cliente.id_cliente) }}" class="boton-editar">Editar</a>
-                                    <form action="{{ url_for('admin.eliminar_usuario', rol='cliente', id=cliente.id_cliente) }}" method="POST" style="display:inline;">
+                                    <form action="{{ url_for('admin.eliminar_usuario', rol='cliente', id=cliente.id_cliente) }}" method="POST" class="inline-form">
                                         <button type="submit" class="boton-eliminar" onclick="return confirm('¿Estás seguro de que quieres eliminar a este cliente?');">Eliminar</button>
                                     </form>
                                 </td>
@@ -84,7 +84,7 @@
                                 <td class="columna-rol">Administrador</td>
                                 <td class="columna-acciones">
                                     <a href="{{ url_for('admin.editar_usuario', rol='admin', id=admin.id_admin) }}" class="boton-editar">Editar</a>
-                                    <form action="{{ url_for('admin.eliminar_usuario', rol='admin', id=admin.id_admin) }}" method="POST" style="display:inline;">
+                                    <form action="{{ url_for('admin.eliminar_usuario', rol='admin', id=admin.id_admin) }}" method="POST" class="inline-form">
                                         <button type="submit" class="boton-eliminar" onclick="return confirm('¿Estás seguro de que quieres eliminar a este administrador?');">Eliminar</button>
                                     </form>
                                 </td>

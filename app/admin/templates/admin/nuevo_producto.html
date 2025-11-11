@@ -32,7 +32,7 @@
             </div>
 
                 <div class="formulario-producto-des">
-                    <form action="{{ url_for('admin.agregar_producto') }}" method="POST">
+                    <form action="{{ url_for('admin.agregar_producto') }}" method="POST" enctype="multipart/form-data">
                         
                         {% with messages = get_flashed_messages(with_categories=true) %}
                           {% if messages %}
@@ -145,6 +145,11 @@
                             <div class="grupo-formulario-completo">
                                 <label class="etiqueta-grupo-grande">Descripción del producto</label>
                                 <textarea class="campo-textarea-grande" name="descripcion" placeholder="Descripción del producto" rows="8"></textarea>
+                            </div>
+                            <div class="grupo-formulario-completo">
+                                <label class="etiqueta-grupo-grande">Imagen del producto</label>
+                                <input type="file" name="imagen" accept="image/*">
+                                <small>Sube una imagen (jpg, png). Se guardará en el servidor.</small>
                             </div>
                         </section>
 

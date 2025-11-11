@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle de {{ nombre }}</title>
+  <link rel="icon" href="{{ url_for('static', filename='images/Shoe_Logo.jpg') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body>
+  {% include 'shared/_header.html' %}
+  {% include 'shared/_flashes.html' %}
+
+  <main class="detalle-container">
+    <a href="{{ request.referrer or url_for('public.index') }}" class="back-link">← Volver</a>
+    <div class="detalle-grid">
+      <div class="detalle-imagen">
+        {% if image_url %}
+          <img class="detalle-img" src="{{ image_url }}" alt="{{ nombre }}">
+        {% else %}
+          <div class="placeholder-imagen">Imagen</div>
+        {% endif %}
+      </div>
+      <div class="detalle-info">
+        <h1>{{ nombre }}</h1>
+        {% if descripcion %}
+          <p class="detalle-descripcion">{{ descripcion }}</p>
+        {% endif %}
+        <p class="detalle-precio">${{ '%.2f'|format(precio) }}</p>
+        <form action="{{ url_for('public.agregar_al_carrito') }}" method="post" class="form-agregar">
+          <input type="hidden" name="tipo" value="{{ tipo }}">
+          <input type="hidden" name="id_producto" value="{{ id_producto }}">
+          <label for="cantidad">Cantidad</label>
+          <input type="number" id="cantidad" name="cantidad" value="1" min="1">
+          <button type="submit" class="btn-primario">Agregar al carrito</button>
+        </form>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

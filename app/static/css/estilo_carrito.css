@@ -3,54 +3,12 @@ body {
     margin: 0;
     font-family: sans-serif;
     background-color: #f5f5f5; /* Fondo gris claro */
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* Ocupa al menos el alto completo de la ventana */
-    overflow-x: hidden; /* Evita scroll horizontal */
-}
-
-/* Header */
-.header {
-    width: 100%;
-    height: 140px;
-     background: linear-gradient(to right, #00BBFF 0%, #7E8383 50%, #FC4B08 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1;
-}
-
-/* Contenedor del logo */
-.logo-container {
-    background:  rgba(255, 255, 255, 0.7);  /* Fondo blanco para el borde */
-    border-radius: 50%; /* Lo hace circular */
-    padding: 8px;
-    width: 120px;
-    height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 50%;
-    transform: translateY(1%); /* Lo baja para que salga un poco del header */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-/* Imagen del logo */
-.logo {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    border-radius: 50%;
 }
 
 
 /* Contenido Principal */
 .main-content {
-    flex-grow: 1; /* Permite que el contenido principal ocupe el espacio restante */
-    padding: 70px 20px 20px; /* Espacio para el logo que sale del header */
+    padding: 20px; /* Alineado con el layout general */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -264,21 +222,6 @@ body {
 @media (max-width: 768px) {
     .product-grid {
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* 2 columnas en pantallas medianas */
-    }
-    .header {
-        height: 100px;
-    }
-    .logo-container {
-        width: 80px;
-        height: 80px;
-        bottom: -40px;
-    }
-    .logo {
-        max-width: 60px;
-        max-height: 60px;
-    }
-    .main-content {
-        padding-top: 60px;
     }
     .bottom-actions {
         justify-content: center; /* Centra el botón Pagar en móviles */

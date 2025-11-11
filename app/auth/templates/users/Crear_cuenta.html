@@ -17,7 +17,12 @@
 
     <main class="login-page">
         <div class="contenedor-formulario">
-            <form action="{{ url_for('auth.registro') }}" method="POST">
+                        {% if request.args.get('next') %}
+                        <div class="alert alert-warning">
+                            Crea tu cuenta para continuar con tu compra.
+                        </div>
+                        {% endif %}
+            <form action="{{ url_for('auth.registro', next=request.args.get('next')) }}" method="POST">
                 
                 <div class="grupo-input">
                     <label for="nombre">Nombre</label>
@@ -48,7 +53,7 @@
                     Crear cuenta nueva
                 </button>
 
-                <a href="{{ url_for('auth.login') }}" class="enlace-secundario">¿Ya tienes cuenta? Inicia sesión</a>   
+                <a href="{{ url_for('auth.login', next=request.args.get('next')) }}" class="enlace-secundario">¿Ya tienes cuenta? Inicia sesión</a>   
             </form>
         </div>
     </main>

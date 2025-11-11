@@ -1,85 +1,68 @@
 :root {
-    --bg-gray: #e0e0e0;
-    --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    --dark-button: #333333;
+    --bg-gray: #f5f5f5;
+    --card-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+    --brand-primary: #FC4B08;
+    --brand-secondary: #00BBFF;
     --text-dark: #333333;
-    --text-light-gray: #777777;
+    --text-light-gray: #666666;
 }
 
 /* Estilos generales */
 body {
-    font-family: Arial, sans-serif;
+    font-family: sans-serif;
     margin: 0;
     padding: 0;
     background-color: var(--bg-gray);
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     min-height: 100vh; /* Asegura que la interfaz ocupe al menos toda la altura de la vista */
 }
 
+/* Asegurar que el header ocupe todo el ancho incluso dentro del body flex */
+body > header {
+    width: 100%;
+    align-self: stretch;
+}
+
 .main-container {
     width: 100%;
-    max-width: 1000px; /* Ancho máximo para el contenido */
-    background-color: var(--bg-gray);
+    max-width: 1100px; /* Ancho máximo para el contenido */
+    background-color: transparent;
     position: relative;
-    padding-bottom: 80px; /* Espacio para el botón de pagar */
-}
-
-/* Encabezado */
-.header {
-    background: linear-gradient(to right, #1f6479, #ff5733); /* Gradiente de color similar */
-    height: 150px;
+    padding: 20px 16px 40px; /* separaciones superiores e inferiores */
     display: flex;
-    align-items: center;
-    padding: 0 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 50px;
-    justify-content: flex-start;
-}
-
-.logo-container {
-    background-color: linear-gradient(to right, #007bff, #ff4500);
-    border-radius: 0%;
-    padding: 10px;
-    width: 150px;
-    height: 150px;
-    display: flex;
-    align-items: center;
     justify-content: center;
-    position: absolute;
-    bottom: -40px; /* Posiciona el logo para que sobresalga */
-    left: 15%;
-    transform: translateX(-85%);
+    align-items: flex-start;
 }
 
-.logo {
-    height: 50px;
-  max-width: 100%;
-}
+/* Encabezado: usar el header global de estilo.css para consistencia */
 
 /* Contenedor de las tarjetas */
 .card-container {
     display: flex;
     justify-content: space-around;
-    gap: 30px;
+    gap: 24px;
     padding: 0 20px;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 /* Estilo de la tarjeta individual */
 .product-card {
-    background-color: white;
-    border-radius: 8px;
+    background-color: #ffffff;
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
     box-shadow: var(--card-shadow);
     width: 30%;
-    min-width: 200px;
+    min-width: 220px;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
     text-align: center;
+    transition: transform .15s ease, box-shadow .2s ease;
 }
+.product-card:hover { transform: translateY(-3px); box-shadow: 0 10px 22px rgba(0,0,0,.09); }
 
 .card-content {
     flex-grow: 1;
@@ -93,10 +76,10 @@ body {
 }
 
 .price {
-    font-size: 3rem;
-    font-weight: bold;
-    color: var(--text-dark);
-    margin: 10px 0 20px 0;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--brand-primary);
+    margin: 8px 0 16px;
 }
 
 .per-mo {
@@ -110,56 +93,66 @@ body {
 .product-card ul {
     list-style: none;
     padding: 0;
-    margin: 20px 0;
+    margin: 16px 0;
     text-align: left;
 }
 
 .product-card ul li {
     color: var(--text-light-gray);
-    font-size: 1rem;
+    font-size: 0.95rem;
     margin-bottom: 10px;
+    position: relative;
+    padding-left: 16px;
+}
+.product-card ul li::before {
+    content: "";
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    left: 0;
+    top: 9px;
+    background: var(--text-dark);
+    border-radius: 50%;
+    opacity: .7;
 }
 
-.feature-icon {
-    color: var(--text-dark);
-    margin-right: 10px;
-    font-size: 0.7rem;
-    vertical-align: middle;
-}
+.feature-icon { display: none; }
 
 /* Botones de selección de tarjeta */
 .select-button {
-    background-color: var(--dark-button);
-    color: white;
-    border: none;
+    background-color: var(--brand-primary);
+    color: #fff;
+    border: 1px solid var(--brand-primary);
     padding: 10px 40px;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 1rem;
-    margin-top: 15px;
+    margin-top: 12px;
     width: 80%;
-    transition: background-color 0.3s;
+    transition: filter 0.2s, transform 0.1s;
 }
 
 .select-button:hover {
-    background-color: #555555;
+    filter: brightness(0.95);
+    transform: translateY(-1px);
 }
 
 /* Modal de pago flotante */
 .payment-modal {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    padding: 30px;
+    position: relative; /* en flujo, evita quedar oculto bajo el header */
+    background-color: #ffffff;
+    border: 1px solid #ececec;
+    border-radius: 12px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+    padding: 28px 26px;
     text-align: center;
-    width: 400px; /* Ajusta el ancho */
-    z-index: 10;
-    /* Para simular la superposición en el centro de la interfaz */
-    /* Debería estar oculto con 'display: none;' y mostrarse con JavaScript */
+    width: 560px; /* ampliar un poco el cuadro */
+    max-width: 100%;
+    z-index: 1;
+    margin: 8px auto 24px;
+    display: flex;             /* organizar contenido vertical */
+    flex-direction: column;
+    min-height: 360px;         /* asegura espacio interior para fijar botones abajo */
 }
 
 .payment-modal p {
@@ -168,22 +161,27 @@ body {
 }
 
 .payment-modal p:first-child {
-    font-weight: bold;
-    font-size: 1.2rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #111;
 }
 
 .total-amount {
     font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 30px !important;
+    font-weight: 800;
+    color: var(--brand-primary);
+    margin-bottom: 26px !important;
 }
 
 .modal-actions {
     display: flex;
-    justify-content: flex-end;
-    gap: 15px;
-    margin-top: 20px;
+    justify-content: center; /* centrar botones */
+    gap: 14px;
+    margin-top: 16px;
+    flex-wrap: wrap;
 }
+/* empujar los botones hacia la parte inferior del cuadro */
+.modal-actions.bottom { margin-top: auto; }
 
 
 .modal-button {
@@ -200,9 +198,78 @@ body {
 }
 
 .next-btn {
-    background-color: var(--dark-button);
+    background-color: var(--brand-primary);
     color: white;
     border: none;
+}
+
+/* Botonera del modal (enlaces con estilo de botón) - AZUL, más grandes y consistentes */
+.filter-btn {
+    border: 1px solid var(--brand-secondary);
+    background: var(--brand-secondary);
+    color: #fff;
+    padding: 12px 20px;            /* botones más grandes */
+    border-radius: 8px;
+    cursor: pointer;
+}
+.filter-btn:hover { filter: brightness(0.95); }
+.pay-button-style { display: inline-block; text-decoration: none; font-weight: 700; color: #fff; font-size: 1.02rem; }
+/* Variación secundaria para 'Atrás' - negro sólido */
+.filter-btn.secondary { background: #111; color: #fff; border-color: #111; }
+.filter-btn.secondary:hover { filter: brightness(1.05); }
+
+/* Tabla de items */
+.modal-title { margin: 0 0 8px; font-size: 1.15rem; color: #111; }
+.items-wrapper { max-height: 260px; overflow: auto; margin-bottom: 10px; }
+.items-table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+.items-table thead th { text-align: left; padding: 8px 10px; border-bottom: 1px solid #eee; color: #444; font-weight: 600; }
+.items-table tbody td { padding: 8px 10px; border-bottom: 1px solid #f3f3f3; color: #333; }
+.items-table tbody tr:last-child td { border-bottom: none; }
+.txt-left { text-align: left; }
+.empty { color: #666; margin: 6px 0 2px; }
+.total-row { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 10px; margin-top: 6px; font-size: 1rem; }
+.total-row strong { color: var(--brand-primary); font-size: 1.2rem; }
+
+/* Sección de métodos de pago */
+.pay-section { margin-top: 18px; }
+.pay-title { margin: 0 0 10px; font-size: 1.05rem; color: #1f2937; text-align: left; }
+.pay-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+.pay-option {
+    display: flex;
+    flex-direction: row; /* icono + textos */
+    align-items: center;
+    gap: 12px;
+    justify-content: flex-start;
+    padding: 14px 16px;
+    border-radius: 12px;
+    text-decoration: none;
+    box-shadow: var(--card-shadow);
+    border: 1px solid #eaeaea;
+    transition: transform .12s ease, box-shadow .2s ease;
+}
+.pay-option:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(0,0,0,.10); }
+.pay-option .icon-wrap {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #0f172a;
+}
+.pay-option .title { font-weight: 800; font-size: 1.03rem; color: #0f172a; display:block; }
+.pay-option .subtitle { font-size: .9rem; color: #556; margin-top: 2px; display:block; }
+.pay-option.transfer .icon-wrap { background: #e6f4ff; color: #0284c7; }
+.pay-option.mp .icon-wrap { background: #fff0e8; color: #f97316; }
+.pay-option.transfer { background: linear-gradient(180deg, #e6f4ff 0%, #ffffff 100%); border-color: #b3e0ff; }
+.pay-option.mp { background: linear-gradient(180deg, #fff0e8 0%, #ffffff 100%); border-color: #ffd3c2; }
+
+@media (max-width: 520px) {
+    .pay-options { grid-template-columns: 1fr; }
 }
 
 /* Botón principal de Pagar */
@@ -210,19 +277,20 @@ body {
     position: absolute;
     bottom: 20px;
     right: 20px;
-    background-color: var(--dark-button);
+    background-color: var(--brand-primary);
     color: white;
-    border: none;
-    padding: 15px 50px;
-    border-radius: 4px;
+    border: 1px solid var(--brand-primary);
+    padding: 12px 28px;
+    border-radius: 6px;
     cursor: pointer;
-    font-size: 1.1rem;
-    transition: background-color 0.3s;
+    font-size: 1rem;
+    transition: filter 0.2s, transform 0.1s;
     z-index: 5;
 }
 
 .pay-button:hover {
-    background-color: #555555;
+    filter: brightness(0.95);
+    transform: translateY(-1px);
 }
 
 /* Flecha de retorno */
@@ -230,7 +298,7 @@ body {
     position: absolute;
     bottom: 35px;
     left: 20px;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: var(--text-dark);
     cursor: pointer;
     z-index: 5;
@@ -244,22 +312,24 @@ body {
     }
 
     .product-card {
-        width: 80%;
-        margin-bottom: 20px;
+        width: 88%;
+        margin-bottom: 16px;
     }
 
     .payment-modal {
-        width: 80%;
-        padding: 20px;
+        width: 100%;
+        max-width: 520px;
+        padding: 22px;
+        margin: 12px auto 20px;
     }
 
     .pay-button {
-        bottom: 10px;
-        right: 10px;
+        bottom: 12px;
+        right: 12px;
     }
 
     .back-arrow {
-        bottom: 25px;
-        left: 10px;
+        bottom: 24px;
+        left: 12px;
     }
 }

@@ -1,0 +1,23 @@
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-container">
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+    <script>
+      (function() {
+        try {
+          var alerts = document.querySelectorAll('.flash-container .alert');
+          alerts.forEach(function(el, idx) {
+            // Auto-dismiss quickly (~1s) with slight stagger if there are multiple
+            setTimeout(function(){
+              el.classList.add('fade-out');
+              setTimeout(function(){ el.remove(); }, 500);
+            }, 1000 + idx * 200);
+          });
+        } catch (e) { /* no-op */ }
+      })();
+    </script>
+  {% endif %}
+{% endwith %}

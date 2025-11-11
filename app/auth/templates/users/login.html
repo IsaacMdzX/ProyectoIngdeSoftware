@@ -17,7 +17,12 @@
 
     <main class="login-page">
         <div class="contenedor-formulario">
-            <form action="{{ url_for('auth.login') }}" method="POST">
+                        {% if request.args.get('next') %}
+                        <div class="alert alert-warning">
+                            Inicia sesión para continuar con tu compra.
+                        </div>
+                        {% endif %}
+            <form action="{{ url_for('auth.login', next=request.args.get('next')) }}" method="POST">
 
                 <div class="grupo-input">
                     <label for="correo">Correo</label>

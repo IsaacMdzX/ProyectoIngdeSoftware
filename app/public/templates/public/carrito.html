@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito</title>
+  <link rel="icon" href="{{ url_for('static', filename='images/Shoe_Logo.jpg') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo_carrito.css') }}">
+</head>
+<body>
+  {% include 'shared/_header.html' %}
+  {% include 'shared/_flashes.html' %}
+
+  <main class="main-content">
+    <h1>Tu carrito</h1>
+    {% if items %}
+    <div class="product-grid">
+      {% for item in items %}
+      <div class="product-card">
+        <h3 class="card-title">{{ item.nombre }}</h3>
+        <p class="card-price">${{ '%.2f'|format(item.precio) }}</p>
+        <ul class="features-list">
+          <li>• Tipo: {{ item.tipo|capitalize }}</li>
+          <li>• Cantidad: {{ item.cantidad }}</li>
+        </ul>
+        <form action="{{ url_for('public.eliminar_del_carrito', tipo=item.tipo, id_producto=item.id_producto) }}" method="post">
+          <button class="card-button" type="submit">Quitar</button>
+        </form>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="resumen-carrito">
+      <p class="total">Total: ${{ '%.2f'|format(total) }}</p>
+      <a href="{{ url_for('public.index') }}" class="btn-secundario">Seguir comprando</a>
+      <a href="{{ url_for('public.checkout') }}" class="pay-button">Proceder al pago</a>
+    </div>
+    {% else %}
+      <p>Tu carrito está vacío.</p>
+      <a href="{{ url_for('public.index') }}" class="btn-secundario">Ir al catálogo</a>
+    {% endif %}
+  </main>
+</body>
+</html>

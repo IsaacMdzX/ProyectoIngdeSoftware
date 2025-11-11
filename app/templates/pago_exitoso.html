@@ -4,68 +4,70 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tr.sneakers</title>
-  <link rel="icon" href="../static/images/Shoe Logo.jpg">
- <link rel="stylesheet" href="../static/css/pago_exitoso.css">
+        <title>Tr.sneakers</title>
+        <link rel="icon" href="{{ url_for('static', filename='images/Shoe_Logo.jpg') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/pago_exitoso.css') }}">
+                <style>
+                    .flash-container { max-width: 900px; margin: 10px auto 0; padding: 0 16px; }
+                    .flash { border-radius: 6px; padding: 10px 12px; margin: 8px 0; color: #0f172a; font-weight: 500; }
+                    .flash.success { background: #d1fae5; border: 1px solid #10b981; }
+                    .flash.info { background: #e0f2fe; border: 1px solid #3b82f6; }
+                    .flash.warning { background: #fef3c7; border: 1px solid #f59e0b; }
+                    .flash.danger { background: #fee2e2; border: 1px solid #ef4444; }
+                    .modal-actions { display:flex; gap:10px; }
+                    .modal-actions--space { justify-content: space-between; }
+                </style>
 </head>
 <body>
-
+    <header class="header">
+        <img src="{{ url_for('static', filename='images/trsneakers_logo.png') }}" alt="Logo TK Sneakers" class="logo">
+    </header>
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                <div class="flash-container">
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
     <div class="main-container">
 
-        <header class="header">
-            <img src="../static/images/trsneakers_logo.png" alt="Logo TK Sneakers" class="logo">
-        </header>
-
-        <div class="card-container">
-            <div class="product-card">
-                <h3>Título</h3>
-                <p class="price">$0<span class="per-mo">/mo</span></p>
-                <ul>
-                    <li><i class="fas fa-dot-circle feature-icon"></i> Talla</li>
-                    <li><i class="fas fa-dot-circle feature-icon"></i> Marca</li>
-                </ul>
-                <button class="select-button">Button</button>
-            </div>
-
-            <div class="product-card">
-                <h3>Título</h3>
-                <p class="price">$0<span class="per-mo">/mo</span></p>
-                <ul>
-                    <li><i class="fas fa-dot-circle feature-icon"></i> Talla</li>
-                    <li><i class="fas fa-dot-circle feature-icon"></i> Marca</li>
-                </ul>
-                <button class="select-button">Button</button>
-            </div>
-
-            <div class="product-card">
-                <h3>Título</h3>
-                <p class="price">$0<span class="per-mo">/mo</span></p>
-                <ul>
-                    <li><i class="fas fa-dot-circle feature-icon"></i> Talla</li>
-                    <li><i class="fas fa-dot-circle feature-icon"></i> Marca</li>
-                </ul>
-                <button class="select-button">Button</button>
-            </div>
-        </div>
-
-        <div class="back-arrow">
-            <i class="fas fa-arrow-left"></i>
-        </div>
-        
-        <button class="pay-button">Pagar</button>
+        <!-- Fondo limpio: eliminadas tarjetas decorativas y botones sueltos -->
 
         <div class="success-modal">
-            <h2 class="modal-title">¡Pago exitoso!</h2>
-            
-            <label for="fecha-entrega">Fecha de entrega</label>
-            <input type="text" id="fecha-entrega" placeholder="DD/MM/AAAA">
-            
-            <label for="detalles">Detalles</label>
-            <textarea id="detalles" rows="4"></textarea>
+                                    <h2 class="modal-title">¡Gracias! Operación registrada</h2>
 
-            <div class="modal-actions">
-                <button class="finalize-button"><a href="carrito.html" class="pay-button">Finalizar</a></button>
-            </div>
+                                    <div class="order-summary">
+                                        {% if order_code %}
+                                            <div class="order-badge">Folio: {{ order_code }}</div>
+                                        {% endif %}
+                                        <ul class="order-data">
+                                            <li><span>Total:</span> $ {{ '%.2f' % (total or 0) }}</li>
+                                            <li><span>Método:</span> {{ 'Transferencia' if source == 'transfer' else 'Mercado Pago' }}</li>
+                                            {% if user_name %}<li><span>Nombre:</span> {{ user_name }}</li>{% endif %}
+                                            {% if user_email %}<li><span>Correo:</span> {{ user_email }}</li>{% endif %}
+                                        </ul>
+                                    </div>
+
+                                    {% if source == 'transfer' %}
+                                        <p>Si realizaste una transferencia, envíanos tu comprobante por WhatsApp para acelerar la validación.</p>
+                                        {% set base = 'Hola, envío comprobante de transferencia para mi pedido en TK Sneakers.' %}
+                                        {% set line_total = ' Total: $ ' ~ ('%.2f' % (total or 0)) %}
+                                        {% set line_name = user_name and (' Nombre: ' ~ user_name) or '' %}
+                                        {% set line_email = user_email and (' Correo: ' ~ user_email) or '' %}
+                                        {% set line_code = order_code and (' Folio: ' ~ order_code) or '' %}
+                                        {% set msg = (base ~ line_total ~ line_name ~ line_email ~ line_code) %}
+                                        {% set wa_link = 'https://wa.me/' ~ (whatsapp_phone or '5215512345678') ~ '?text=' ~ msg|urlencode %}
+                            <div class="modal-actions modal-actions--space">
+                                <a class="wa-btn" href="{{ wa_link }}" target="_blank" rel="noopener">Enviar comprobante por WhatsApp</a>
+                                <a class="finalize-link" href="{{ url_for('public.index') }}">Finalizar</a>
+                            </div>
+                        {% else %}
+                                            <div class="modal-actions">
+                                                <a class="finalize-link" href="{{ url_for('public.index') }}">Finalizar</a>
+                                            </div>
+                        {% endif %}
         </div>
         
     </div>

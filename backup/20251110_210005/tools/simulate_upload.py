@@ -1,0 +1,131 @@
+import io
+import os, sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from PIL import Image
+from app import create_app
+from app.extensions import db
+from app.public.models import Marca, TipoProducto, TallaCalzado, Tenis
+
+app = create_app()
+
+with app.app_context():
+    # Ensure at least one Marca and TipoProducto exist
+    marca = db.session.execute(db.select(Marca)).scalars().first()
+    if not marca:
+        marca = Marca(nombre_marca='MarcaTest')
+        db.session.add(marca)
+        db.session.commit()
+
+    tipo = db.session.execute(db.select(TipoProducto)).scalars().first()
+    if not tipo:
+        tipo = TipoProducto(nombre_tipo='TipoTest')
+        db.session.add(tipo)
+        db.session.commit()
+
+    talla = db.session.execute(db.select(TallaCalzado)).scalars().first()
+    # talla is optional; if exists use id, else None
+    talla_id = getattr(talla, 'id_talla_calzado', None) if talla else None
+
+    client = app.test_client()
+    # Set session to admin
+    with client.session_transaction() as sess:
+        sess['role'] = 'admin'
+
+    # Create an in-memory image
+    img = Image.new('RGB', (1000, 600), (10, 120, 200))
+    bio = io.BytesIO()
+    img.save(bio, format='JPEG')
+    bio.seek(0)
+
+    data = {
+        'categoria': 'tenis',
+        'nombre': 'Autotest Tenis',
+        'marca': str(marca.id_marca),
+        'tipo': str(tipo.id_tipo_producto),
+        'precio': '79.99',
+        'cantidad': '5'
+    }
+    if talla_id:
+        data['talla_calzado'] = str(talla_id)
+
+    # files: field name 'imagen'
+    data_files = {
+        'imagen': (bio, 'autotest.jpg')
+    }
+
+    print('Enviando POST a /agregar-producto ...')
+    resp = client.post('/agregar-producto', data={**data, 'imagen': (bio, 'autotest.jpg')}, content_type='multipart/form-data', follow_redirects=True)
+
+    print('Código HTTP:', resp.status_code)
+    # Save response for debugging
+    text = resp.get_data(as_text=True)
+    if resp.status_code == 200 and 'Producto (tenis) agregado exitosamente.' in text:
+        print('Respuesta indica éxito. Buscando el producto en DB...')
+        producto = db.session.execute(db.select(Tenis).where(Tenis.nombre_tenis == 'Autotest Tenis')).scalars().first()
+        # Check all product tables for the created name
+        import os
+        found = False
+        tenis_prod = db.session.execute(db.select(Tenis).where(Tenis.nombre_tenis == 'Autotest Tenis')).scalars().first()
+        if tenis_prod:
+            found = True
+            print('Tenis creado. id:', tenis_prod.id_teni, 'image_filename:', tenis_prod.image_filename)
+            filename = tenis_prod.image_filename
+        else:
+            # check playeras and gorras by similar name
+            from app.public.models import Playera, Gorra
+            playera_prod = db.session.execute(db.select(Playera).where(Playera.nombre_playera == 'Autotest Tenis')).scalars().first()
+            gorra_prod = db.session.execute(db.select(Gorra).where(Gorra.nombre_gorra == 'Autotest Tenis')).scalars().first()
+            if playera_prod:
+                found = True
+                print('Playera creada (unexpected). id:', playera_prod.id_playera, 'image_filename:', playera_prod.image_filename)
+                filename = playera_prod.image_filename
+            elif gorra_prod:
+                found = True
+                print('Gorra creada (unexpected). id:', gorra_prod.id_gorra, 'image_filename:', gorra_prod.image_filename)
+                filename = gorra_prod.image_filename
+            else:
+                filename = None
+
+        if found and filename:
+            static_img_dir = os.path.join(app.static_folder, 'images', 'product_images')
+            orig = os.path.join(static_img_dir, filename)
+            small = os.path.join(static_img_dir, 'thumbs', 'small', filename)
+            medium = os.path.join(static_img_dir, 'thumbs', 'medium', filename)
+            print('Paths:')
+            print(' original:', orig, 'exists:', os.path.exists(orig))
+            print(' small:', small, 'exists:', os.path.exists(small))
+            print(' medium:', medium, 'exists:', os.path.exists(medium))
+        else:
+            print('No se encontró el producto en ninguna tabla.')
+    else:
+        print('Respuesta no indica éxito. Texto de respuesta (completo, truncado a 8000 chars):')
+        print(text[:8000])
+
+        # Try again with category 'playera' in case DB enforces playera FK
+        bio.seek(0)
+        data2 = data.copy()
+        data2['categoria'] = 'playera'
+        data2['nombre'] = 'Autotest Playera'
+        print('\nIntentando POST con categoria=playera ...')
+        resp2 = client.post('/agregar-producto', data={**data2, 'imagen': (bio, 'autotest2.jpg')}, content_type='multipart/form-data', follow_redirects=True)
+        print('Código HTTP (playera):', resp2.status_code)
+        txt2 = resp2.get_data(as_text=True)
+        if resp2.status_code == 200 and 'Producto (playera) agregado exitosamente.' in txt2:
+            print('Playera creada correctamente según respuesta.')
+            from app.public.models import Playera
+            p = db.session.execute(db.select(Playera).where(Playera.nombre_playera == 'Autotest Playera')).scalars().first()
+            if p:
+                print('Playera en DB id:', p.id_playera, 'image_filename:', p.image_filename)
+                static_img_dir = os.path.join(app.static_folder, 'images', 'product_images')
+                orig = os.path.join(static_img_dir, p.image_filename) if p.image_filename else None
+                small = os.path.join(static_img_dir, 'thumbs', 'small', p.image_filename) if p.image_filename else None
+                medium = os.path.join(static_img_dir, 'thumbs', 'medium', p.image_filename) if p.image_filename else None
+                print('Paths exist: orig', os.path.exists(orig) if orig else 'N/A', 'small', os.path.exists(small) if small else 'N/A', 'medium', os.path.exists(medium) if medium else 'N/A')
+            else:
+                print('No se encontró playera en DB tras respuesta positiva.')
+        else:
+            print('Respuesta playera (trunc):')
+            print(txt2[:2000])
+
+    # close streams
+    bio.close()

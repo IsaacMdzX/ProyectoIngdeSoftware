@@ -4,84 +4,52 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tr.sneakers</title>
-  <link rel="icon" href="../static/images/Shoe Logo.jpg">
-  <link rel="stylesheet" href="../static/css/datos_pago.css">
+        <title>Tr.sneakers</title>
+        <link rel="icon" href="{{ url_for('static', filename='images/Shoe_Logo.jpg') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/datos_pago.css') }}">
+                <style>
+                    .flash-container { max-width: 900px; margin: 10px auto 0; padding: 0 16px; }
+                    .flash { border-radius: 6px; padding: 10px 12px; margin: 8px 0; color: #0f172a; font-weight: 500; }
+                    .flash.success { background: #d1fae5; border: 1px solid #10b981; }
+                    .flash.info { background: #e0f2fe; border: 1px solid #3b82f6; }
+                    .flash.warning { background: #fef3c7; border: 1px solid #f59e0b; }
+                    .flash.danger { background: #fee2e2; border: 1px solid #ef4444; }
+                </style>
 </head>
 <body>
-
+    {% set minimal_header = True %}
+    {% include 'shared/_header.html' %}
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                <div class="flash-container">
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
     <div class="main-container">
-
-        <header class="header">
-            <img src="../static/images/trsneakers_logo.png" alt="Logo TK Sneakers" class="logo">
-        </header>
-
-        <div class="card-container">
-            <div class="product-card">
-                <div class="card-content">
-                    <h3>Título</h3>
-                    <p class="price">$0<span class="per-mo">/mo</span></p>
-                    <ul>
-                        <li><i class="fas fa-dot-circle feature-icon"></i> Talla</li>
-                        <li><i class="fas fa-dot-circle feature-icon"></i> Marca</li>
-                    </ul>
-                </div>
-                <button class="select-button">Button</button>
-            </div>
-
-            <div class="product-card">
-                <div class="card-content">
-                    <h3>Título</h3>
-                    <p class="price">$0<span class="per-mo">/mo</span></p>
-                    <ul>
-                        <li><i class="fas fa-dot-circle feature-icon"></i> Talla</li>
-                        <li><i class="fas fa-dot-circle feature-icon"></i> Marca</li>
-                    </ul>
-                </div>
-                <button class="select-button">Button</button>
-            </div>
-        </div>
-
-        <div class="back-arrow">
-            <i class="fas fa-arrow-left"></i>
-        </div>
-        
-        <button class="pay-button">Pagar</button>
-
         <div class="transfer-modal">
             <div class="modal-header">
-                <h2>Datos de Transferencia</h2>
-                <i class="fas fa-times close-icon"></i>
+                <h2>Pago por transferencia</h2>
             </div>
-            <form class="transfer-form">
-                <label for="origen">Origen</label>
-                <input type="text" id="origen" placeholder="">
-                
-                <label for="destino">Destino</label>
-                <input type="text" id="destino" placeholder="">
-                
-                <label for="comision">Comisión</label>
-                <input type="text" id="comision" placeholder="">
-                
-                <label for="concepto">Concepto</label>
-                <input type="text" id="concepto" placeholder="">
-                
-                <label for="referencia">Referencia</label>
-                <input type="text" id="referencia" placeholder="">
-                
-                <label for="operacion">Tipo de Operación</label>
-                <input type="text" id="operacion" placeholder="">
-                
-                <label for="folio">Folio</label>
-                <input type="text" id="folio" placeholder="">
-                
-                <label for="fecha">Fecha</label>
-                <input type="text" id="fecha" placeholder="DD/MM/AAAA">
-                
-                <button type="submit" class="realizar-pago-btn"><a href="pago_exitoso.html" class="pay-button-style">Realizar pago</a></button>
-            </form>
+            <div class="transfer-instructions">
+                <p class="total">Total a pagar: <strong>$ {{ '%.2f' % total if total is defined else '0.00' }}</strong></p>
+                <ul class="bank-data">
+                    <li><span>Banco:</span> BBVA</li>
+                    <li><span>Beneficiario:</span> TK Sneakers</li>
+                    <li><span>CLABE:</span> 000000000000000000</li>
+                    <li><span>Cuenta:</span> 0000000000</li>
+                    <li><span>Referencia:</span> Tu correo registrado o tu nombre completo</li>
+                </ul>
+                <p class="note">Una vez realizada la transferencia, por favor envía tu comprobante a nuestro correo de soporte o WhatsApp. Tu pedido se marcará como pendiente y se confirmará al acreditarse el pago.</p>
+            </div>
+            <div class="actions">
+                <a class="btn-secondary" href="{{ url_for('public.checkout') }}">← Atrás</a>
+                <a class="btn-primary" href="{{ url_for('public.checkout_exito', source='transfer') }}">He realizado la transferencia</a>
+            </div>
         </div>
-
     </div>
 
 </body>

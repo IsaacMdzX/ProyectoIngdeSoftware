@@ -32,7 +32,7 @@
             </div>
 
                 <div class="formulario-producto-des">
-                    <form action="{{ url_for('admin.editar_producto', tipo=tipo_producto, id=(producto.id_teni or producto.id_playera or producto.id_gorra)) }}" method="POST">
+                    <form action="{{ url_for('admin.editar_producto', tipo=tipo_producto, id=(producto.id_teni or producto.id_playera or producto.id_gorra)) }}" method="POST" enctype="multipart/form-data">
                         
                         {% with messages = get_flashed_messages(with_categories=true) %}
                           {% if messages %}
@@ -148,6 +148,19 @@
                             <div class="grupo-formulario-completo">
                                 <label class="etiqueta-grupo-grande">Descripción del producto</label>
                                 <textarea class="campo-textarea-grande" name="descripcion" rows="8">{{ producto.descripcion or '' }}</textarea>
+                            </div>
+
+                            <div class="grupo-formulario-completo">
+                                <label class="etiqueta-grupo-grande">Imagen del producto</label>
+                                {% if producto.image_filename %}
+                                    <div style="margin-bottom:8px;">
+                                        <img class="current-image" src="{{ producto.image_url }}" alt="Imagen actual">
+                                    </div>
+                                    <label><input type="file" name="imagen" accept="image/*"> (Sube una nueva imagen para reemplazar la actual)</label>
+                                {% else %}
+                                    <input type="file" name="imagen" accept="image/*">
+                                {% endif %}
+                                <small>Si subes una imagen se reemplazará la anterior. Tipos permitidos: png, jpg, jpeg, gif. Máx 2MB.</small>
                             </div>
                         </section>
 

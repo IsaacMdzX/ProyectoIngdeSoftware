@@ -47,6 +47,13 @@
                     </div>
                 </div>
 
+                <form method="get" action="{{ url_for('admin.inventario_tenis') }}" style="margin: 10px 0 16px; display:flex; gap:8px; align-items:center; flex-wrap: wrap;">
+                    <input type="text" name="q" placeholder="Buscar por nombre" value="{{ q or '' }}" style="padding:8px 10px; border:1px solid #ccc; border-radius:6px; min-width:220px;">
+                    <input type="hidden" name="per_page" value="{{ per_page or 12 }}">
+                    <button type="submit" class="boton-agregar" style="padding:8px 14px;">Buscar</button>
+                    {% if q %}<a href="{{ url_for('admin.inventario_tenis') }}" class="boton-agregar" style="background:#777;">Limpiar</a>{% endif %}
+                </form>
+
                 <div class="contenedor-tabla-usuarios">
 
                     <div class="divisor"></div>
@@ -66,6 +73,9 @@
                         <div class="encabezado-p">
                             <h3 class="nombre-producto">{{ producto.nombre_tenis }} (ID: {{ producto.id_teni }})</h3>
                         </div>
+            <div class="producto-imagen-mini">
+                <img class="thumb-small" src="{{ producto.image_url }}" alt="{{ producto.nombre_tenis }}">
+            </div>
                         <p class="producto-detalles">Precio: ${{ producto.precio }} | Cantidad: {{ cantidad or 0 }}</p>
                         
                         <a href="{{ url_for('admin.editar_producto', tipo='Tenis', id=producto.id_teni) }}" class="actualizar-btn">Editar</a>
@@ -75,11 +85,21 @@
                         </form>
                     </div>
                     {% else %}
-                    <p>No hay tenis en el inventario.</p>
+                    <p>No hay tenis en el inventario{% if q %} que coincidan con "{{ q }}"{% endif %}.</p>
                     {% endfor %}
 
+                    {% set total_pages = ((total - 1) // per_page) + 1 if total and per_page else 1 %}
+                    {% if total_pages > 1 %}
                     <div class="paginacion">
-                    </div>                
+                        {% if page > 1 %}
+                          <a href="{{ url_for('admin.inventario_tenis', q=q, page=page-1, per_page=per_page) }}">« Anterior</a>
+                        {% endif %}
+                        <span>Página {{ page }} de {{ total_pages }}</span>
+                        {% if page < total_pages %}
+                          <a href="{{ url_for('admin.inventario_tenis', q=q, page=page+1, per_page=per_page) }}">Siguiente »</a>
+                        {% endif %}
+                    </div>
+                    {% endif %}
                 </div>
             </section>
         </main>

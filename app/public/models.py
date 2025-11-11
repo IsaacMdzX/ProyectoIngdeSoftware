@@ -51,6 +51,8 @@ class Tenis(db.Model):
     descripcion = db.Column(db.Text)
     precio = db.Column(db.Numeric(10, 2), nullable=False)
     talla_calzado = db.Column(db.Integer, db.ForeignKey('productos.tallas_calzado.id_talla_calzado'))
+    # Nombre de archivo de la imagen del producto (opcional)
+    image_filename = db.Column(db.String(255))
     
 class Playera(db.Model):
     __tablename__ = 'playeras'
@@ -65,6 +67,8 @@ class Playera(db.Model):
     tipo = db.Column(db.Integer, db.ForeignKey('productos.tipos_producto.id_tipo_producto'))
     talla_ropa = db.Column(db.Integer, db.ForeignKey('productos.tallas_ropa.id_talla_ropa'))
     genero = db.Column(db.Integer, db.ForeignKey('productos.generos.id_genero'))
+    # Nombre de archivo de la imagen del producto (opcional)
+    image_filename = db.Column(db.String(255))
 
 class Gorra(db.Model):
     __tablename__ = 'gorras'
@@ -75,3 +79,5 @@ class Gorra(db.Model):
     descripcion = db.Column(db.Text)
     precio = db.Column(db.Numeric(10, 2), nullable=False)
     talla_ropa = db.Column(db.Integer, db.ForeignKey('productos.tallas_ropa.id_talla_ropa'))
+    # Nombre de archivo de la imagen del producto (opcional)
+    image_filename = db.Column(db.String(255))
